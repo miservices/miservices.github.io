@@ -93,7 +93,7 @@
                 <ul>
                   <li><a href="/genesee-county/">Website</a></li>
                   <li><a href="/genesee-county/elections/">Elections</a></li>
-                  <li><a href="/genesee-county/board-of/commissioners/">Board of Commissioners</a></li>
+                  <li><a href="/genesee-county/board-of-commissioners/">Board of Commissioners</a></li>
                   <li><a href="/genesee-county/clerk">County Clerk</a></li>
                   <li><a href="/genesee-county/sheriffs-office">Sheriff's Office</a></li>
                   <li><a href="/genesee-county/district-court/">District Court</a></li>

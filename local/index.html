@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Government Directory | MiGovt.org</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Shared site-wide styles (banner, header, nav, confirm modal) -->
+<link rel="stylesheet" href="/shared.css">
+
+<style>
+  /* ---------- Page-specific styles: directory tree + footer ---------- */
+
+  .page-hero {
+    background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+    border-bottom: 1px solid var(--nav-border);
+    padding: 44px 24px 34px;
+  }
+
+  .page-hero-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--trail-amber-text);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(28px, 4.4vw, 40px);
+    line-height: 1.16;
+    margin: 0 0 14px;
+    color: var(--lake-deep);
+  }
+
+  .page-hero p.lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 0 22px;
+  }
+
+  .local-callout {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-left: 4px solid var(--trail-amber);
+    border-radius: 6px;
+    padding: 16px 20px;
+    max-width: 620px;
+  }
+
+  .local-callout svg {
+    width: 26px;
+    height: 26px;
+    stroke: var(--lake-deep);
+    flex-shrink: 0;
+  }
+
+  .local-callout-text {
+    flex: 1;
+  }
+
+  .local-callout-text strong {
+    display: block;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .local-callout-text span {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+
+  .local-callout a.go {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    background: var(--lake-deep);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 4px;
+    white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+
+  .local-callout a.go:hover { background: var(--lake-night); }
+
+  /* ---------- Directory tree ---------- */
+
+  .directory-wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 38px 24px 70px;
+  }
+
+  .branch-label {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--trail-amber-text);
+  }
+
+  .org-tree {
+    margin-top: 10px;
+  }
+
+  .org-tree + .org-tree {
+    margin-top: 34px;
+    padding-top: 30px;
+    border-top: 1px solid var(--nav-border);
+  }
+
+  details.org-node {
+    border-left: 2px solid var(--nav-border);
+    margin: 0 0 2px 0;
+  }
+
+  details.org-node > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 11px 14px 11px 16px;
+    font-family: 'Public Sans', sans-serif;
+    transition: background 0.12s ease;
+  }
+
+  details.org-node > summary::-webkit-details-marker { display: none; }
+
+  details.org-node > summary::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--lake-mist);
+    border-bottom: 2px solid var(--lake-mist);
+    transform: rotate(-45deg);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: transform 0.15s ease;
+  }
+
+  details.org-node[open] > summary::before {
+    transform: rotate(45deg);
+  }
+
+  details.org-node > summary:hover {
+    background: rgba(76,124,146,0.07);
+  }
+
+  .org-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  a.org-title {
+    color: var(--lake-deep);
+  }
+
+  a.org-title:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--trail-amber);
+    text-underline-offset: 3px;
+  }
+
+  .org-body {
+    padding: 0 14px 16px 34px;
+  }
+
+  .org-desc {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 6px;
+    max-width: 620px;
+  }
+
+  .org-children {
+    margin-left: 4px;
+  }
+
+  /* leaf-level nodes with no children: plain rows, no chevron */
+  .org-leaf {
+    border-left: 2px solid var(--nav-border);
+    padding: 11px 14px 12px 16px;
+    margin: 0 0 2px 0;
+  }
+
+  .org-leaf .org-title,
+  .org-leaf .org-title-plain {
+    display: block;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  .org-leaf .org-desc {
+    margin-top: 4px;
+    padding-left: 0;
+  }
+
+  .org-title-plain {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  footer {
+    text-align: center;
+    padding: 22px 20px 26px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid rgba(90,70,50,0.15);
+  }
+
+  footer strong {
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+
+  <!-- Shared banner + header + mobile nav get injected here by partials.js -->
+  <div id="site-chrome"></div>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow">Local Government</div>
+      <h1>Local Government Directory</h1>
+      <p class="lede">
+        A structural directory of local government within Genesee County —
+        the county government itself, and the City of Flint's municipal
+        government.
+      </p>
+
+      <div class="local-callout">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-7h6v7"/><path d="M9 12h.01M15 12h.01M12 8h.01"/></svg>
+        <div class="local-callout-text">
+          <strong>Looking for state government?</strong>
+          <span>The Governor's office, state departments, the Legislature, and the state courts are listed separately.</span>
+        </div>
+        <a class="go confirm-link" href="/directory/">
+          View state government
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="directory-wrap">
+
+    <!-- ============ GENESEE COUNTY ============ -->
+    <div class="org-tree">
+      <div class="branch-label">Local Government</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:600;color:var(--lake-deep);margin:6px 0 4px;font-size:22px;">Genesee County</h2>
+      <p class="org-desc" style="margin-bottom:18px;">The county government providing law enforcement, courts, property records, and other core services across Genesee County — including for the City of Flint, which sits within it and runs its own municipal government alongside these county services.</p>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/genesee-county/board-of-commissioners/">Board of Commissioners</a>
+        <p class="org-desc">A five-member elected body that serves as the county's legislative branch, setting local policy, approving the county budget, and overseeing county departments.</p>
+      </div>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/genesee-county/clerk/">County Clerk</a>
+        <p class="org-desc">Maintains vital records and official county documents and administers elections at the county level. The Clerk also serves as the county's Register of Deeds, recording and maintaining property deeds, mortgages, and other real estate documents.</p>
+      </div>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/genesee-county/treasurer/">County Treasurer</a>
+        <p class="org-desc">Collects property taxes, manages county funds and investments, and handles delinquent tax collection and property tax foreclosures.</p>
+      </div>
+
+      <details class="org-node">
+        <summary><a class="org-title confirm-link" href="/genesee-county/sheriffs-office/">Sheriff's Office</a></summary>
+        <div class="org-body">
+          <p class="org-desc">The county's primary law enforcement agency, providing policing, jail operations, court security, and emergency medical response across Genesee County.</p>
+
+          <div class="org-children">
+            <details class="org-node">
+              <summary><span class="org-title-plain">Office of the Sheriff</span></summary>
+              <div class="org-body">
+                <p class="org-desc">The senior leadership of the Sheriff's Office.</p>
+                <div class="org-children">
+                  <div class="org-leaf">
+                    <span class="org-title-plain">Elected Sheriff</span>
+                    <p class="org-desc">The county's chief law enforcement officer, elected directly by voters to oversee the entire Sheriff's Office.</p>
+                  </div>
+                  <div class="org-leaf">
+                    <span class="org-title-plain">Undersheriff</span>
+                    <p class="org-desc">The second-in-command of the Sheriff's Office, appointed by the Sheriff to help run day-to-day operations.</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <div class="org-leaf">
+              <span class="org-title-plain">Law Enforcement Division</span>
+              <p class="org-desc">Deputies who patrol the county, respond to calls, and enforce state and local law in areas outside city police jurisdiction.</p>
+            </div>
+
+            <div class="org-leaf">
+              <span class="org-title-plain">Corrections Division</span>
+              <p class="org-desc">Operates the county jail, overseeing the custody and care of individuals held before trial or serving short sentences.</p>
+            </div>
+
+            <div class="org-leaf">
+              <span class="org-title-plain">Paramedic Division</span>
+              <p class="org-desc">Provides emergency medical response countywide. Staff are dual-credentialed, serving as both certified police officers and licensed paramedics.</p>
+            </div>
+
+            <div class="org-leaf">
+              <span class="org-title-plain">Court Services Division</span>
+              <p class="org-desc">Provides court security, prisoner transport, courtroom bailiffs, warrant service, and civil process service for the county's courts.</p>
+            </div>
+
+            <div class="org-leaf">
+              <span class="org-title-plain">Administrative Services Division</span>
+              <p class="org-desc">Handles the Sheriff's Office's internal operations, including internal affairs, training, recruitment, and records management.</p>
+            </div>
+
+            <div class="org-leaf">
+              <span class="org-title-plain">Reserve Division</span>
+              <p class="org-desc">A volunteer corps of trained reserve deputies who supplement sworn staff at events and during emergencies.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/genesee-county/prosecutor/">County Prosecutor</a>
+        <p class="org-desc">The county's chief criminal law enforcement attorney, responsible for charging and prosecuting criminal cases on behalf of the state within Genesee County.</p>
+      </div>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/genesee-county/public-defender/">Office of the Public Defender</a>
+        <p class="org-desc">Provides legal representation for criminal defendants in Genesee County who cannot afford to hire an attorney.</p>
+      </div>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/genesee-county/corporation-counsel/">Office of the Corporation Counsel</a>
+        <p class="org-desc">Acts as the county government's chief in-house civil attorney — providing legal advice to county officials, drafting local ordinances, and handling civil lawsuits involving the county. The office represents the county as an entity rather than prosecuting criminal matters.</p>
+      </div>
+
+      <details class="org-node">
+        <summary><a class="org-title confirm-link" href="/genesee-county/district-court/">County District Court</a></summary>
+        <div class="org-body">
+          <p class="org-desc">Genesee County's trial court and the only trial-level court in the county — hearing the full range of civil, criminal, and administrative cases before an appeal would go to the state courts.</p>
+
+          <div class="org-children">
+            <details class="org-node">
+              <summary><span class="org-title-plain">Chief Judge, Judges &amp; Magistrates</span></summary>
+              <div class="org-body">
+                <p class="org-desc">The judicial officers who hear and decide cases before the District Court, organized into three divisions by case type.</p>
+                <div class="org-children">
+                  <div class="org-leaf">
+                    <span class="org-title-plain">Criminal Division</span>
+                    <p class="org-desc">Hears criminal cases, from arraignment through trial and sentencing.</p>
+                  </div>
+                  <div class="org-leaf">
+                    <span class="org-title-plain">Civil Division</span>
+                    <p class="org-desc">Hears civil disputes between individuals, businesses, and other parties.</p>
+                  </div>
+                  <div class="org-leaf">
+                    <span class="org-title-plain">Administrative Division</span>
+                    <p class="org-desc">Handles administrative matters such as traffic infractions, licensing appeals, and other non-criminal, non-civil filings.</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <div class="org-leaf">
+              <span class="org-title-plain">Court Administrator</span>
+              <p class="org-desc">Oversees the daily administrative operations of the District Court, including scheduling, budgeting, and staffing.</p>
+            </div>
+
+            <div class="org-leaf">
+              <span class="org-title-plain">Legal Records Division</span>
+              <p class="org-desc">Maintains the court's official case files and legal records. The division is headed by the Clerk of the Court — a role held by the elected County Clerk.</p>
+            </div>
+
+            <details class="org-node">
+              <summary><span class="org-title-plain">Court Services Division</span></summary>
+              <div class="org-body">
+                <p class="org-desc">Supports the court's operations outside the courtroom, from supervising people awaiting or serving out sentences to running the jury pool.</p>
+                <div class="org-children">
+                  <div class="org-leaf">
+                    <span class="org-title-plain">Probation and Pretrial Services</span>
+                    <p class="org-desc">Supervises individuals on probation and monitors defendants released before trial.</p>
+                  </div>
+                  <div class="org-leaf">
+                    <span class="org-title-plain">Jury Services</span>
+                    <p class="org-desc">Summons and manages jury pools for trials held in the District Court.</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ============ CITY OF FLINT ============ -->
+    <div class="org-tree">
+      <div class="branch-label">Local Government</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:600;color:var(--lake-deep);margin:6px 0 4px;font-size:22px;">City of Flint</h2>
+      <p class="org-desc" style="margin-bottom:18px;">Genesee County's largest city, operating its own municipal government — including its own police and fire departments — alongside the county services available to all Genesee County residents.</p>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/flint/mayor/">Mayor</a>
+        <p class="org-desc">Flint's elected chief executive, responsible for running city departments, proposing the city budget, and enforcing city ordinances.</p>
+      </div>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/flint/city-council/">City Council</a>
+        <p class="org-desc">Flint's elected legislative body, responsible for passing city ordinances, approving the budget, and providing oversight of city departments.</p>
+      </div>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/flint/city-attorney/">City Attorney's Office</a>
+        <p class="org-desc">Serves as the city's legal counsel, representing Flint in civil litigation, advising city officials, and drafting municipal ordinances.</p>
+      </div>
+
+      <details class="org-node">
+        <summary><a class="org-title confirm-link" href="/flint/departments/police/">Police Department</a></summary>
+        <div class="org-body">
+          <p class="org-desc">Flint's municipal police force, providing law enforcement services within city limits.</p>
+
+          <div class="org-children">
+            <div class="org-leaf">
+              <span class="org-title-plain">Patrol Division</span>
+              <p class="org-desc">Officers who patrol city neighborhoods, respond to calls for service, and provide the department's frontline policing presence.</p>
+            </div>
+            <div class="org-leaf">
+              <span class="org-title-plain">Crime Area Target Team</span>
+              <p class="org-desc">A specialized unit focused on high-crime areas and repeat-offender activity within the city.</p>
+            </div>
+            <div class="org-leaf">
+              <span class="org-title-plain">Internal Affairs</span>
+              <p class="org-desc">Investigates complaints and allegations of misconduct involving department officers.</p>
+            </div>
+            <div class="org-leaf">
+              <span class="org-title-plain">Training Services Division</span>
+              <p class="org-desc">Oversees recruit training and ongoing certification for department officers.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="org-node">
+        <summary><a class="org-title confirm-link" href="/flint/departments/fire/">Fire Department</a></summary>
+        <div class="org-body">
+          <p class="org-desc">Flint's municipal fire department, providing fire suppression, emergency response, and fire prevention services within city limits.</p>
+
+          <div class="org-children">
+            <div class="org-leaf">
+              <span class="org-title-plain">Field Operations</span>
+              <p class="org-desc">Firefighting crews who respond to fires, medical emergencies, and other calls for service across the city.</p>
+            </div>
+            <div class="org-leaf">
+              <span class="org-title-plain">Professional Standards Division</span>
+              <p class="org-desc">Reviews department conduct and ensures compliance with policy and procedure.</p>
+            </div>
+            <div class="org-leaf">
+              <span class="org-title-plain">Fire Academy Division</span>
+              <p class="org-desc">Trains new recruits and provides ongoing certification for firefighting personnel.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <div class="org-leaf">
+        <a class="org-title confirm-link" href="/flint/departments/public-works/">Public Works</a>
+        <p class="org-desc">Maintains city infrastructure, including streets, water and sewer systems, and public facilities.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <strong>Department of Technology</strong> · migovt.org · Local Government
+  </footer>
+
+  <!-- Injects banner + header + mobile nav into #site-chrome above -->
+  <script src="/partials.js"></script>
+
+  <!-- Confirms before navigating away on any link marked confirm-link -->
+  <script src="/confirm-nav.js"></script>
+
+</body>
+</html>
