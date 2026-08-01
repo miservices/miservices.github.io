@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employment | MiGovt.org</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Shared site-wide styles (banner, header, nav, confirm modal) -->
+<link rel="stylesheet" href="/shared.css">
+
+<style>
+  /* ---------- Page-specific styles ---------- */
+
+  .page-hero {
+    background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+    border-bottom: 1px solid var(--nav-border);
+    padding: 52px 24px 40px;
+    text-align: center;
+  }
+
+  .page-hero-inner { max-width: 640px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--trail-amber-text);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(30px, 5vw, 42px);
+    line-height: 1.15;
+    margin: 0 0 14px;
+    color: var(--lake-deep);
+  }
+
+  .page-hero p.lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 auto;
+    max-width: 540px;
+  }
+
+  /* ---------- Tool section ---------- */
+
+  .tool-wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 44px 24px 70px;
+  }
+
+  .tool-panel {
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 10px;
+    padding: 24px;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 18px;
+    align-items: start;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 700px) { .field-row { grid-template-columns: 1fr; } }
+
+  .field-label {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    padding-top: 10px;
+  }
+
+  .field-label span {
+    display: block;
+    font-weight: 500;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  input[type="text"], select {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--nav-border);
+    border-radius: 5px;
+    padding: 10px 12px;
+    width: 100%;
+  }
+
+  input[type="text"]:focus, select:focus {
+    outline: 2px solid var(--lake-mist);
+    outline-offset: 1px;
+  }
+
+  select:disabled { color: var(--ink-soft); cursor: not-allowed; }
+
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .chip {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 7px 13px;
+    border-radius: 100px;
+    border: 1.5px solid var(--nav-border);
+    background: var(--paper);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    user-select: none;
+  }
+
+  .chip:hover { border-color: var(--lake-mist); }
+
+  .chip.active {
+    background: var(--lake-deep);
+    border-color: var(--lake-deep);
+    color: var(--paper);
+  }
+
+  .filter-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 6px;
+    border-top: 1px solid var(--nav-border);
+    margin-top: 4px;
+  }
+
+  .results-count {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .results-count strong { color: var(--ink); }
+
+  .clear-btn {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12.5px;
+    color: var(--lake-deep);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 4px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ---------- Results ---------- */
+
+  .results-list {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .job-card {
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  .job-top {
+    padding: 18px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .job-top:hover { background: rgba(76,124,146,0.05); }
+
+  .job-title-block { flex: 1; min-width: 0; }
+
+  .job-title {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+    margin: 0 0 4px;
+  }
+
+  .job-meta {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  .job-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .badge {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 10.5px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 100px;
+  }
+
+  .badge-green { background: #e2f0e4; color: #2b6b3a; }
+  .badge-gray { background: #e7e3d8; color: #5c5646; }
+  .badge-blue { background: #e1ecf3; color: #1d5a80; }
+
+  .job-chevron {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .job-chevron svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--lake-mist);
+    transition: transform 0.15s ease;
+  }
+
+  .job-card.open .job-chevron svg { transform: rotate(180deg); }
+
+  .job-body {
+    display: none;
+    padding: 0 20px 22px;
+    border-top: 1px solid var(--nav-border);
+  }
+
+  .job-card.open .job-body { display: block; }
+
+  .job-body h5 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--trail-amber-text);
+    margin: 18px 0 8px;
+  }
+
+  .job-desc p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+  }
+
+  .job-desc p:last-child { margin-bottom: 0; }
+
+  .req-list { margin: 0; padding: 0; list-style: none; }
+
+  .req-list li {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .req-list li::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--trail-amber);
+    position: absolute;
+    left: 0;
+    top: 7px;
+  }
+
+  .job-dates {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 16px;
+  }
+
+  .job-dates strong { color: var(--ink); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+
+  .job-apply-row {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .apply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--lake-deep);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 11px 20px;
+    border-radius: 5px;
+    transition: background 0.15s ease;
+  }
+
+  .apply-btn:hover { background: var(--lake-night); }
+  .apply-btn svg { width: 15px; height: 15px; stroke: currentColor; }
+
+  .closed-note {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .state-msg {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  .state-msg.error { color: #9a3b34; }
+
+  /* ---------- Info band ---------- */
+
+  .info-band {
+    background: var(--paper-warm);
+    border-top: 1px solid var(--nav-border);
+  }
+
+  .info-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 50px 24px;
+  }
+
+  .info-inner h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--lake-deep);
+    margin: 0 0 8px;
+  }
+
+  .info-inner > p.intro {
+    font-size: 14px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 0 26px;
+  }
+
+  .info-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  @media (max-width: 820px) { .info-cols { grid-template-columns: 1fr; } }
+
+  .info-col h4 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .info-col p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 22px 20px 26px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid rgba(90,70,50,0.15);
+  }
+
+  footer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <!-- Shared banner + header + mobile nav get injected here by partials.js -->
+  <div id="site-chrome"></div>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow">Employment</div>
+      <h1>Jobs with the State</h1>
+      <p class="lede">
+        Search open positions across state, county, and city government —
+        from field roles to office jobs, full-time to seasonal.
+      </p>
+    </div>
+  </section>
+
+  <main class="tool-wrap">
+
+    <div class="tool-panel">
+
+      <div class="field-row">
+        <div class="field-label">Search
+          <span>Job title or department</span>
+        </div>
+        <input type="text" id="search-input" placeholder="e.g. Trooper, or Michigan State Police">
+      </div>
+
+      <div class="field-row">
+        <div class="field-label">Status</div>
+        <div class="chip-group" id="status-chips"></div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-label">Job type</div>
+        <div class="chip-group" id="type-chips"></div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-label">Department</div>
+        <select id="department-select" disabled>
+          <option value="all">Loading departments…</option>
+        </select>
+      </div>
+
+      <div class="filter-footer">
+        <div class="results-count" id="results-count">Loading job listings…</div>
+        <button type="button" class="clear-btn" id="clear-filters">Clear all filters</button>
+      </div>
+    </div>
+
+    <div id="results-area">
+      <div class="state-msg" id="state-msg">Loading job listings…</div>
+      <div class="results-list" id="results-list"></div>
+    </div>
+  </main>
+
+  <section class="info-band">
+    <div class="info-inner">
+      <h2>How hiring works</h2>
+      <p class="intro">A few things worth knowing before you apply.</p>
+      <div class="info-cols">
+        <div class="info-col">
+          <h4>Equal opportunity</h4>
+          <p>State, county, and city government hire without regard to race, color, religion, sex, national origin, age, disability, or any other legally protected status.</p>
+        </div>
+        <div class="info-col">
+          <h4>How to apply</h4>
+          <p>Each listing links to its own application. Expand a listing to review the full description and requirements before you apply.</p>
+        </div>
+        <div class="info-col">
+          <h4>Closing dates</h4>
+          <p>Postings close on the date listed — some positions, especially field and seasonal roles, can close earlier if enough applications come in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <strong>Department of Technology</strong> · migovt.org · Employment
+  </footer>
+
+  <!-- Injects banner + header + mobile nav into #site-chrome above -->
+  <script src="/partials.js"></script>
+
+  <!-- Confirms before navigating away on any link marked confirm-link -->
+  <script src="/confirm-nav.js"></script>
+
+  <script>
+  (function () {
+    var CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9oMor-fKoAf3WjnDd3wtTY5te8QncPTCcQ4lPd-4l8m2vtOwZzestiRTKy9t8iPei91TI7j8OTaAu/pub?gid=0&single=true&output=csv";
+
+    var TYPES = ["Full-Time", "Part-Time", "Reserve", "Temporary", "Contract", "Internship", "Volunteer"];
+
+    var state = {
+      records: [],
+      loaded: false,
+      error: false,
+      search: "",
+      status: ["Open"],
+      type: [],
+      department: "all",
+      openCard: null
+    };
+
+    // ---------- CSV parsing ----------
+    function parseCSV(text) {
+      var rows = [], row = [], field = "", inQuotes = false;
+      for (var i = 0; i < text.length; i++) {
+        var c = text[i];
+        if (inQuotes) {
+          if (c === '"') {
+            if (text[i + 1] === '"') { field += '"'; i++; }
+            else { inQuotes = false; }
+          } else {
+            field += c;
+          }
+        } else {
+          if (c === '"') { inQuotes = true; }
+          else if (c === ',') { row.push(field); field = ""; }
+          else if (c === '\n' || c === '\r') {
+            if (c === '\r' && text[i + 1] === '\n') i++;
+            row.push(field); field = "";
+            if (row.length > 1 || row[0] !== "") rows.push(row);
+            row = [];
+          } else {
+            field += c;
+          }
+        }
+      }
+      if (field.length || row.length) { row.push(field); rows.push(row); }
+      return rows;
+    }
+
+    function toRecords(rows) {
+      return rows.slice(1).filter(function (r) { return r[0]; }).map(function (r, i) {
+        return {
+          idx: i,
+          title: (r[0] || "").trim(),
+          department: (r[1] || "").trim(),
+          status: (r[2] || "").trim(),
+          division: (r[3] || "").trim(),
+          type: (r[4] || "").trim(),
+          description: (r[5] || "").trim(),
+          requirements: (r[6] || "").split("|").map(function (s) { return s.trim(); }).filter(Boolean),
+          postingDate: (r[7] || "").trim(),
+          closingDate: (r[8] || "").trim(),
+          applicationUrl: (r[9] || "").trim()
+        };
+      });
+    }
+
+    // ---------- Formatting ----------
+    function formatDate(raw) {
+      if (!raw) return "—";
+      var d = new Date(raw);
+      if (isNaN(d.getTime())) return raw;
+      return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+
+    function websiteHref(raw) {
+      if (/^https?:\/\//i.test(raw)) return raw;
+      return "https://" + raw;
+    }
+
+    // ---------- Filter UI ----------
+    function buildChips(containerId, values, group) {
+      var el = document.getElementById(containerId);
+      el.innerHTML = "";
+      values.forEach(function (val) {
+        var chip = document.createElement("div");
+        chip.className = "chip" + (state[group].indexOf(val) !== -1 ? " active" : "");
+        chip.textContent = val;
+        chip.dataset.value = val;
+        chip.addEventListener("click", function () {
+          var idx = state[group].indexOf(val);
+          if (idx === -1) state[group].push(val); else state[group].splice(idx, 1);
+          chip.classList.toggle("active");
+          render();
+        });
+        el.appendChild(chip);
+      });
+    }
+
+    function buildDepartmentSelect() {
+      var departments = Array.from(new Set(state.records.map(function (r) { return r.department; }).filter(Boolean))).sort();
+      var el = document.getElementById("department-select");
+      el.innerHTML = '<option value="all">All departments</option>' +
+        departments.map(function (d) { return '<option value="' + escapeHtml(d) + '">' + escapeHtml(d) + "</option>"; }).join("");
+      el.disabled = false;
+      el.addEventListener("change", function (e) {
+        state.department = e.target.value;
+        render();
+      });
+    }
+
+    // ---------- Filtering ----------
+    function passesFilters(rec) {
+      if (state.search) {
+        var q = state.search.toLowerCase();
+        if (rec.title.toLowerCase().indexOf(q) === -1 &&
+            rec.department.toLowerCase().indexOf(q) === -1 &&
+            rec.division.toLowerCase().indexOf(q) === -1) return false;
+      }
+      if (state.status.length && state.status.indexOf(rec.status) === -1) return false;
+      if (state.type.length && state.type.indexOf(rec.type) === -1) return false;
+      if (state.department !== "all" && rec.department !== state.department) return false;
+      return true;
+    }
+
+    // ---------- Render ----------
+    function jobCardHtml(rec) {
+      var isOpen = rec.status.toLowerCase() === "open";
+      var statusBadge = '<span class="badge ' + (isOpen ? "badge-green" : "badge-gray") + '">' + escapeHtml(rec.status || "Unknown") + '</span>';
+      var typeBadge = rec.type ? '<span class="badge badge-blue">' + escapeHtml(rec.type) + '</span>' : "";
+      var metaBits = [rec.department];
+      if (rec.division) metaBits.push(rec.division);
+      var isExpanded = state.openCard === rec.idx;
+
+      var descHtml = rec.description
+        ? rec.description.split(/\n+/).filter(Boolean).map(function (p) { return "<p>" + escapeHtml(p) + "</p>"; }).join("")
+        : "<p>No description provided.</p>";
+
+      var reqHtml = rec.requirements.length
+        ? '<ul class="req-list">' + rec.requirements.map(function (r) { return "<li>" + escapeHtml(r) + "</li>"; }).join("") + "</ul>"
+        : "<p style='font-size:13.5px;color:var(--ink-soft);margin:0;'>No specific requirements listed.</p>";
+
+      var applyHtml = isOpen && rec.applicationUrl
+        ? '<a class="apply-btn confirm-link" href="' + escapeHtml(websiteHref(rec.applicationUrl)) + '">Apply Now' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>'
+        : '<span class="closed-note">' + (isOpen ? "No application link provided." : "This posting is closed.") + '</span>';
+
+      return '' +
+        '<div class="job-card' + (isExpanded ? " open" : "") + '" data-idx="' + rec.idx + '">' +
+          '<div class="job-top" data-toggle="' + rec.idx + '">' +
+            '<div class="job-title-block">' +
+              '<h3 class="job-title">' + escapeHtml(rec.title || "Untitled Position") + '</h3>' +
+              '<div class="job-meta">' + escapeHtml(metaBits.filter(Boolean).join(" · ")) + '</div>' +
+              '<div class="job-badges">' + statusBadge + typeBadge + '</div>' +
+            '</div>' +
+            '<div class="job-chevron"><svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></div>' +
+          '</div>' +
+          '<div class="job-body">' +
+            '<h5>Description</h5>' +
+            '<div class="job-desc">' + descHtml + '</div>' +
+            '<h5>Requirements</h5>' +
+            reqHtml +
+            '<div class="job-dates">' +
+              '<div><strong>Posted</strong>' + formatDate(rec.postingDate) + '</div>' +
+              '<div><strong>Closes</strong>' + formatDate(rec.closingDate) + '</div>' +
+            '</div>' +
+            '<div class="job-apply-row">' + applyHtml + '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    function render() {
+      var countEl = document.getElementById("results-count");
+      var stateMsg = document.getElementById("state-msg");
+      var list = document.getElementById("results-list");
+
+      if (state.error) {
+        stateMsg.textContent = "Job listings couldn't be loaded right now. Please try again shortly.";
+        stateMsg.classList.add("error");
+        stateMsg.style.display = "block";
+        list.innerHTML = "";
+        countEl.textContent = "Listings unavailable";
+        return;
+      }
+
+      if (!state.loaded) {
+        stateMsg.textContent = "Loading job listings…";
+        stateMsg.classList.remove("error");
+        stateMsg.style.display = "block";
+        list.innerHTML = "";
+        countEl.textContent = "Loading job listings…";
+        return;
+      }
+
+      var filtered = state.records.filter(passesFilters);
+      countEl.innerHTML = "Showing <strong>" + filtered.length + "</strong> of " + state.records.length + " listings";
+
+      if (!filtered.length) {
+        stateMsg.textContent = "No listings match your filters. Try clearing a filter.";
+        stateMsg.classList.remove("error");
+        stateMsg.style.display = "block";
+        list.innerHTML = "";
+        return;
+      }
+
+      stateMsg.style.display = "none";
+      list.innerHTML = filtered.map(jobCardHtml).join("");
+
+      Array.prototype.forEach.call(list.querySelectorAll("[data-toggle]"), function (el) {
+        el.addEventListener("click", function () {
+          var idx = Number(el.dataset.toggle);
+          state.openCard = state.openCard === idx ? null : idx;
+          render();
+        });
+      });
+
+      if (window.confirmNav) window.confirmNav.attach();
+    }
+
+    function init() {
+      buildChips("status-chips", ["Open", "Closed"], "status");
+      buildChips("type-chips", TYPES, "type");
+
+      document.getElementById("search-input").addEventListener("input", function (e) {
+        state.search = e.target.value;
+        render();
+      });
+
+      document.getElementById("clear-filters").addEventListener("click", function () {
+        document.getElementById("search-input").value = "";
+        state.search = ""; state.status = []; state.type = []; state.department = "all";
+        buildChips("status-chips", ["Open", "Closed"], "status");
+        buildChips("type-chips", TYPES, "type");
+        var deptEl = document.getElementById("department-select");
+        if (deptEl) deptEl.value = "all";
+        render();
+      });
+
+      render();
+
+      fetch(CSV_URL + "&cachebust=" + Date.now())
+        .then(function (r) {
+          if (!r.ok) throw new Error("Request failed");
+          return r.text();
+        })
+        .then(function (text) {
+          state.records = toRecords(parseCSV(text));
+          state.loaded = true;
+          buildDepartmentSelect();
+          render();
+        })
+        .catch(function () {
+          state.error = true;
+          render();
+        });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+  </script>
+
+</body>
+</html>
