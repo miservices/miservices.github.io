@@ -172,10 +172,12 @@
         <a href="/departments/">Departments</a>
         <div class="group-label">Legislature</div>
         <a href="/legislature/">Website</a>
+        <a href="/capitol/">State Capitol</a>
         <a href="/legislature/legislators/">Legislators</a>
         <div class="group-label">Judiciary</div>
         <a href="/courts/">Website</a>
         <a href="/courts/supreme-court/">Supreme Court</a>
+        <a href="/courts/sbm/">State Bar of Michigan</a>
         <a href="/courts/district-courts/">District Courts</a>
       </div>
     </details>
