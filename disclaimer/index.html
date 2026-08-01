@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disclaimer | MiGovt.org</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Shared site-wide styles (banner, header, nav, confirm modal) -->
+<link rel="stylesheet" href="/shared.css">
+
+<style>
+  /* ---------- Page-specific styles ---------- */
+
+  .page-hero {
+    background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+    border-bottom: 1px solid var(--nav-border);
+    padding: 52px 24px 40px;
+    text-align: center;
+  }
+
+  .page-hero-inner { max-width: 620px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--trail-amber-text);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(30px, 5vw, 42px);
+    line-height: 1.15;
+    margin: 0 0 14px;
+    color: var(--lake-deep);
+  }
+
+  .page-hero p.lede {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 auto;
+    max-width: 500px;
+  }
+
+  .updated-note {
+    display: inline-block;
+    margin-top: 18px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 100px;
+    padding: 5px 14px;
+  }
+
+  /* ---------- Top summary card ---------- */
+
+  .summary-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 0;
+  }
+
+  .summary-card {
+    background: var(--lake-deep);
+    border-radius: 10px;
+    padding: 24px 26px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .summary-card svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--trail-amber);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .summary-card p {
+    color: var(--paper);
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .summary-card strong { color: var(--trail-amber); }
+
+  /* ---------- Content ---------- */
+
+  .page-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 70px;
+  }
+
+  .toc {
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 44px;
+  }
+
+  .toc h2 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--trail-amber-text);
+    margin: 0 0 12px;
+  }
+
+  .toc ol {
+    margin: 0;
+    padding: 0 0 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .toc a {
+    font-size: 13.5px;
+    color: var(--lake-deep);
+    text-decoration: none;
+  }
+
+  .toc a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+  .content-block {
+    margin-bottom: 40px;
+    scroll-margin-top: 20px;
+  }
+
+  .content-block:last-child { margin-bottom: 0; }
+
+  .content-block h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 21px;
+    color: var(--lake-deep);
+    margin: 0 0 14px;
+  }
+
+  .content-block p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+
+  .content-block p:last-child { margin-bottom: 0; }
+
+  .content-block p strong { color: var(--ink); }
+
+  .content-block ul {
+    margin: 0 0 14px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .content-block ul li {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .content-block a {
+    color: var(--lake-deep);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 22px 20px 26px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid rgba(90,70,50,0.15);
+  }
+
+  footer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <!-- Shared banner + header + mobile nav get injected here by partials.js -->
+  <div id="site-chrome"></div>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow">Legal</div>
+      <h1>Disclaimer</h1>
+      <p class="lede">Please read this before using anything on migovt.org.</p>
+      <span class="updated-note">Applies to all pages on migovt.org</span>
+    </div>
+  </section>
+
+  <div class="summary-wrap">
+    <div class="summary-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+      <p><strong>The short version:</strong> migovt.org is not an official government website. It's a simulated government interface, built for demonstration purposes, and it does not represent the State of Michigan, Genesee County, the City of Flint, or any other real government body or authority. Nothing on this site should be used to conduct real government business or make real legal, financial, or civic decisions.</p>
+    </div>
+  </div>
+
+  <main class="page-wrap">
+
+    <nav class="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <ol>
+        <li><a href="#not-official">Not an official government website</a></li>
+        <li><a href="#simulated-content">Simulated content</a></li>
+        <li><a href="#real-places">Use of real place names</a></li>
+        <li><a href="#no-reliance">Don't rely on this site</a></li>
+        <li><a href="#no-warranty">No warranty</a></li>
+        <li><a href="#changes">Changes to this disclaimer</a></li>
+      </ol>
+    </nav>
+
+    <div class="content-block" id="not-official">
+      <h2>Not an official government website</h2>
+      <p>migovt.org is not operated, endorsed, or affiliated with the State of Michigan, Genesee County, the City of Flint, or any federal, state, county, or municipal government entity. No department, office, official, or agency named or described on this site has reviewed, approved, or authorized its content.</p>
+      <p>Any resemblance between this site's design, structure, or terminology and that of a real government website is intentional for demonstration purposes — not a claim of official status.</p>
+    </div>
+
+    <div class="content-block" id="simulated-content">
+      <h2>Simulated content</h2>
+      <p>This site is a simulated government interface. That means departments, offices, officials, statuses, property records, job listings, election rules, and other content presented throughout the site are fictional, for demonstration, or generated as examples — even where they're presented in a way that looks official or authoritative.</p>
+      <p>Where the site includes tools that appear to search real data — such as property records or job listings — the underlying data is example data, not an authoritative government record of any kind.</p>
+    </div>
+
+    <div class="content-block" id="real-places">
+      <h2>Use of real place names</h2>
+      <p>This site refers to real places — including Michigan, Genesee County, and the City of Flint — to give its simulated content a concrete, consistent setting. Referring to a real place by name is not a claim that this site represents, speaks for, or has any relationship with that place's actual government.</p>
+    </div>
+
+    <div class="content-block" id="no-reliance">
+      <h2>Don't rely on this site</h2>
+      <p>Do not use migovt.org to:</p>
+      <ul>
+        <li>Register to vote, check your voter registration, or cast a ballot</li>
+        <li>Search or rely on property, court, or public records</li>
+        <li>Apply for a real job, license, license renewal, or government benefit</li>
+        <li>Determine your legal rights, obligations, or eligibility for anything</li>
+        <li>Make financial, tax, housing, or civic decisions</li>
+      </ul>
+      <p>For any of the above, contact the real government office responsible in your area, or visit its official website directly.</p>
+    </div>
+
+    <div class="content-block" id="no-warranty">
+      <h2>No warranty</h2>
+      <p>This site is provided "as is," without warranties of any kind, express or implied, including as to accuracy, completeness, reliability, or fitness for any particular purpose. Content may be incomplete, outdated, inconsistent, or simply invented, and may change or disappear without notice.</p>
+    </div>
+
+    <div class="content-block" id="changes">
+      <h2>Changes to this disclaimer</h2>
+      <p>This disclaimer may be updated from time to time. Continued use of the site after a change means you accept the disclaimer as updated.</p>
+    </div>
+
+  </main>
+
+  <footer>
+    <strong>Department of Technology</strong> · migovt.org · Disclaimer
+  </footer>
+
+  <!-- Injects banner + header + mobile nav into #site-chrome above -->
+  <script src="/partials.js"></script>
+
+  <!-- Confirms before navigating away on any link marked confirm-link -->
+  <script src="/confirm-nav.js"></script>
+
+</body>
+</html>
