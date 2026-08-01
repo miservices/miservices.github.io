@@ -255,44 +255,6 @@
   .status-action.primary .label { color: var(--paper); }
   .status-action.primary .sub { color: rgba(243,239,230,0.78); }
 
-  /* ---------- Demo status toggle ---------- */
-
-  .demo-toggle {
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px dashed var(--nav-border);
-  }
-
-  .demo-toggle-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 700;
-    font-size: 11.5px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--trail-amber-text);
-    margin-bottom: 8px;
-  }
-
-  .demo-toggle-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .demo-toggle select {
-    max-width: 300px;
-  }
-
-  .demo-toggle-note {
-    font-size: 12px;
-    color: var(--ink-soft);
-    font-style: italic;
-  }
-
   /* ---------- Status glossary ---------- */
 
   .status-glossary {
@@ -892,12 +854,56 @@
     /* ============================================================
        ELECTION STATUS
        ------------------------------------------------------------
-       CURRENT_STATUS is what actually drives the banner in
-       production — a site admin (or, eventually, a real elections
-       feed) sets this one value to reflect where things stand.
-       The dropdown below it is a manual preview control so anyone
-       editing this page can see what each status looks like
-       without changing this value by hand every time.
+       CURRENT_STATUS is the single source of truth for the banner
+       below. Set it to one of the 8 values documented here — in
+       production this would be set by whatever process tracks the
+       real election calendar.
+
+       STATUS REFERENCE
+       -----------------
+       closed
+         Voting is not open. No general election or runoff is
+         currently underway.
+         Shows: Register to Vote, Find Your Polling Place.
+
+       open_pre
+         The general election's online voting window is open, and
+         Election Day has not yet happened.
+         Shows: Register to Vote, Vote Online, Find Your Polling
+         Place (as an alternative to voting online).
+
+       open_during
+         The general election's online voting window is open, and
+         today IS Election Day.
+         Shows: the same three actions as open_pre, plus a
+         highlighted "It's Election Day!" notice.
+
+       open_after
+         The general election's online voting window is still open,
+         but Election Day has already passed.
+         Shows: a "Election Day has passed" notice, then Register
+         to Vote and Vote Online only — no polling-place action,
+         since in-person voting was tied to Election Day.
+
+       open_runoff_pre
+         Same as open_pre, but for a runoff election (held when a
+         race in the general election ended in a tie). Also shows
+         the amber "There's a runoff election" callout.
+
+       open_runoff_during
+         Same as open_during, but for the runoff. Also shows the
+         runoff callout plus the "It's Election Day!" notice
+         (worded for the runoff).
+
+       open_runoff_after
+         Same as open_after, but for the runoff. Also shows the
+         runoff callout plus the "Election Day has passed" notice.
+
+       done
+         The election (general or runoff) ended recently and
+         results are available.
+         Shows: a single "View Results" action linking to
+         https://migovt.org/sos/vote/results/.
        ============================================================ */
     var CURRENT_STATUS = "closed";
 
@@ -1041,18 +1047,7 @@
           '</div>';
       }).join("");
 
-      var options = STATUS_ORDER.map(function (key) {
-        return '<option value="' + key + '"' + (key === CURRENT_STATUS ? " selected" : "") + '>' + STATUS_META[key].label + ' (' + key + ')</option>';
-      }).join("");
-
       return '' +
-        '<div class="demo-toggle">' +
-          '<div class="demo-toggle-label">Preview a status</div>' +
-          '<div class="demo-toggle-row">' +
-            '<select id="status-preview-select">' + options + '</select>' +
-            '<span class="demo-toggle-note">For editors previewing this page — the live status is set in code.</span>' +
-          '</div>' +
-        '</div>' +
         '<details class="status-glossary">' +
           '<summary>What do these statuses mean?</summary>' +
           '<div class="glossary-list">' + items + '</div>' +
@@ -1061,11 +1056,6 @@
 
     function init() {
       renderStatus(CURRENT_STATUS);
-      document.getElementById("status-card").addEventListener("change", function (e) {
-        if (e.target && e.target.id === "status-preview-select") {
-          renderStatus(e.target.value);
-        }
-      });
     }
 
     if (document.readyState === "loading") {
