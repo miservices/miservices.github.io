@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | MiGovt.org</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Shared site-wide styles (banner, header, nav, confirm modal) -->
+<link rel="stylesheet" href="/shared.css">
+
+<style>
+  /* ---------- Page-specific styles ---------- */
+
+  .page-hero {
+    background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+    border-bottom: 1px solid var(--nav-border);
+    padding: 56px 24px 46px;
+    text-align: center;
+  }
+
+  .page-hero-inner { max-width: 640px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--trail-amber-text);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.15;
+    margin: 0 0 16px;
+    color: var(--lake-deep);
+  }
+
+  .page-hero p.lede {
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0 auto;
+    max-width: 540px;
+  }
+
+  /* ---------- Notice strip ---------- */
+
+  .notice-strip {
+    background: var(--lake-night);
+    color: #cfe0e8;
+  }
+
+  .notice-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  .notice-inner svg {
+    width: 18px;
+    height: 18px;
+    stroke: #f0c469;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .notice-inner a {
+    color: #f0c469;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+  }
+
+  /* ---------- Content ---------- */
+
+  .page-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 54px 24px 70px;
+  }
+
+  .content-block {
+    margin-bottom: 44px;
+  }
+
+  .content-block:last-child { margin-bottom: 0; }
+
+  .content-block h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 23px;
+    color: var(--lake-deep);
+    margin: 0 0 14px;
+  }
+
+  .content-block p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+
+  .content-block p:last-child { margin-bottom: 0; }
+
+  .content-block p strong { color: var(--ink); }
+
+  .scope-list {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .scope-item {
+    display: flex;
+    gap: 14px;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .scope-item .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .scope-item.built .dot { background: #4c9a5c; }
+  .scope-item.referenced .dot { background: var(--trail-amber); }
+
+  .scope-item h4 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    margin: 0 0 4px;
+  }
+
+  .scope-item p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .disclaimer-box {
+    background: var(--paper-warm);
+    border: 1px solid var(--nav-border);
+    border-left: 4px solid var(--trail-amber);
+    border-radius: 6px;
+    padding: 20px 22px;
+  }
+
+  .disclaimer-box p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+  }
+
+  .disclaimer-box p:last-child { margin-bottom: 0; }
+
+  .disclaimer-box a {
+    color: var(--lake-deep);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 22px 20px 26px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid rgba(90,70,50,0.15);
+  }
+
+  footer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <!-- Shared banner + header + mobile nav get injected here by partials.js -->
+  <div id="site-chrome"></div>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow">About</div>
+      <h1>About migovt.org</h1>
+      <p class="lede">
+        What this site is, what it isn't, and why it's built the way it is.
+      </p>
+    </div>
+  </section>
+
+  <div class="notice-strip">
+    <div class="notice-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+      <span>migovt.org is not an official government website. It's a simulated government interface and does not represent any real government body or authority. <a href="https://migovt.org/disclaimer">Read the full disclaimer</a>.</span>
+    </div>
+  </div>
+
+  <main class="page-wrap">
+
+    <div class="content-block">
+      <h2>What this site is</h2>
+      <p>migovt.org is a simulated interface for a Michigan state and local government portal. It's built to look and behave like a real government website — with the departments, agencies, forms, and tools you'd expect to find on one — but the site itself is not affiliated with, operated by, or endorsed by the State of Michigan, Genesee County, the City of Flint, or any other government entity.</p>
+      <p>Think of it as a working model: a fully fleshed-out example of how a government's various branches, departments, and services might be organized and presented online, built for demonstration rather than official use.</p>
+    </div>
+
+    <div class="content-block">
+      <h2>What's built out, and what's referenced</h2>
+      <p>Not everything linked from this site leads to fully built-out content — some pages exist in depth, and others are referenced the way a real government site would link to a department without every visitor needing to visit it.</p>
+      <ul class="scope-list">
+        <li class="scope-item built">
+          <span class="dot"></span>
+          <div>
+            <h4>Built out</h4>
+            <p>Pages like the state and local government directories, housing, voting, employment, and the visitor section are fully built with real structure, descriptions, and — where noted — live tools.</p>
+          </div>
+        </li>
+        <li class="scope-item referenced">
+          <span class="dot"></span>
+          <div>
+            <h4>Referenced</h4>
+            <p>Some departments, offices, and pages are named and linked throughout the site as part of the larger structure, even where a dedicated page hasn't been built out yet.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content-block">
+      <h2>Genesee County &amp; the City of Flint</h2>
+      <p>Where this site needed a real-feeling example of local government, it uses Genesee County and the City of Flint — real places in Michigan. That choice is for the sake of a concrete, consistent example throughout the site, not a claim that this site represents their actual governments in any way.</p>
+    </div>
+
+    <div class="content-block">
+      <h2>Who maintains it</h2>
+      <p>Within the site's own fiction, migovt.org is presented as maintained by a <strong>Department of Technology</strong> — the entity credited in the footer of every page. Its role here is purely to give the simulated site a consistent, plausible owner, in keeping with how a real government's central IT or digital services office might run a state web portal.</p>
+    </div>
+
+    <div class="content-block">
+      <div class="disclaimer-box">
+        <p><strong>In short:</strong> migovt.org is not a real government website, and nothing on it should be used to conduct actual government business, verify your rights, or make legal or civic decisions.</p>
+        <p>For the complete disclaimer, see <a href="https://migovt.org/disclaimer">migovt.org/disclaimer</a>.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <strong>Department of Technology</strong> · migovt.org · About
+  </footer>
+
+  <!-- Injects banner + header + mobile nav into #site-chrome above -->
+  <script src="/partials.js"></script>
+
+  <!-- Confirms before navigating away on any link marked confirm-link -->
+  <script src="/confirm-nav.js"></script>
+
+</body>
+</html>
