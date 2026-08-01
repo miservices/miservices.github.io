@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voting | MiGovt.org</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Shared site-wide styles (banner, header, nav, confirm modal) -->
+<link rel="stylesheet" href="/shared.css">
+
+<style>
+  /* ---------- Page-specific styles ---------- */
+
+  .page-hero {
+    background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+    border-bottom: 1px solid var(--nav-border);
+    padding: 52px 24px 40px;
+    text-align: center;
+  }
+
+  .page-hero-inner { max-width: 660px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--trail-amber-text);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(30px, 5vw, 42px);
+    line-height: 1.15;
+    margin: 0 0 14px;
+    color: var(--lake-deep);
+  }
+
+  .page-hero p.lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 auto;
+    max-width: 560px;
+  }
+
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section-block {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--nav-border);
+  }
+
+  .section-block:last-child { border-bottom: none; }
+
+  .section-head { max-width: 640px; margin: 0 0 22px; }
+
+  .section-head .eyebrow { margin-bottom: 8px; }
+
+  .section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 25px;
+    color: var(--lake-deep);
+    margin: 0 0 10px;
+  }
+
+  .section-head p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- Quick-fact stat cards ---------- */
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) { .stat-grid { grid-template-columns: 1fr; } }
+
+  .stat-card {
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-top: 3px solid var(--trail-amber);
+    border-radius: 6px;
+    padding: 18px 20px;
+  }
+
+  .stat-card .stat-label {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--trail-amber-text);
+    margin-bottom: 8px;
+  }
+
+  .stat-card .stat-value {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--lake-deep);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .stat-card .stat-note {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ---------- Explainer boxes ---------- */
+
+  .explainer-box {
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-left: 4px solid var(--lake-mist);
+    border-radius: 6px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+
+  .explainer-box h4 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+
+  .explainer-box p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+  }
+
+  .explainer-box p:last-child { margin-bottom: 0; }
+
+  .explainer-box.amber { border-left-color: var(--trail-amber); }
+
+  /* ---------- Points table ---------- */
+
+  .points-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0 4px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 13px;
+  }
+
+  .points-table th, .points-table td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--nav-border);
+  }
+
+  .points-table th {
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--trail-amber-text);
+    background: var(--paper-warm);
+  }
+
+  .points-table td { color: var(--ink-soft); }
+  .points-table td.race-name { color: var(--ink); font-weight: 700; }
+
+  @media (max-width: 620px) {
+    .points-table { display: block; overflow-x: auto; white-space: nowrap; }
+  }
+
+  /* ---------- Ballot items ---------- */
+
+  .ballot-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .ballot-item {
+    display: flex;
+    gap: 16px;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .ballot-item .icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: var(--paper-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ballot-item .icon svg { width: 19px; height: 19px; stroke: var(--lake-deep); }
+
+  .ballot-item h4 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .ballot-item p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+
+  .ballot-item p:last-child { margin-bottom: 0; }
+
+  .ballot-item .rule-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--lake-deep);
+    background: var(--paper-warm);
+    border-radius: 100px;
+    padding: 4px 10px;
+    margin-top: 4px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 22px 20px 26px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid rgba(90,70,50,0.15);
+  }
+
+  footer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <!-- Shared banner + header + mobile nav get injected here by partials.js -->
+  <div id="site-chrome"></div>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow">Voting</div>
+      <h1>Voting in Michigan</h1>
+      <p class="lede">
+        How the state, county, and city general elections work — who's on
+        the ballot, how ranked preference voting decides multi-seat races,
+        and what happens when there's a tie or a vacancy.
+      </p>
+    </div>
+  </section>
+
+  <div class="page-wrap">
+
+    <!-- ============ ELECTION CALENDAR ============ -->
+    <section class="section-block">
+      <div class="section-head">
+        <div class="eyebrow">The Basics</div>
+        <h2>Michigan's Election Calendar</h2>
+        <p>Every general election in Michigan — state, county, and city — runs on the same calendar.</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Term Length</div>
+          <div class="stat-value">January 1 – December 31</div>
+          <div class="stat-note">Every office filled in a general election serves a one-year term.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Election Day</div>
+          <div class="stat-value">21 days before the term begins</div>
+          <div class="stat-note">In practice, that places Election Day around December 11 of the prior year.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Online Voting Window</div>
+          <div class="stat-value">30 to 10 days before the term begins</div>
+          <div class="stat-note">In practice, that's roughly December 2 through December 22. Available through the Secretary of State's online system for the state election, and a Secretary of State–approved system for county and city elections.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RANKED PREFERENCE VOTING ============ -->
+    <section class="section-block">
+      <div class="section-head">
+        <div class="eyebrow">How It Works</div>
+        <h2>Ranked Preference Voting</h2>
+        <p>Four races fill more than one seat at once. For those, instead of picking a single candidate, you rank as many as you'd like, up to the number of open seats.</p>
+      </div>
+
+      <div class="explainer-box">
+        <h4>How the scoring works</h4>
+        <p>Your top choice gets the highest number of points for that race, your second choice the next-highest, and so on. Points are awarded per ballot and added up across every voter — the winners are whoever earns the highest total preference score, not whoever gets the most first-choice votes.</p>
+        <p>You don't have to rank every open seat. But the point values themselves don't change based on how many candidates you rank — if you only rank your top choice, that candidate still receives the full top point value from your ballot.</p>
+      </div>
+
+      <table class="points-table">
+        <thead>
+          <tr>
+            <th>Race</th>
+            <th>Seats</th>
+            <th>You may rank up to</th>
+            <th>Points (1st → last)</th>
+            <th>Top scorer becomes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="race-name">Legislature</td>
+            <td>12</td>
+            <td>12 candidates</td>
+            <td>12, 11, 10 … 1</td>
+            <td>Speaker of the Legislature</td>
+          </tr>
+          <tr>
+            <td class="race-name">Judiciary</td>
+            <td>7</td>
+            <td>7 candidates</td>
+            <td>7, 6, 5 … 1</td>
+            <td>Chief Justice</td>
+          </tr>
+          <tr>
+            <td class="race-name">Board of Commissioners</td>
+            <td>5</td>
+            <td>5 candidates</td>
+            <td>5, 4, 3, 2, 1</td>
+            <td>Chairperson</td>
+          </tr>
+          <tr>
+            <td class="race-name">City Council</td>
+            <td>3</td>
+            <td>3 candidates</td>
+            <td>3, 2, 1</td>
+            <td>President of the Council</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============ TIES, RUNOFFS & HEAD POSITIONS ============ -->
+    <section class="section-block">
+      <div class="section-head">
+        <div class="eyebrow">The Basics</div>
+        <h2>Ties, Runoffs &amp; Head Positions</h2>
+        <p>Most ties are settled by voters in a runoff. A handful of specific ties are settled by the state's newly elected leadership instead.</p>
+      </div>
+
+      <div class="explainer-box">
+        <h4>Runoff elections</h4>
+        <p>If a race ends in a tie, a runoff election is held to settle it. Online voting for a runoff opens January 1 and closes January 10; in-person Election Day for the runoff is January 5.</p>
+      </div>
+
+      <div class="explainer-box amber">
+        <h4>The exception: head positions</h4>
+        <p>A tie for the top preference score in the Legislature, Judiciary, Board of Commissioners, or City Council race isn't sent to a runoff — because that tie determines who becomes Speaker of the Legislature, Chief Justice, Chairperson, or President of the Council. Those specific ties are broken by the newly elected Governor, except for a City Council President tie, which is broken by the newly elected Mayor.</p>
+      </div>
+    </section>
+
+    <!-- ============ SPECIAL ELECTIONS ============ -->
+    <section class="section-block">
+      <div class="section-head">
+        <div class="eyebrow">The Basics</div>
+        <h2>Special Elections</h2>
+        <p>General elections happen on a fixed yearly cycle — but seats sometimes come open in between.</p>
+      </div>
+
+      <div class="explainer-box">
+        <h4>Filling a vacancy</h4>
+        <p>When a seat becomes vacant outside the regular election cycle, a special election is held to fill the remainder of the term. It follows the same basic structure as a general election — a period of online voting followed by an in-person Election Day — on a timeline set by the Secretary of State for state offices, or by the County Clerk for county and city offices.</p>
+        <p>The one exception is the Governor's office: if it becomes vacant, the Lieutenant Governor succeeds to the office directly, without a special election.</p>
+      </div>
+    </section>
+
+    <!-- ============ GENERAL STATE ELECTION ============ -->
+    <section class="section-block">
+      <div class="section-head">
+        <div class="eyebrow">General Election</div>
+        <h2>General State Election</h2>
+        <p>Held on the calendar above. Four things appear on the state ballot.</p>
+      </div>
+
+      <div class="ballot-list">
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <h4>Governor &amp; Lieutenant Governor</h4>
+            <p>Elected jointly as a single ticket — one vote decides both offices together.</p>
+          </div>
+        </div>
+
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+          </div>
+          <div>
+            <h4>12 Legislators</h4>
+            <p>Elected by ranked preference voting — rank up to 12 candidates, with each ballot's top choice worth 12 points down to 1. The candidate with the highest total preference score becomes Speaker of the Legislature; the other 11 winners serve as members.</p>
+            <span class="rule-tag">Tie for Speaker → broken by the newly elected Governor</span>
+          </div>
+        </div>
+
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 8v10a1 1 0 001 1h12a1 1 0 001-1V8"/></svg>
+          </div>
+          <div>
+            <h4>7 Justices</h4>
+            <p>1 Chief Justice and 6 Associate Justices, elected by ranked preference voting — rank up to 7 candidates, with each ballot's top choice worth 7 points down to 1. The candidate with the highest total preference score becomes Chief Justice; the other 6 winners serve as Associate Justices.</p>
+            <span class="rule-tag">Tie for Chief Justice → broken by the newly elected Governor</span>
+          </div>
+        </div>
+
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <h4>Questions &amp; Issues</h4>
+            <p>Statewide ballot questions and issues are also put directly to voters. Unless a specific question says otherwise, it's decided by a simple majority — though some questions require a two-thirds supermajority to pass.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GENERAL COUNTY ELECTION ============ -->
+    <section class="section-block">
+      <div class="section-head">
+        <div class="eyebrow">General Election</div>
+        <h2>General County Election</h2>
+        <p>Genesee County's ballot fills the Board of Commissioners and four countywide offices.</p>
+      </div>
+
+      <div class="ballot-list">
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div>
+            <h4>5 Commissioners</h4>
+            <p>Elected by ranked preference voting — rank up to 5 candidates, with each ballot's top choice worth 5 points down to 1. The candidate with the highest total preference score becomes Chairperson of the Board; the other 4 winners serve as members.</p>
+            <span class="rule-tag">Tie for Chairperson → broken by the newly elected Governor</span>
+          </div>
+        </div>
+
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></svg>
+          </div>
+          <div>
+            <h4>County Clerk</h4>
+            <p>Maintains the county's official records, including property records and District Court records, and administers elections at the county level and for every municipality within the county. The Clerk also serves as Clerk of the Court for the County District Court — Genesee County's only trial-level court.</p>
+          </div>
+        </div>
+
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div>
+            <h4>County Treasurer</h4>
+            <p>The county's chief financial officer, responsible for collecting property taxes and managing county funds.</p>
+          </div>
+        </div>
+
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4>Sheriff</h4>
+            <p>The county's elected chief law enforcement officer, overseeing the Sheriff's Office.</p>
+          </div>
+        </div>
+
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6l3 7-6 13-6-13z"/></svg>
+          </div>
+          <div>
+            <h4>County Prosecutor</h4>
+            <p>The county's chief criminal law enforcement attorney, responsible for charging and prosecuting criminal cases within the county.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="explainer-box" style="margin-top:18px;">
+        <h4>Ties, runoffs &amp; vacancies</h4>
+        <p>Same rules as the state election: a tie in any of these races goes to a runoff, except a tie for Chairperson of the Board of Commissioners, which the newly elected Governor breaks. A vacancy in any of these offices is filled by a special election on the same two-part structure described above.</p>
+      </div>
+    </section>
+
+    <!-- ============ CITY OF FLINT GENERAL ELECTION ============ -->
+    <section class="section-block">
+      <div class="section-head">
+        <div class="eyebrow">General Election</div>
+        <h2>City of Flint General Election</h2>
+        <p>Flint's ballot fills the Mayor's office and the City Council.</p>
+      </div>
+
+      <div class="ballot-list">
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <h4>Mayor</h4>
+            <p>Flint's elected chief executive.</p>
+          </div>
+        </div>
+
+        <div class="ballot-item">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div>
+            <h4>3 Council Members</h4>
+            <p>Elected by ranked preference voting — rank up to 3 candidates, with each ballot's top choice worth 3 points, second 2, and third 1. The candidate with the highest total preference score becomes President of the Council; the other 2 winners serve as members.</p>
+            <span class="rule-tag">Tie for President → broken by the newly elected Mayor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="explainer-box" style="margin-top:18px;">
+        <h4>Ties, runoffs &amp; vacancies</h4>
+        <p>Same rules as the state and county elections: a tie for Mayor or for a non-President Council seat goes to a runoff. A vacancy in either office is filled by a special election on the same two-part structure described above.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <strong>Department of Technology</strong> · migovt.org · Voting
+  </footer>
+
+  <!-- Injects banner + header + mobile nav into #site-chrome above -->
+  <script src="/partials.js"></script>
+
+  <!-- Confirms before navigating away on any link marked confirm-link -->
+  <script src="/confirm-nav.js"></script>
+
+</body>
+</html>
