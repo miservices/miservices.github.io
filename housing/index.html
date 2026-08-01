@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Housing | MiGovt.org</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Shared site-wide styles (banner, header, nav, confirm modal) -->
+<link rel="stylesheet" href="/shared.css">
+
+<style>
+  /* ---------- Page-specific styles ---------- */
+
+  .page-hero {
+    background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+    border-bottom: 1px solid var(--nav-border);
+    padding: 52px 24px 40px;
+    text-align: center;
+  }
+
+  .page-hero-inner { max-width: 640px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--trail-amber-text);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(30px, 5vw, 42px);
+    line-height: 1.15;
+    margin: 0 0 14px;
+    color: var(--lake-deep);
+  }
+
+  .page-hero p.lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 auto;
+    max-width: 540px;
+  }
+
+  /* ---------- Action tiles ---------- */
+
+  .actions-wrap { max-width: 1080px; margin: 0 auto; padding: 42px 24px 8px; }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 900px) { .action-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .action-grid { grid-template-columns: 1fr; } }
+
+  .action-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    padding: 20px 20px 18px;
+    cursor: pointer;
+    font-family: 'Public Sans', sans-serif;
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .action-tile:hover {
+    border-color: var(--trail-amber);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(14,58,83,0.1);
+  }
+
+  .action-tile.active {
+    border-color: var(--lake-deep);
+    background: var(--lake-deep);
+  }
+
+  .action-tile .icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: var(--paper-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .action-tile.active .icon { background: rgba(243,239,230,0.14); }
+
+  .action-tile .icon svg { width: 19px; height: 19px; stroke: var(--lake-deep); }
+  .action-tile.active .icon svg { stroke: var(--paper); }
+
+  .action-tile h3 {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .action-tile.active h3 { color: var(--paper); }
+
+  .action-tile p {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .action-tile.active p { color: rgba(243,239,230,0.78); }
+
+  /* ---------- Tool section ---------- */
+
+  .tool-wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 50px 24px 70px;
+  }
+
+  .tool-head { margin-bottom: 22px; }
+
+  .tool-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--lake-deep);
+    margin: 0 0 6px;
+  }
+
+  .tool-head p { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+
+  .tool-panel {
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 10px;
+    padding: 24px;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 18px;
+    align-items: start;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 700px) { .field-row { grid-template-columns: 1fr; } }
+
+  .field-label {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    padding-top: 10px;
+  }
+
+  .field-label span {
+    display: block;
+    font-weight: 500;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  input[type="text"], select {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--nav-border);
+    border-radius: 5px;
+    padding: 10px 12px;
+    width: 100%;
+  }
+
+  input[type="text"]:focus, select:focus {
+    outline: 2px solid var(--lake-mist);
+    outline-offset: 1px;
+  }
+
+  select:disabled {
+    color: var(--ink-soft);
+    cursor: not-allowed;
+  }
+
+  .county-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .county-row select { max-width: 260px; }
+
+  .county-note {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .chip {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 7px 13px;
+    border-radius: 100px;
+    border: 1.5px solid var(--nav-border);
+    background: var(--paper);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    user-select: none;
+  }
+
+  .chip:hover { border-color: var(--lake-mist); }
+
+  .chip.active {
+    background: var(--lake-deep);
+    border-color: var(--lake-deep);
+    color: var(--paper);
+  }
+
+  .two-col-selects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 500px) { .two-col-selects { grid-template-columns: 1fr; } }
+
+  .filter-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 6px;
+    border-top: 1px solid var(--nav-border);
+    margin-top: 4px;
+  }
+
+  .results-count {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .results-count strong { color: var(--ink); }
+
+  .clear-btn {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12.5px;
+    color: var(--lake-deep);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 4px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ---------- Results ---------- */
+
+  .results-grid {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 760px) { .results-grid { grid-template-columns: 1fr; } }
+
+  .prop-card {
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    background: var(--paper);
+  }
+
+  .prop-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .prop-address {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+
+  .prop-cost {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--lake-deep);
+    white-space: nowrap;
+  }
+
+  .prop-meta {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+
+  .badge {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 10.5px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 100px;
+  }
+
+  .badge-green { background: #e2f0e4; color: #2b6b3a; }
+  .badge-blue { background: #e1ecf3; color: #1d5a80; }
+  .badge-gray { background: #e7e3d8; color: #5c5646; }
+  .badge-red { background: #f5e2e0; color: #9a3b34; }
+  .badge-amber { background: #f8ecd4; color: var(--trail-amber-text); }
+  .badge-affordable { background: #dde8ea; color: var(--lake-deep); border: 1px solid var(--lake-mist); }
+
+  .prop-owner {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+
+  .prop-owner strong { color: var(--ink); }
+
+  .contact-block {
+    border-top: 1px dashed var(--nav-border);
+    padding-top: 12px;
+    font-size: 12.5px;
+  }
+
+  .contact-block .contact-line {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  .contact-block .contact-line span.label {
+    font-weight: 700;
+    color: var(--ink-soft);
+    min-width: 62px;
+    flex-shrink: 0;
+  }
+
+  .contact-block a { color: var(--lake-deep); text-decoration: underline; text-underline-offset: 2px; }
+
+  .contact-note {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .state-msg {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  .state-msg.error { color: #9a3b34; }
+
+  /* ---------- Info sections (assistance / build & maintain) ---------- */
+
+  .info-band {
+    background: var(--paper-warm);
+    border-top: 1px solid var(--nav-border);
+  }
+
+  .info-band + .info-band { border-top: none; }
+
+  .info-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 50px 24px;
+  }
+
+  .info-inner h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--lake-deep);
+    margin: 0 0 8px;
+  }
+
+  .info-inner > p.intro {
+    font-size: 14px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 0 26px;
+  }
+
+  .info-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  @media (max-width: 820px) { .info-cols { grid-template-columns: 1fr; } }
+
+  .info-col h4 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .info-col p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 22px 20px 26px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid rgba(90,70,50,0.15);
+  }
+
+  footer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <!-- Shared banner + header + mobile nav get injected here by partials.js -->
+  <div id="site-chrome"></div>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow">Housing</div>
+      <h1>Housing in Michigan</h1>
+      <p class="lede">
+        Search property records, find a place to live, get help affording
+        housing, or find what you need to build and maintain property.
+      </p>
+    </div>
+  </section>
+
+  <div class="actions-wrap">
+    <div class="action-grid">
+      <button type="button" class="action-tile" data-preset="search">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        </div>
+        <h3>Search Property Records</h3>
+        <p>Look up any property in the county by ID, address, or record details.</p>
+      </button>
+
+      <button type="button" class="action-tile" data-preset="find">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+        </div>
+        <h3>Find Housing</h3>
+        <p>Browse homes, apartments, and duplexes currently for sale or for rent.</p>
+      </button>
+
+      <button type="button" class="action-tile" data-preset="assistance">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 00-7.1 0L12 5.3l-1.7-.7a5 5 0 00-7.1 7.1L12 20.3l8.8-8.6a5 5 0 000-7.1z"/></svg>
+        </div>
+        <h3>Get Housing Assistance</h3>
+        <p>Find affordable housing listings and programs that help with cost.</p>
+      </button>
+
+      <button type="button" class="action-tile" data-preset="build">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3>Build &amp; Maintain Property</h3>
+        <p>Find land and lots, and see what's currently under construction.</p>
+      </button>
+    </div>
+  </div>
+
+  <main class="tool-wrap">
+    <div class="tool-head">
+      <h2 id="tool-title">Property Records Search</h2>
+      <p id="tool-subtitle">Search the county's property records directly.</p>
+    </div>
+
+    <div class="tool-panel">
+
+      <div class="field-row">
+        <div class="field-label">County</div>
+        <div class="county-row">
+          <select id="county-select" disabled>
+            <option selected>Genesee County</option>
+          </select>
+          <span class="county-note">More counties coming soon</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-label">Search
+          <span>Property ID or address</span>
+        </div>
+        <input type="text" id="search-input" placeholder="e.g. 123 Main Street, or GC-0001">
+      </div>
+
+      <div class="field-row">
+        <div class="field-label">Status</div>
+        <div class="chip-group" id="status-chips" data-filter="status"></div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-label">Property type</div>
+        <div class="chip-group" id="type-chips" data-filter="type"></div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-label">More filters</div>
+        <div class="two-col-selects">
+          <select id="category-select"></select>
+          <select id="owner-select"></select>
+        </div>
+      </div>
+
+      <div class="filter-footer">
+        <div class="results-count" id="results-count">Loading property records…</div>
+        <button type="button" class="clear-btn" id="clear-filters">Clear all filters</button>
+      </div>
+    </div>
+
+    <div id="results-area">
+      <div class="state-msg" id="state-msg">Loading property records…</div>
+      <div class="results-grid" id="results-grid"></div>
+    </div>
+  </main>
+
+  <section class="info-band">
+    <div class="info-inner">
+      <h2>Getting help with housing costs</h2>
+      <p class="intro">
+        Beyond browsing listings, a few programs exist specifically to help
+        residents afford a place to live.
+      </p>
+      <div class="info-cols">
+        <div class="info-col">
+          <h4>Affordable housing units</h4>
+          <p>Listings marked "Affordable Housing" in the property search are income-restricted units priced below market rate. Use the Get Housing Assistance filter above to see what's currently available.</p>
+        </div>
+        <div class="info-col">
+          <h4>Rental assistance</h4>
+          <p>Programs exist to help cover rent for households facing a temporary financial hardship, including emergency assistance for people at risk of losing their housing.</p>
+        </div>
+        <div class="info-col">
+          <h4>Weatherization &amp; repair help</h4>
+          <p>Income-qualifying homeowners can get help with insulation, heating system repairs, and other improvements that lower utility costs and keep a home livable through Michigan winters.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-band">
+    <div class="info-inner">
+      <h2>Building &amp; maintaining property</h2>
+      <p class="intro">
+        Whether you're starting from a vacant lot or keeping up an existing
+        property, here's what that generally involves.
+      </p>
+      <div class="info-cols">
+        <div class="info-col">
+          <h4>Buying land</h4>
+          <p>Vacant land and lots appear in the property search as "Land / Lot." Use the Build &amp; Maintain filter above to see what's currently listed.</p>
+        </div>
+        <div class="info-col">
+          <h4>Permits &amp; inspections</h4>
+          <p>New construction and major renovations typically require permits and inspections before, during, and after the work, to make sure the property meets local building and safety codes.</p>
+        </div>
+        <div class="info-col">
+          <h4>Ongoing maintenance</h4>
+          <p>Keeping a property in good standing — lawns, exteriors, and code compliance — is generally the owner's responsibility, whether the property is occupied, vacant, or under construction.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <strong>Department of Technology</strong> · migovt.org · Housing
+  </footer>
+
+  <!-- Injects banner + header + mobile nav into #site-chrome above -->
+  <script src="/partials.js"></script>
+
+  <!-- Confirms before navigating away on any link marked confirm-link -->
+  <script src="/confirm-nav.js"></script>
+
+  <script>
+  (function () {
+    var CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6ytJt_M7iwcX6oGb4nz1BVva89-EpW99RgBBqYXk_FdX0o9RuUiVogMRCaJBXkptFnxGQsk7fl0UI/pub?gid=0&single=true&output=csv";
+
+    var STATUS_LABELS = {
+      for_sale: "For Sale",
+      for_rent: "For Rent",
+      sold: "Sold",
+      leased: "Leased",
+      unavailable: "Unavailable",
+      under_construction: "Under Construction"
+    };
+    var STATUS_BADGE = {
+      for_sale: "badge-green",
+      for_rent: "badge-blue",
+      sold: "badge-gray",
+      leased: "badge-gray",
+      unavailable: "badge-red",
+      under_construction: "badge-amber"
+    };
+    var TYPE_LABELS = {
+      home: "Home",
+      apartment: "Apartment",
+      duplex: "Duplex",
+      "land/lot": "Land / Lot",
+      commercial_property: "Commercial Property",
+      government_property: "Government Property",
+      government_housing: "Government Housing"
+    };
+    var CATEGORY_LABELS = { normal: "Normal", affordable_housing: "Affordable Housing" };
+    var OWNER_LABELS = {
+      private_owner: "Private Owner",
+      real_estate: "Real Estate Company",
+      entity: "Business / Entity",
+      city_government: "City Government",
+      county_government: "County Government",
+      state_government: "State Government"
+    };
+
+    var PRESETS = {
+      search: {
+        title: "Property Records Search",
+        subtitle: "Search the county's property records directly.",
+        status: [], type: [], category: "all", owner: "all"
+      },
+      find: {
+        title: "Find Housing",
+        subtitle: "Homes, apartments, duplexes, and government housing currently for sale or for rent.",
+        status: ["for_sale", "for_rent"],
+        type: ["home", "apartment", "duplex", "government_housing"],
+        category: "all", owner: "all"
+      },
+      assistance: {
+        title: "Get Housing Assistance",
+        subtitle: "Affordable housing currently for sale or for rent.",
+        status: ["for_sale", "for_rent"],
+        type: ["home", "apartment", "duplex", "government_housing"],
+        category: "affordable_housing", owner: "all"
+      },
+      build: {
+        title: "Build & Maintain Property",
+        subtitle: "Land and lots for sale, plus properties currently under construction.",
+        status: ["for_sale", "under_construction"],
+        type: ["land/lot"],
+        category: "all", owner: "all"
+      }
+    };
+
+    var state = {
+      records: [],
+      loaded: false,
+      error: false,
+      search: "",
+      status: [],
+      type: [],
+      category: "all",
+      owner: "all"
+    };
+
+    // ---------- CSV parsing ----------
+    function parseCSV(text) {
+      var rows = [], row = [], field = "", inQuotes = false;
+      for (var i = 0; i < text.length; i++) {
+        var c = text[i];
+        if (inQuotes) {
+          if (c === '"') {
+            if (text[i + 1] === '"') { field += '"'; i++; }
+            else { inQuotes = false; }
+          } else {
+            field += c;
+          }
+        } else {
+          if (c === '"') { inQuotes = true; }
+          else if (c === ',') { row.push(field); field = ""; }
+          else if (c === '\n' || c === '\r') {
+            if (c === '\r' && text[i + 1] === '\n') i++;
+            row.push(field); field = "";
+            if (row.length > 1 || row[0] !== "") rows.push(row);
+            row = [];
+          } else {
+            field += c;
+          }
+        }
+      }
+      if (field.length || row.length) { row.push(field); rows.push(row); }
+      return rows;
+    }
+
+    function toRecords(rows) {
+      return rows.slice(1).filter(function (r) { return r[0]; }).map(function (r) {
+        return {
+          id: (r[0] || "").trim(),
+          status: (r[1] || "").trim(),
+          lastUpdated: (r[2] || "").trim(),
+          type: (r[3] || "").trim(),
+          category: (r[4] || "").trim(),
+          owner: (r[5] || "").trim(),
+          address: (r[6] || "").trim(),
+          cost: (r[7] || "").trim(),
+          contact: (r[8] || "").trim().toLowerCase(),
+          name: (r[9] || "").trim(),
+          pin: (r[10] || "").trim(),
+          email: (r[11] || "").trim(),
+          website: (r[12] || "").trim()
+        };
+      });
+    }
+
+    // ---------- Formatting ----------
+    function formatCost(raw) {
+      if (!raw) return "—";
+      var isRent = raw.indexOf("/month") !== -1 || raw.indexOf("/mo") !== -1;
+      var num = raw.replace(/[^0-9.]/g, "");
+      if (!num) return raw;
+      var formatted = "$" + Number(num).toLocaleString("en-US");
+      return isRent ? formatted + "/mo" : formatted;
+    }
+
+    function formatDate(raw) {
+      if (!raw) return "—";
+      var d = new Date(raw);
+      if (isNaN(d.getTime())) return raw;
+      return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+
+    function websiteHref(raw) {
+      if (/^https?:\/\//i.test(raw)) return raw;
+      return "https://" + raw;
+    }
+
+    // ---------- Filter UI ----------
+    function buildChips(containerId, labels, activeArr) {
+      var el = document.getElementById(containerId);
+      el.innerHTML = "";
+      Object.keys(labels).forEach(function (key) {
+        var chip = document.createElement("div");
+        chip.className = "chip" + (activeArr.indexOf(key) !== -1 ? " active" : "");
+        chip.textContent = labels[key];
+        chip.dataset.value = key;
+        chip.addEventListener("click", function () {
+          var group = containerId === "status-chips" ? "status" : "type";
+          var idx = state[group].indexOf(key);
+          if (idx === -1) state[group].push(key); else state[group].splice(idx, 1);
+          chip.classList.toggle("active");
+          render();
+        });
+        el.appendChild(chip);
+      });
+    }
+
+    function syncChips(containerId, activeArr) {
+      var el = document.getElementById(containerId);
+      Array.prototype.forEach.call(el.children, function (chip) {
+        chip.classList.toggle("active", activeArr.indexOf(chip.dataset.value) !== -1);
+      });
+    }
+
+    function buildSelect(id, labels, current) {
+      var el = document.getElementById(id);
+      el.innerHTML = "";
+      var allOpt = document.createElement("option");
+      allOpt.value = "all";
+      allOpt.textContent = id === "category-select" ? "Any category" : "Any owner type";
+      el.appendChild(allOpt);
+      Object.keys(labels).forEach(function (key) {
+        var opt = document.createElement("option");
+        opt.value = key;
+        opt.textContent = labels[key];
+        el.appendChild(opt);
+      });
+      el.value = current;
+    }
+
+    // ---------- Filtering + render ----------
+    function passesFilters(rec) {
+      if (state.search) {
+        var q = state.search.toLowerCase();
+        if (rec.id.toLowerCase().indexOf(q) === -1 && rec.address.toLowerCase().indexOf(q) === -1) return false;
+      }
+      if (state.status.length && state.status.indexOf(rec.status) === -1) return false;
+      if (state.type.length && state.type.indexOf(rec.type) === -1) return false;
+      if (state.category !== "all" && rec.category !== state.category) return false;
+      if (state.owner !== "all" && rec.owner !== state.owner) return false;
+      return true;
+    }
+
+    function contactBlockHtml(rec) {
+      if (rec.contact === "true") {
+        var parts = [];
+        parts.push('<div class="contact-line"><span class="label">Name</span>' + escapeHtml(rec.name || "—") + '</div>');
+        parts.push('<div class="contact-line"><span class="label">PIN</span>' + escapeHtml(rec.pin || "—") + '</div>');
+        if (rec.email) parts.push('<div class="contact-line"><span class="label">Email</span><a href="mailto:' + encodeURIComponent(rec.email) + '">' + escapeHtml(rec.email) + '</a></div>');
+        if (rec.website) parts.push('<div class="contact-line"><span class="label">Website</span><a class="confirm-link" href="' + escapeHtml(websiteHref(rec.website)) + '">' + escapeHtml(rec.website) + '</a></div>');
+        return '<div class="contact-block">' + parts.join("") + '</div>';
+      }
+      if (rec.contact === "true_name") {
+        return '<div class="contact-block">' +
+          '<div class="contact-line"><span class="label">Name</span>' + escapeHtml(rec.name || "—") + '</div>' +
+          '<div class="contact-line"><span class="label">PIN</span>' + escapeHtml(rec.pin || "—") + '</div>' +
+          '<div class="contact-note">Email and website are not published for this listing.</div>' +
+          '</div>';
+      }
+      return '<div class="contact-block"><div class="contact-note">Contact information is not published for this listing.</div></div>';
+    }
+
+    function cardHtml(rec) {
+      var badges = '<span class="badge ' + (STATUS_BADGE[rec.status] || "badge-gray") + '">' + (STATUS_LABELS[rec.status] || rec.status) + '</span>';
+      if (rec.category === "affordable_housing") {
+        badges += '<span class="badge badge-affordable">Affordable Housing</span>';
+      }
+      return '' +
+        '<div class="prop-card">' +
+          '<div class="prop-top">' +
+            '<div class="prop-address">' + escapeHtml(rec.address || "Address unavailable") + '</div>' +
+            '<div class="prop-cost">' + formatCost(rec.cost) + '</div>' +
+          '</div>' +
+          '<div class="prop-meta">Property ID ' + escapeHtml(rec.id) + ' · ' + (TYPE_LABELS[rec.type] || rec.type) + ' · Updated ' + formatDate(rec.lastUpdated) + '</div>' +
+          '<div class="badge-row">' + badges + '</div>' +
+          '<div class="prop-owner">Owner: <strong>' + (OWNER_LABELS[rec.owner] || rec.owner || "—") + '</strong></div>' +
+          contactBlockHtml(rec) +
+        '</div>';
+    }
+
+    function render() {
+      var countEl = document.getElementById("results-count");
+      var stateMsg = document.getElementById("state-msg");
+      var grid = document.getElementById("results-grid");
+
+      if (state.error) {
+        stateMsg.textContent = "Property records couldn't be loaded right now. Please try again shortly.";
+        stateMsg.classList.add("error");
+        stateMsg.style.display = "block";
+        grid.innerHTML = "";
+        countEl.textContent = "Records unavailable";
+        return;
+      }
+
+      if (!state.loaded) {
+        stateMsg.textContent = "Loading property records…";
+        stateMsg.classList.remove("error");
+        stateMsg.style.display = "block";
+        grid.innerHTML = "";
+        countEl.textContent = "Loading property records…";
+        return;
+      }
+
+      var filtered = state.records.filter(passesFilters);
+
+      countEl.innerHTML = "Showing <strong>" + filtered.length + "</strong> of " + state.records.length + " records";
+
+      if (!filtered.length) {
+        stateMsg.textContent = "No properties match your filters. Try clearing a filter.";
+        stateMsg.classList.remove("error");
+        stateMsg.style.display = "block";
+        grid.innerHTML = "";
+        return;
+      }
+
+      stateMsg.style.display = "none";
+      grid.innerHTML = filtered.map(cardHtml).join("");
+
+      // Newly-inserted website links need the confirm handler attached.
+      if (window.__attachConfirmLinks) window.__attachConfirmLinks();
+    }
+
+    function applyPreset(name) {
+      var p = PRESETS[name];
+      if (!p) return;
+      state.status = p.status.slice();
+      state.type = p.type.slice();
+      state.category = p.category;
+      state.owner = p.owner;
+
+      document.getElementById("tool-title").textContent = p.title;
+      document.getElementById("tool-subtitle").textContent = p.subtitle;
+
+      syncChips("status-chips", state.status);
+      syncChips("type-chips", state.type);
+      document.getElementById("category-select").value = state.category;
+      document.getElementById("owner-select").value = state.owner;
+
+      document.querySelectorAll(".action-tile").forEach(function (t) {
+        t.classList.toggle("active", t.dataset.preset === name);
+      });
+
+      render();
+      document.querySelector(".tool-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function init() {
+      buildChips("status-chips", STATUS_LABELS, state.status);
+      buildChips("type-chips", TYPE_LABELS, state.type);
+      buildSelect("category-select", CATEGORY_LABELS, state.category);
+      buildSelect("owner-select", OWNER_LABELS, state.owner);
+
+      document.getElementById("search-input").addEventListener("input", function (e) {
+        state.search = e.target.value;
+        render();
+      });
+      document.getElementById("category-select").addEventListener("change", function (e) {
+        state.category = e.target.value;
+        render();
+      });
+      document.getElementById("owner-select").addEventListener("change", function (e) {
+        state.owner = e.target.value;
+        render();
+      });
+      document.getElementById("clear-filters").addEventListener("click", function () {
+        document.getElementById("search-input").value = "";
+        state.search = ""; state.status = []; state.type = []; state.category = "all"; state.owner = "all";
+        syncChips("status-chips", []); syncChips("type-chips", []);
+        document.getElementById("category-select").value = "all";
+        document.getElementById("owner-select").value = "all";
+        document.querySelectorAll(".action-tile").forEach(function (t) { t.classList.remove("active"); });
+        document.getElementById("tool-title").textContent = "Property Records Search";
+        document.getElementById("tool-subtitle").textContent = "Search the county's property records directly.";
+        render();
+      });
+
+      document.querySelectorAll(".action-tile").forEach(function (t) {
+        t.addEventListener("click", function () { applyPreset(t.dataset.preset); });
+      });
+
+      render();
+
+      fetch(CSV_URL + "&cachebust=" + Date.now())
+        .then(function (r) {
+          if (!r.ok) throw new Error("Request failed");
+          return r.text();
+        })
+        .then(function (text) {
+          state.records = toRecords(parseCSV(text));
+          state.loaded = true;
+          render();
+        })
+        .catch(function () {
+          state.error = true;
+          render();
+        });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+  </script>
+
+</body>
+</html>
