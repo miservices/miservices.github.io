@@ -32,16 +32,6 @@
     pointer-events: none;
   }
 
-  .hero-mitten {
-    position: absolute;
-    top: 50%;
-    right: -6%;
-    transform: translateY(-50%);
-    width: min(56vw, 620px);
-    opacity: 0.14;
-    pointer-events: none;
-  }
-
   .hero-inner {
     position: relative;
     z-index: 1;
@@ -547,24 +537,6 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero">
-    <svg class="hero-mitten" viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path fill="#f3efe6" d="M150 10
-        C 120 8, 95 28, 92 58
-        C 90 82, 100 100, 98 122
-        C 60 128, 30 150, 26 190
-        C 22 232, 45 300, 40 350
-        C 37 385, 55 410, 90 415
-        C 130 420, 150 400, 165 372
-        C 178 348, 172 320, 190 300
-        C 215 274, 260 280, 288 258
-        C 320 232, 322 190, 300 160
-        C 282 136, 250 130, 235 108
-        C 222 88, 228 60, 210 35
-        C 195 15, 172 12, 150 10 Z" opacity="0.9"/>
-      <circle cx="118" cy="185" r="6" fill="#d9a441"/>
-      <text x="132" y="190" font-family="Public Sans, sans-serif" font-size="13" font-weight="700" fill="#f3efe6">Flint</text>
-    </svg>
-
     <div class="hero-inner">
       <div class="hero-eyebrow"><span class="line"></span> State of Michigan <span class="line"></span></div>
       <h1>Everything Michigan, <em>in one place.</em></h1>
@@ -823,21 +795,25 @@
     var input = document.getElementById("home-search-input");
     var hint = document.getElementById("search-hint");
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var dest = findRoute(input.value);
+    function runSearch(query) {
+      var dest = findRoute(query);
       if (dest) {
         hint.textContent = "";
-        if (window.confirmNav) window.confirmNav.go(dest);
+        window.location.href = dest;
       } else {
         hint.textContent = "No exact match — try Services for the full list, or a broader term.";
       }
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      runSearch(input.value);
     });
 
     document.querySelectorAll(".search-chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         input.value = chip.dataset.q;
-        form.dispatchEvent(new Event("submit", { cancelable: true }));
+        runSearch(chip.dataset.q);
       });
     });
   })();
