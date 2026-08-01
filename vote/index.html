@@ -51,6 +51,312 @@
     max-width: 560px;
   }
 
+  html { scroll-behavior: smooth; }
+
+  .section-block { scroll-margin-top: 62px; }
+  #election-status { scroll-margin-top: 0; }
+
+  /* ---------- Sticky "jump to" bar ---------- */
+
+  .toc-bar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--nav-border);
+    box-shadow: 0 2px 10px rgba(14,58,83,0.06);
+  }
+
+  .toc-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .toc-inner::-webkit-scrollbar { display: none; }
+
+  .toc-label {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--trail-amber-text);
+    padding: 14px 12px 14px 0;
+    flex-shrink: 0;
+  }
+
+  .toc-inner a {
+    flex-shrink: 0;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 14px 12px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.12s ease, border-color 0.12s ease;
+  }
+
+  .toc-inner a:hover { color: var(--lake-deep); }
+
+  .toc-inner a.active {
+    color: var(--lake-deep);
+    border-bottom-color: var(--trail-amber);
+  }
+
+  /* ---------- Election status banner ---------- */
+
+  .status-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 8px;
+  }
+
+  .status-card {
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 10px;
+    padding: 26px 26px 22px;
+  }
+
+  .status-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+    padding: 6px 13px;
+    border-radius: 100px;
+  }
+
+  .status-badge .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .status-badge.s-gray { background: #e7e3d8; color: #5c5646; }
+  .status-badge.s-gray .dot { background: #8a8371; }
+
+  .status-badge.s-blue { background: #e1ecf3; color: #1d5a80; }
+  .status-badge.s-blue .dot { background: #3f8fb8; }
+
+  .status-badge.s-green { background: #e2f0e4; color: #2b6b3a; }
+  .status-badge.s-green .dot { background: #4c9a5c; }
+
+  .status-badge.s-amber { background: #f8ecd4; color: var(--trail-amber-text); }
+  .status-badge.s-amber .dot { background: var(--trail-amber); }
+
+  .status-badge.s-deep { background: var(--lake-deep); color: var(--paper); }
+  .status-badge.s-deep .dot { background: var(--trail-amber); }
+
+  .status-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 8px 0 4px;
+  }
+
+  .status-notice {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--paper-warm);
+    border-left: 4px solid var(--lake-mist);
+    border-radius: 5px;
+    padding: 11px 15px;
+    margin: 14px 0 0;
+  }
+
+  .status-notice.notice-today {
+    border-left-color: var(--trail-amber);
+    font-weight: 600;
+  }
+
+  .runoff-flag {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    background: #f8ecd4;
+    border: 1px solid #eeda9f;
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin: 14px 0 0;
+  }
+
+  .runoff-flag svg { width: 17px; height: 17px; stroke: var(--trail-amber-text); flex-shrink: 0; margin-top: 1px; }
+  .runoff-flag strong { color: var(--trail-amber-text); }
+
+  .status-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .status-actions.count-1 { grid-template-columns: minmax(220px, 320px); }
+  .status-actions.count-2 { grid-template-columns: repeat(2, 1fr); }
+
+  @media (max-width: 640px) { .status-actions { grid-template-columns: 1fr !important; } }
+
+  .status-action {
+    display: block;
+    background: var(--paper);
+    border: 1px solid var(--nav-border);
+    border-radius: 7px;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: border-color 0.12s ease, transform 0.12s ease;
+  }
+
+  .status-action:hover { border-color: var(--trail-amber); transform: translateY(-1px); }
+
+  .status-action .label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13.5px;
+    color: var(--lake-deep);
+  }
+
+  .status-action .label svg { width: 16px; height: 16px; stroke: currentColor; flex-shrink: 0; }
+
+  .status-action .sub {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .status-action.primary {
+    background: var(--lake-deep);
+    border-color: var(--lake-deep);
+  }
+
+  .status-action.primary .label { color: var(--paper); }
+  .status-action.primary .sub { color: rgba(243,239,230,0.78); }
+
+  /* ---------- Demo status toggle ---------- */
+
+  .demo-toggle {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--nav-border);
+  }
+
+  .demo-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--trail-amber-text);
+    margin-bottom: 8px;
+  }
+
+  .demo-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .demo-toggle select {
+    max-width: 300px;
+  }
+
+  .demo-toggle-note {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  /* ---------- Status glossary ---------- */
+
+  .status-glossary {
+    margin-top: 18px;
+  }
+
+  .status-glossary summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--lake-deep);
+    padding: 4px 0;
+  }
+
+  .status-glossary summary::-webkit-details-marker { display: none; }
+
+  .status-glossary summary::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid var(--lake-deep);
+    border-bottom: 2px solid var(--lake-deep);
+    transform: rotate(-45deg);
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .status-glossary[open] summary::before { transform: rotate(45deg); }
+
+  .glossary-list {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .glossary-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .glossary-item .g-badge {
+    flex-shrink: 0;
+    width: 168px;
+  }
+
+  @media (max-width: 640px) {
+    .glossary-item { flex-direction: column; gap: 6px; }
+    .glossary-item .g-badge { width: auto; }
+  }
+
+  .glossary-item p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
   .page-wrap {
     max-width: 900px;
     margin: 0 auto;
@@ -272,10 +578,30 @@
     </div>
   </section>
 
+  <section class="status-section" id="election-status">
+    <div class="status-card" id="status-card">
+      <!-- Populated by JS below -->
+    </div>
+  </section>
+
+  <nav class="toc-bar" id="toc-bar" aria-label="Jump to section">
+    <div class="toc-inner">
+      <span class="toc-label">Jump to</span>
+      <a href="#election-status">Election Status</a>
+      <a href="#election-calendar">Calendar</a>
+      <a href="#ranked-voting">Ranked Voting</a>
+      <a href="#ties-runoffs">Ties &amp; Runoffs</a>
+      <a href="#special-elections">Special Elections</a>
+      <a href="#state-election">State Election</a>
+      <a href="#county-election">County Election</a>
+      <a href="#city-election">City Election</a>
+    </div>
+  </nav>
+
   <div class="page-wrap">
 
     <!-- ============ ELECTION CALENDAR ============ -->
-    <section class="section-block">
+    <section class="section-block" id="election-calendar">
       <div class="section-head">
         <div class="eyebrow">The Basics</div>
         <h2>Michigan's Election Calendar</h2>
@@ -302,7 +628,7 @@
     </section>
 
     <!-- ============ RANKED PREFERENCE VOTING ============ -->
-    <section class="section-block">
+    <section class="section-block" id="ranked-voting">
       <div class="section-head">
         <div class="eyebrow">How It Works</div>
         <h2>Ranked Preference Voting</h2>
@@ -359,7 +685,7 @@
     </section>
 
     <!-- ============ TIES, RUNOFFS & HEAD POSITIONS ============ -->
-    <section class="section-block">
+    <section class="section-block" id="ties-runoffs">
       <div class="section-head">
         <div class="eyebrow">The Basics</div>
         <h2>Ties, Runoffs &amp; Head Positions</h2>
@@ -378,7 +704,7 @@
     </section>
 
     <!-- ============ SPECIAL ELECTIONS ============ -->
-    <section class="section-block">
+    <section class="section-block" id="special-elections">
       <div class="section-head">
         <div class="eyebrow">The Basics</div>
         <h2>Special Elections</h2>
@@ -393,7 +719,7 @@
     </section>
 
     <!-- ============ GENERAL STATE ELECTION ============ -->
-    <section class="section-block">
+    <section class="section-block" id="state-election">
       <div class="section-head">
         <div class="eyebrow">General Election</div>
         <h2>General State Election</h2>
@@ -446,7 +772,7 @@
     </section>
 
     <!-- ============ GENERAL COUNTY ELECTION ============ -->
-    <section class="section-block">
+    <section class="section-block" id="county-election">
       <div class="section-head">
         <div class="eyebrow">General Election</div>
         <h2>General County Election</h2>
@@ -513,7 +839,7 @@
     </section>
 
     <!-- ============ CITY OF FLINT GENERAL ELECTION ============ -->
-    <section class="section-block">
+    <section class="section-block" id="city-election">
       <div class="section-head">
         <div class="eyebrow">General Election</div>
         <h2>City of Flint General Election</h2>
@@ -560,6 +886,225 @@
 
   <!-- Confirms before navigating away on any link marked confirm-link -->
   <script src="/confirm-nav.js"></script>
+
+  <script>
+  (function () {
+    /* ============================================================
+       ELECTION STATUS
+       ------------------------------------------------------------
+       CURRENT_STATUS is what actually drives the banner in
+       production — a site admin (or, eventually, a real elections
+       feed) sets this one value to reflect where things stand.
+       The dropdown below it is a manual preview control so anyone
+       editing this page can see what each status looks like
+       without changing this value by hand every time.
+       ============================================================ */
+    var CURRENT_STATUS = "closed";
+
+    var STATUS_META = {
+      closed: {
+        label: "Closed",
+        badge: "s-gray",
+        desc: "Voting is not currently open. The general election hasn't opened for online voting yet, and there's no runoff underway."
+      },
+      open_pre: {
+        label: "Open — Before Election Day",
+        badge: "s-blue",
+        desc: "Online voting for the general election is open. Election Day hasn't happened yet."
+      },
+      open_during: {
+        label: "Open — It's Election Day",
+        badge: "s-green",
+        desc: "Online voting for the general election is open, and today is Election Day."
+      },
+      open_after: {
+        label: "Open — After Election Day",
+        badge: "s-amber",
+        desc: "Election Day for the general election has passed, but online voting remains open until the window closes."
+      },
+      open_runoff_pre: {
+        label: "Runoff Open — Before Election Day",
+        badge: "s-blue",
+        desc: "A runoff election is underway. Online voting is open, and Election Day for the runoff hasn't happened yet."
+      },
+      open_runoff_during: {
+        label: "Runoff Open — It's Election Day",
+        badge: "s-green",
+        desc: "A runoff election is underway, and today is Election Day for the runoff."
+      },
+      open_runoff_after: {
+        label: "Runoff Open — After Election Day",
+        badge: "s-amber",
+        desc: "Election Day for the runoff has passed, but online voting remains open until the window closes."
+      },
+      done: {
+        label: "Results Are In",
+        badge: "s-deep",
+        desc: "The election ended not long ago. Whether that was the general election or a runoff depends on how this year's races played out — official results are posted either way."
+      }
+    };
+
+    // Order shown in the dropdown and the glossary below.
+    var STATUS_ORDER = ["closed", "open_pre", "open_after", "open_during",
+      "open_runoff_pre", "open_runoff_after", "open_runoff_during", "done"];
+
+    var ACTIONS = {
+      register: {
+        href: "/sos/vote/",
+        label: "Register to Vote",
+        sub: "Check or update your voter registration.",
+        icon: '<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>'
+      },
+      online: {
+        href: "/sos/absentee/",
+        label: "Vote Online",
+        sub: "Cast your ballot through the Secretary of State's system.",
+        icon: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/>'
+      },
+      polling: {
+        href: "/sos/polling/",
+        label: "Find Your Polling Place",
+        sub: "Prefer voting in person instead of online? Look up your location.",
+        icon: '<path d="M12 21s7-6.5 7-11a7 7 0 10-14 0c0 4.5 7 11 7 11z"/><circle cx="12" cy="10" r="3"/>'
+      },
+      results: {
+        href: "https://migovt.org/sos/vote/results/",
+        label: "View Results",
+        sub: "See the official outcome of the election.",
+        icon: '<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>'
+      }
+    };
+
+    function actionHtml(key, primary) {
+      var a = ACTIONS[key];
+      return '<a class="status-action confirm-link' + (primary ? ' primary' : '') + '" href="' + a.href + '">' +
+        '<span class="label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + a.icon + '</svg>' + a.label + '</span>' +
+        '<span class="sub">' + a.sub + '</span>' +
+        '</a>';
+    }
+
+    function renderStatus(status) {
+      var meta = STATUS_META[status];
+      var isRunoff = status.indexOf("runoff") !== -1;
+      var isDuring = /during$/.test(status);
+      var isAfter = /after$/.test(status);
+      var isClosed = status === "closed";
+      var isDone = status === "done";
+
+      var html = '';
+
+      html += '<div class="status-card-top">' +
+        '<span class="status-badge ' + meta.badge + '"><span class="dot"></span>' + meta.label + '</span>' +
+        '</div>';
+      html += '<p class="status-desc">' + meta.desc + '</p>';
+
+      var actionKeys = [];
+
+      if (isRunoff && !isDone) {
+        html += '<div class="runoff-flag">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>' +
+          '<span><strong>There\'s a runoff election.</strong> At least one race in the general election ended in a tie, so voters are deciding it in a runoff.</span>' +
+          '</div>';
+      }
+
+      if (isClosed) {
+        actionKeys = ["register", "polling"];
+      } else if (isDone) {
+        actionKeys = ["results"];
+      } else if (isAfter) {
+        html += '<p class="status-notice">Election Day has ' + (isRunoff ? "passed for the runoff" : "passed") + ', but online voting is still open until the window closes.</p>';
+        actionKeys = ["register", "online"];
+      } else {
+        if (isDuring) {
+          html += '<p class="status-notice notice-today">' + (isRunoff ? "It's Election Day for the runoff!" : "It's Election Day!") + ' You can still vote online, or in person at your polling place.</p>';
+        }
+        actionKeys = ["register", "online", "polling"];
+      }
+
+      html += '<div class="status-actions count-' + actionKeys.length + '">' +
+        actionKeys.map(function (k, i) { return actionHtml(k, i === 0 && actionKeys.length > 1); }).join("") +
+        '</div>';
+
+      html += glossaryHtml();
+
+      document.getElementById("status-card").innerHTML = html;
+
+      if (window.confirmNav) window.confirmNav.attach();
+    }
+
+    function glossaryHtml() {
+      var items = STATUS_ORDER.map(function (key) {
+        var m = STATUS_META[key];
+        return '<div class="glossary-item">' +
+          '<span class="g-badge"><span class="status-badge ' + m.badge + '"><span class="dot"></span>' + m.label + '</span></span>' +
+          '<p>' + m.desc + '</p>' +
+          '</div>';
+      }).join("");
+
+      var options = STATUS_ORDER.map(function (key) {
+        return '<option value="' + key + '"' + (key === CURRENT_STATUS ? " selected" : "") + '>' + STATUS_META[key].label + ' (' + key + ')</option>';
+      }).join("");
+
+      return '' +
+        '<div class="demo-toggle">' +
+          '<div class="demo-toggle-label">Preview a status</div>' +
+          '<div class="demo-toggle-row">' +
+            '<select id="status-preview-select">' + options + '</select>' +
+            '<span class="demo-toggle-note">For editors previewing this page — the live status is set in code.</span>' +
+          '</div>' +
+        '</div>' +
+        '<details class="status-glossary">' +
+          '<summary>What do these statuses mean?</summary>' +
+          '<div class="glossary-list">' + items + '</div>' +
+        '</details>';
+    }
+
+    function init() {
+      renderStatus(CURRENT_STATUS);
+      document.getElementById("status-card").addEventListener("change", function (e) {
+        if (e.target && e.target.id === "status-preview-select") {
+          renderStatus(e.target.value);
+        }
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+  </script>
+
+  <script>
+  (function () {
+    /* ---------- TOC scrollspy: highlight the active jump-to link ---------- */
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc-inner a'));
+    if (!links.length || !window.IntersectionObserver) return;
+
+    var map = {};
+    links.forEach(function (link) {
+      var id = link.getAttribute('href').slice(1);
+      var section = document.getElementById(id);
+      if (section) map[id] = link;
+    });
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var link = map[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+    Object.keys(map).forEach(function (id) {
+      observer.observe(document.getElementById(id));
+    });
+  })();
+  </script>
 
 </body>
 </html>

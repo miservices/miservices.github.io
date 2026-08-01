@@ -69,8 +69,9 @@
     pendingHref = null;
   }
 
-  function init() {
-    document.querySelectorAll('a.confirm-link').forEach(function (link) {
+  function attach() {
+    document.querySelectorAll('a.confirm-link:not([data-confirm-bound])').forEach(function (link) {
+      link.setAttribute('data-confirm-bound', '1');
       link.addEventListener('click', function (e) {
         e.preventDefault();
         openModal(link.getAttribute('href'));
@@ -78,9 +79,13 @@
     });
   }
 
+  // Exposed so pages that render confirm-link elements dynamically
+  // (after a fetch, a filter change, etc.) can re-scan for new ones.
+  window.confirmNav = { attach: attach };
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', attach);
   } else {
-    init();
+    attach();
   }
 })();
