@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — migovt.org</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lake-deep: #0e3a53;
+    --lake-mist: #4c7c92;
+    --lake-night: #0a2536;
+    --paper: #f3efe6;
+    --paper-warm: #ece5d4;
+    --sign-brown-dark: #453423;
+    --trail-amber: #d9a441;
+    --trail-amber-text: #a97a1f;
+    --ink: #1f2a2e;
+    --ink-soft: #46565c;
+    --nav-bg: #ffffff;
+    --nav-border: #d8cfb8;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Public Sans', -apple-system, sans-serif;
+    min-height: 100%;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  a { color: inherit; }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid var(--lake-deep);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---------- Disclaimer banner ---------- */
+  .disclaimer-banner {
+    background: var(--lake-night);
+    color: #cfe0e8;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 12.5px;
+    line-height: 1.5;
+    padding: 9px 20px;
+    text-align: center;
+  }
+
+  .disclaimer-banner a {
+    color: #f0c469;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .disclaimer-banner a:hover { color: #f7d488; }
+
+  /* ---------- Site header (logo + nav combined) ---------- */
+  .site-header {
+    background: linear-gradient(180deg, var(--lake-deep) 0%, var(--lake-mist) 100%);
+    position: relative;
+    z-index: 40;
+  }
+
+  .site-header .inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 68px;
+  }
+
+  .logo-link {
+    display: inline-flex;
+    align-items: baseline;
+    text-decoration: none;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: 0.1em;
+    color: var(--paper);
+    text-transform: uppercase;
+    flex-shrink: 0;
+    padding: 6px 2px;
+  }
+
+  .logo-link span { color: var(--trail-amber); }
+  .logo-link:hover { opacity: 0.9; }
+
+  /* --- desktop nav --- */
+  .main-nav > ul {
+    list-style: none;
+    display: flex;
+    align-items: stretch;
+    margin: 0;
+    padding: 0;
+    gap: 2px;
+  }
+
+  .main-nav li { position: relative; display: flex; }
+
+  .main-nav > ul > li > a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 24px 14px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    letter-spacing: 0.02em;
+    color: var(--paper);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .main-nav > ul > li > a:hover,
+  .main-nav > ul > li:focus-within > a {
+    border-color: var(--trail-amber);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .chev {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+  }
+
+  .main-nav li:hover .chev,
+  .main-nav li:focus-within .chev {
+    transform: rotate(180deg);
+  }
+
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-top: 3px solid var(--trail-amber);
+    box-shadow: 0 14px 30px rgba(14,58,83,0.18);
+    padding: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .main-nav li:hover > .dropdown,
+  .main-nav li:focus-within > .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .dropdown-simple {
+    min-width: 230px;
+  }
+
+  .dropdown-simple ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .dropdown-mega {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(190px, 1fr));
+    gap: 22px;
+  }
+
+  .dropdown-mega.cols-2 {
+    grid-template-columns: repeat(2, minmax(210px, 1fr));
+  }
+
+  .dropdown-col-title {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--trail-amber-text);
+    border-bottom: 1px solid var(--nav-border);
+    padding-bottom: 8px;
+    margin-bottom: 6px;
+  }
+
+  .dropdown-mega ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .dropdown a {
+    display: block;
+    padding: 8px 10px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+
+  .dropdown a:hover {
+    background: var(--paper);
+    color: var(--lake-deep);
+  }
+
+  .nav-actions-wrap {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  .login-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    color: var(--paper);
+    text-decoration: none;
+    border: 1.5px solid rgba(243,239,230,0.55);
+    border-radius: 4px;
+    white-space: nowrap;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .login-link svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+  }
+
+  .login-link:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: var(--trail-amber);
+  }
+
+  /* --- mobile hamburger + panel --- */
+  .nav-toggle-checkbox { display: none; }
+
+  .nav-toggle-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .nav-toggle-btn svg { width: 24px; height: 24px; stroke: var(--paper); }
+
+  .mobile-nav { display: none; }
+
+  @media (max-width: 900px) {
+    .site-header .inner { padding: 0 20px; }
+    .main-nav { display: none; }
+    .header-actions .login-link { display: none; }
+    .nav-toggle-btn { display: flex; }
+
+    .mobile-nav {
+      display: none;
+      background: var(--paper-warm);
+      border-top: 3px solid var(--trail-amber);
+      max-height: 70vh;
+      overflow-y: auto;
+      padding: 8px 16px 20px;
+    }
+
+    .nav-toggle-checkbox:checked ~ .mobile-nav { display: block; }
+
+    .mobile-nav > a.login-link-mobile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px 0 4px;
+      padding: 11px 14px;
+      background: var(--lake-deep);
+      color: var(--paper);
+      border-radius: 4px;
+      font-weight: 700;
+      border-bottom: none;
+    }
+
+    .mobile-nav > a.login-link-mobile svg { width: 15px; height: 15px; stroke: currentColor; }
+
+    .mobile-nav a {
+      display: block;
+      padding: 12px 4px;
+      font-family: 'Public Sans', sans-serif;
+      font-weight: 600;
+      font-size: 14.5px;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--nav-border);
+    }
+
+    .mobile-nav details summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 4px;
+      font-family: 'Public Sans', sans-serif;
+      font-weight: 600;
+      font-size: 14.5px;
+      color: var(--ink);
+      cursor: pointer;
+      border-bottom: 1px solid var(--nav-border);
+      list-style: none;
+    }
+
+    .mobile-nav details summary::-webkit-details-marker { display: none; }
+
+    .mobile-nav details[open] summary { color: var(--lake-deep); }
+
+    .mobile-nav .sub-list,
+    .mobile-nav .sub-details { padding-left: 14px; }
+
+    .mobile-nav .sub-list a,
+    .mobile-nav .sub-details summary {
+      font-weight: 500;
+      font-size: 13.5px;
+      border-bottom: none;
+      padding: 9px 4px;
+    }
+
+    .mobile-nav .group-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--trail-amber-text);
+      padding: 10px 4px 2px 18px;
+    }
+  }
+
+  /* ---------- Main stage ---------- */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 24px 40px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  main::before {
+    content: "";
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(76,124,146,0.16) 0%, rgba(76,124,146,0) 62%);
+    pointer-events: none;
+  }
+
+  .stage-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 640px;
+  }
+
+  .map-wrap {
+    position: relative;
+    width: min(88vw, 420px);
+    margin-bottom: 10px;
+  }
+
+  .map-wrap svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .map-card {
+    fill: var(--paper-warm);
+    stroke: var(--lake-deep);
+    stroke-width: 3;
+  }
+
+  .contour {
+    fill: none;
+    stroke: var(--lake-mist);
+    stroke-width: 1.4;
+    opacity: 0.55;
+  }
+
+  .compass-ring {
+    fill: none;
+    stroke: var(--lake-deep);
+    stroke-width: 1.4;
+    opacity: 0.6;
+  }
+
+  .compass-tick {
+    stroke: var(--lake-deep);
+    stroke-width: 1.4;
+    opacity: 0.6;
+  }
+
+  .compass-letter {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    fill: var(--lake-deep);
+    opacity: 0.65;
+  }
+
+  .start-dot {
+    fill: var(--lake-deep);
+  }
+
+  .trail-line {
+    fill: none;
+    stroke: var(--trail-amber);
+    stroke-width: 2;
+    stroke-dasharray: 5 6;
+    stroke-linecap: round;
+  }
+
+  .lost-pin-group {
+    transform-origin: center;
+  }
+
+  .lost-pin {
+    fill: var(--trail-amber);
+    stroke: var(--sign-brown-dark);
+    stroke-width: 1.5;
+  }
+
+  .lost-pin-dot {
+    fill: var(--sign-brown-dark);
+  }
+
+  .you-are-nowhere {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    fill: var(--sign-brown-dark);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lost-pin-group {
+      animation: bob 2.6s ease-in-out infinite;
+    }
+    .trail-line {
+      animation: dash 1.8s linear infinite;
+    }
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @keyframes dash {
+    to { stroke-dashoffset: -22; }
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(26px, 5vw, 40px);
+    line-height: 1.18;
+    margin: 18px 0 14px;
+    color: var(--lake-deep);
+  }
+
+  .eyebrow-404 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--trail-amber-text);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  p.lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 460px;
+    margin: 0 0 36px;
+  }
+
+  /* ---------- CTA button ---------- */
+  .cta-button {
+    display: inline-block;
+    background: var(--lake-deep);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    padding: 14px 30px;
+    border-radius: 4px;
+    border-bottom: 3px solid var(--trail-amber);
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .cta-button:hover {
+    background: var(--lake-night);
+    transform: translateY(-1px);
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    text-align: center;
+    padding: 22px 20px 26px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid rgba(90,70,50,0.15);
+  }
+
+  footer strong {
+    color: var(--ink);
+  }
+
+  @media (max-width: 480px) {
+    .lede { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="disclaimer-banner">
+    This is not an official government website. This site is a simulated government interface and does not represent any real government body or authority.
+    <a href="https://migovt.org/disclaimer">Read the full disclaimer</a>
+  </div>
+
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo-link" href="/">migovt<span>.org</span></a>
+
+      <div class="nav-actions-wrap">
+      <nav class="main-nav" aria-label="Primary">
+        <ul>
+          <li>
+            <a href="/visit/">Visitors <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
+            <div class="dropdown dropdown-simple">
+              <ul>
+                <li><a href="/citizenship/">Get citizenship</a></li>
+                <li><a href="/tourism/">Tourism</a></li>
+                <li><a href="/dnr/hunting-fishing/">Hunting &amp; Fishing</a></li>
+                <li><a href="/dnr/state-parks/">State Parks</a></li>
+                <li><a href="/events">Events</a></li>
+                <li><a href="/mdot/travel-info/">Travel information</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <a href="/residents/">Michiganders <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
+            <div class="dropdown dropdown-simple">
+              <ul>
+                <li><a href="/housing/">Housing</a></li>
+                <li><a href="/vote/">Voting</a></li>
+                <li><a href="/treasury/taxes/">Taxes</a></li>
+                <li><a href="/jobs/">Employment</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <a href="/services/">Services</a>
+          </li>
+
+          <li>
+            <a href="/directory/">State Government <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
+            <div class="dropdown dropdown-mega">
+              <div class="col">
+                <div class="dropdown-col-title">Executive</div>
+                <ul>
+                  <li><a href="/governor/">Governor &amp; Lt. Governor</a></li>
+                  <li><a href="/governor/cabinet/">Cabinet</a></li>
+                  <li><a href="/ag/">Attorney General</a></li>
+                  <li><a href="/sos/">Secretary of State</a></li>
+                  <li><a href="/departments/">Departments</a></li>
+                </ul>
+              </div>
+              <div class="col">
+                <div class="dropdown-col-title">Legislature</div>
+                <ul>
+                  <li><a href="/legislature/">Website</a></li>
+                  <li><a href="/legislature/legislators/">Legislators</a></li>
+                </ul>
+              </div>
+              <div class="col">
+                <div class="dropdown-col-title">Judiciary</div>
+                <ul>
+                  <li><a href="/courts/">Website</a></li>
+                  <li><a href="/courts/supreme-court/">Supreme Court</a></li>
+                  <li><a href="/courts/district-courts/">District Courts</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a href="/local/">Local Government <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
+            <div class="dropdown dropdown-mega cols-2">
+              <div class="col">
+                <div class="dropdown-col-title">Genesee County</div>
+                <ul>
+                  <li><a href="/genesee-county/">Website</a></li>
+                  <li><a href="/genesee-county/elections/">Elections</a></li>
+                  <li><a href="/genesee-county/board-of/commissioners/">Board of Commissioners</a></li>
+                  <li><a href="/genesee-county/clerk">County Clerk</a></li>
+                  <li><a href="/genesee-county/sheriffs-office">Sheriff's Office</a></li>
+                  <li><a href="/genesee-county/district-court/">District Court</a></li>
+                </ul>
+              </div>
+              <div class="col">
+                <div class="dropdown-col-title">City of Flint</div>
+                <ul>
+                  <li><a href="/flint/">Website</a></li>
+                  <li><a href="/flint/elections/">Elections</a></li>
+                  <li><a href="/flint/mayor/">Mayor</a></li>
+                  <li><a href="/flint/city-council/">City Council</a></li>
+                  <li><a href="/flint/departments/">Departments</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a href="/about">About</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="login-link" href="/login/">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Log in
+        </a>
+
+        <label class="nav-toggle-btn" for="nav-toggle" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </label>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Primary mobile">
+    <a class="login-link-mobile" href="/login/">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Log in
+    </a>
+    <details>
+      <summary>Visitors</summary>
+      <div class="sub-list">
+        <a href="/visit/">Visitors overview</a>
+        <a href="/citizenship/">Get citizenship</a>
+        <a href="/tourism/">Tourism</a>
+        <a href="/dnr/hunting-fishing/">Hunting &amp; Fishing</a>
+        <a href="/dnr/state-parks/">State Parks</a>
+        <a href="/events">Events</a>
+        <a href="/mdot/travel-info/">Travel information</a>
+      </div>
+    </details>
+    <details>
+      <summary>Michiganders</summary>
+      <div class="sub-list">
+        <a href="/residents/">Michiganders overview</a>
+        <a href="/housing/">Housing</a>
+        <a href="/vote/">Voting</a>
+        <a href="/treasury/taxes/">Taxes</a>
+        <a href="/jobs/">Employment</a>
+      </div>
+    </details>
+    <a href="/services/">Services</a>
+    <details>
+      <summary>State Government</summary>
+      <div class="sub-list">
+        <a href="/directory/">State Government overview</a>
+        <div class="group-label">Executive</div>
+        <a href="/governor/">Governor &amp; Lt. Governor</a>
+        <a href="/governor/cabinet/">Cabinet</a>
+        <a href="/ag/">Attorney General</a>
+        <a href="/sos/">Secretary of State</a>
+        <a href="/departments/">Departments</a>
+        <div class="group-label">Legislature</div>
+        <a href="/legislature/">Website</a>
+        <a href="/legislature/legislators/">Legislators</a>
+        <div class="group-label">Judiciary</div>
+        <a href="/courts/">Website</a>
+        <a href="/courts/supreme-court/">Supreme Court</a>
+        <a href="/courts/district-courts/">District Courts</a>
+      </div>
+    </details>
+    <details>
+      <summary>Local Government</summary>
+      <div class="sub-list">
+        <a href="/local/">Local Government overview</a>
+        <div class="group-label">Genesee County</div>
+        <a href="/genesee-county/">Website</a>
+        <a href="/genesee-county/elections/">Elections</a>
+        <a href="/genesee-county/board-of/commissioners/">Board of Commissioners</a>
+        <a href="/genesee-county/clerk">County Clerk</a>
+        <a href="/genesee-county/sheriffs-office">Sheriff's Office</a>
+        <a href="/genesee-county/district-court/">District Court</a>
+        <div class="group-label">City of Flint</div>
+        <a href="/flint/">Website</a>
+        <a href="/flint/elections/">Elections</a>
+        <a href="/flint/mayor/">Mayor</a>
+        <a href="/flint/city-council/">City Council</a>
+        <a href="/flint/departments/">Departments</a>
+      </div>
+    </details>
+    <a href="/about">About</a>
+  </nav>
+
+  <main>
+    <div class="stage-inner">
+
+      <div class="map-wrap">
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a map with a dashed trail leading off the edge to a lost location marker">
+          <rect class="map-card" x="10" y="10" width="380" height="260" rx="14" />
+
+          <!-- faint contour / road lines -->
+          <path class="contour" d="M30,60 C90,40 150,80 210,55 C270,32 320,55 370,45" />
+          <path class="contour" d="M25,120 C100,105 160,140 230,118 C300,98 340,120 375,110" />
+          <path class="contour" d="M35,190 C110,170 170,205 240,185 C300,168 335,190 365,178" />
+          <path class="contour" d="M45,235 C110,222 180,245 250,228" />
+
+          <!-- compass rose -->
+          <g transform="translate(52,52)">
+            <circle class="compass-ring" r="20" />
+            <line class="compass-tick" x1="0" y1="-20" x2="0" y2="-26" />
+            <line class="compass-tick" x1="0" y1="20" x2="0" y2="26" />
+            <line class="compass-tick" x1="-20" y1="0" x2="-26" y2="0" />
+            <line class="compass-tick" x1="20" y1="0" x2="26" y2="0" />
+            <text class="compass-letter" x="0" y="-30" text-anchor="middle">N</text>
+          </g>
+
+          <!-- starting point -->
+          <circle class="start-dot" cx="150" cy="180" r="5" />
+
+          <!-- dashed trail off the card edge -->
+          <path class="trail-line" d="M154,174 C 220,140 300,90 388,40" />
+
+          <!-- lost pin, off the map -->
+          <g class="lost-pin-group">
+            <path class="lost-pin" d="M388,10
+              c -16,0 -28,12 -28,28
+              c 0,20 28,46 28,46
+              s 28,-26 28,-46
+              c 0,-16 -12,-28 -28,-28 Z" />
+            <circle class="lost-pin-dot" cx="388" cy="38" r="9" />
+            <text class="you-are-nowhere" x="388" y="-2" text-anchor="middle">YOU ARE ??</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="eyebrow-404">Error 404</div>
+      <h1>Looks like you've wandered&nbsp;off&nbsp;the&nbsp;trail.</h1>
+      <p class="lede">
+        The page you're looking for isn't here. It may have moved, been
+        renamed, or the link might just be wrong. Let's get you back on
+        the map.
+      </p>
+
+      <a class="cta-button" href="/">Return to homepage</a>
+
+    </div>
+  </main>
+
+  <footer>
+    <strong>Department of Technology</strong> · migovt.org · Error 404
+  </footer>
+
+</body>
+</html>
