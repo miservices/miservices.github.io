@@ -10,6 +10,7 @@
 
 (function () {
   var CHROME_HTML = `
+  <div class="site-chrome-sticky">
   <div class="disclaimer-banner">
     This is not an official government website. This site is a simulated government interface and does not represent any real government body or authority.
     <a href="https://migovt.org/disclaimer">Read the full disclaimer</a>
@@ -19,7 +20,7 @@
 
   <header class="site-header">
     <div class="inner">
-      <a class="logo-link" href="/">migovt<span>.org</span></a>
+      <a class="logo-link" href="/">MiGOVT<span>.org</span></a>
 
       <div class="nav-actions-wrap">
       <nav class="main-nav" aria-label="Primary">
@@ -71,6 +72,7 @@
                 <div class="dropdown-col-title">Legislature</div>
                 <ul>
                   <li><a href="/legislature/">Website</a></li>
+                  <li><a href="/capitol/">State Capitol</a></li>
                   <li><a href="/legislature/legislators/">Legislators</a></li>
                 </ul>
               </div>
@@ -202,6 +204,7 @@
     </details>
     <a href="/about">About</a>
   </nav>
+  </div>
   `;
 
   function inject() {
