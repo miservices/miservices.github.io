@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visiting Michigan | MiGovt.org</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Shared site-wide styles (banner, header, nav, confirm modal) -->
+<link rel="stylesheet" href="/shared.css">
+
+<style>
+  /* ---------- Page-specific styles ---------- */
+
+  .page-hero {
+    background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+    border-bottom: 1px solid var(--nav-border);
+    padding: 56px 24px 46px;
+    text-align: center;
+  }
+
+  .page-hero-inner { max-width: 640px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--trail-amber-text);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.15;
+    margin: 0 0 16px;
+    color: var(--lake-deep);
+  }
+
+  .page-hero p.lede {
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0 auto;
+    max-width: 540px;
+  }
+
+  /* ---------- Section wrapper ---------- */
+
+  .section-wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 54px 24px;
+  }
+
+  .section-head {
+    max-width: 620px;
+    margin: 0 0 28px;
+  }
+
+  .section-head .eyebrow { margin-bottom: 8px; }
+
+  .section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--lake-deep);
+    margin: 0 0 10px;
+  }
+
+  .section-head p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- Explore cards ---------- */
+
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  @media (max-width: 760px) { .explore-grid { grid-template-columns: 1fr; } }
+
+  .explore-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    padding: 24px 24px 22px;
+  }
+
+  .explore-card .icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: var(--paper-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .explore-card .icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--lake-deep);
+  }
+
+  .explore-card h3 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+
+  .explore-card p.blurb {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+
+  .explore-card ul.sample-list {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+  }
+
+  .explore-card ul.sample-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  .explore-card ul.sample-list li::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--trail-amber);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .explore-card .see-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--lake-deep);
+    text-decoration: none;
+    margin-top: auto;
+    align-self: flex-start;
+  }
+
+  .explore-card .see-more svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    transition: transform 0.15s ease;
+  }
+
+  .explore-card .see-more:hover svg { transform: translateX(3px); }
+
+  /* Events card: no sample list, so keep it visually lighter */
+  .explore-card.events-card {
+    background: var(--paper-warm);
+    border-style: dashed;
+  }
+
+  /* ---------- Good to know band ---------- */
+
+  .info-band {
+    background: var(--paper-warm);
+    border-top: 1px solid var(--nav-border);
+    border-bottom: 1px solid var(--nav-border);
+  }
+
+  .info-band .section-wrap { padding: 46px 24px 50px; }
+
+  .info-band p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 700px;
+    margin: 0;
+  }
+
+  .info-band p a {
+    color: var(--lake-deep);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 22px 20px 26px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid rgba(90,70,50,0.15);
+  }
+
+  footer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <!-- Shared banner + header + mobile nav get injected here by partials.js -->
+  <div id="site-chrome"></div>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow">For Visitors</div>
+      <h1>Visiting Michigan</h1>
+      <p class="lede">
+        Great Lakes shoreline, state parks, small-town festivals, and
+        everything in between — here's where to start planning your trip.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-wrap">
+    <div class="section-head">
+      <div class="eyebrow">Start exploring</div>
+      <h2>What brings you to Michigan?</h2>
+      <p>A few places to start, depending on what kind of trip you're planning.</p>
+    </div>
+
+    <div class="explore-grid">
+
+      <div class="explore-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M12 2a15 15 0 010 20 15 15 0 010-20z"/></svg>
+        </div>
+        <h3>Tourism</h3>
+        <p class="blurb">From the shoreline to downtown Flint, there's a lot worth the drive.</p>
+        <ul class="sample-list">
+          <li>Great Lakes beaches &amp; lighthouses</li>
+          <li>Downtown Flint arts &amp; culture</li>
+          <li>Scenic drives &amp; fall color tours</li>
+          <li>Local festivals &amp; attractions</li>
+        </ul>
+        <a class="see-more confirm-link" href="/tourism/">
+          See more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <div class="explore-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-14 4 8 3-5 5 11z"/></svg>
+        </div>
+        <h3>State Parks</h3>
+        <p class="blurb">Camping, trails, and beaches across Michigan's state park system.</p>
+        <ul class="sample-list">
+          <li>Camping &amp; cabin rentals</li>
+          <li>Hiking &amp; mountain biking trails</li>
+          <li>Swimming beaches &amp; boat launches</li>
+          <li>Day-use picnic areas</li>
+        </ul>
+        <a class="see-more confirm-link" href="/dnr/state-parks/">
+          See more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <div class="explore-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>
+        </div>
+        <h3>Hunting &amp; Fishing</h3>
+        <p class="blurb">Licenses, seasons, and regulations for hunting and fishing statewide.</p>
+        <ul class="sample-list">
+          <li>Hunting licenses &amp; season dates</li>
+          <li>Fishing licenses &amp; catch limits</li>
+          <li>Designated hunting &amp; fishing areas</li>
+          <li>Reporting &amp; safety requirements</li>
+        </ul>
+        <a class="see-more confirm-link" href="/dnr/hunting-fishing/">
+          See more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <div class="explore-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h2l2-5h10l2 5h2"/><path d="M5 13v5h14v-5"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg>
+        </div>
+        <h3>Travel Information</h3>
+        <p class="blurb">Road conditions and travel planning resources before you hit the road.</p>
+        <ul class="sample-list">
+          <li>Road &amp; highway conditions</li>
+          <li>Construction &amp; closure updates</li>
+          <li>Rest areas &amp; travel centers</li>
+          <li>Winter travel advisories</li>
+        </ul>
+        <a class="see-more confirm-link" href="/mdot/travel-info/">
+          See more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <div class="explore-card events-card" style="grid-column: span 2;">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <h3>Events</h3>
+        <p class="blurb">Festivals, fairs, markets, and everything else happening around the state — updated regularly, so check in for what's coming up during your visit.</p>
+        <a class="see-more confirm-link" href="/events/">
+          See what's happening
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="info-band">
+    <div class="section-wrap">
+      <div class="section-head">
+        <div class="eyebrow">Good to know</div>
+        <h2>A few other things</h2>
+      </div>
+      <p>
+        Road conditions can change quickly during Michigan winters, so it's
+        worth checking travel information before any long drive. Most state
+        parks require a vehicle entry permit, available at the park or
+        ahead of time. And if you find yourself thinking about staying
+        longer than a visit, Michigan also offers
+        <a class="confirm-link" href="/citizenship/">state citizenship</a>
+        to people who want to formally become residents.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <strong>Department of Technology</strong> · migovt.org · For Visitors
+  </footer>
+
+  <!-- Injects banner + header + mobile nav into #site-chrome above -->
+  <script src="/partials.js"></script>
+
+  <!-- Confirms before navigating away on any link marked confirm-link -->
+  <script src="/confirm-nav.js"></script>
+
+</body>
+</html>
