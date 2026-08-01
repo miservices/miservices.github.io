@@ -80,8 +80,10 @@
   }
 
   // Exposed so pages that render confirm-link elements dynamically
-  // (after a fetch, a filter change, etc.) can re-scan for new ones.
-  window.confirmNav = { attach: attach };
+  // (after a fetch, a filter change, etc.) can re-scan for new ones,
+  // and so pages can trigger the same confirmation programmatically
+  // (e.g. a search box that computes a destination on submit).
+  window.confirmNav = { attach: attach, go: openModal };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', attach);

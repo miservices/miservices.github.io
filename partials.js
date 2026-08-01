@@ -169,7 +169,7 @@
         <a href="/governor/cabinet/">Cabinet</a>
         <a href="/ag/">Attorney General</a>
         <a href="/sos/">Secretary of State</a>
-        <a href="/departments/">Departments</a>
+        <a href="/directory/">Departments</a>
         <div class="group-label">Legislature</div>
         <a href="/legislature/">Website</a>
         <a href="/capitol/">State Capitol</a>
