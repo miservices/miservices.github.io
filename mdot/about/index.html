@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safety | MDOT</title>
+<link rel="icon" type="image/png" href="/mdot/images/mdot-favicon.png">
+<link rel="stylesheet" href="../shared.css">
+<style>
+  /* ---------- Page-specific styles (safety only) ---------- */
+
+  .page-hero {
+    background: var(--mdot-blue);
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.15)),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 14px);
+    color: #fff;
+    padding: 48px 24px;
+  }
+  .page-hero-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    color: #b9d0ef;
+    margin-bottom: 10px;
+  }
+  .page-hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 1.12;
+    margin-bottom: 14px;
+  }
+  .page-hero p {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: #e2e9f5;
+    max-width: 62ch;
+  }
+
+  /* Jump nav */
+  .jump-nav {
+    background: var(--concrete);
+    border-bottom: 1px solid var(--line);
+  }
+  .jump-nav-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+  .jump-nav a {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: var(--mdot-blue-dark);
+  }
+  .jump-nav a:hover { text-decoration: underline; }
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 20px;
+  }
+
+  .topic {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 20px;
+  }
+  .topic:first-of-type { padding-top: 0; }
+  .topic-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .topic-badge {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 4px;
+    background: var(--mdot-blue-dark);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .topic h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .topic p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #3a3a3a;
+    margin-bottom: 14px;
+    max-width: 72ch;
+  }
+  .topic p:last-child { margin-bottom: 0; }
+  .topic ul {
+    margin: 0 0 14px 0;
+    padding-left: 20px;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #3a3a3a;
+  }
+  .topic ul:last-child { margin-bottom: 0; }
+  .topic li { margin-bottom: 6px; }
+  .topic li:last-child { margin-bottom: 0; }
+  .topic strong { color: var(--ink); }
+
+  .subhead {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--mdot-blue);
+    margin: 18px 0 8px;
+  }
+  .topic .subhead:first-of-type { margin-top: 0; }
+
+  /* Amber callout */
+  .callout {
+    background: #fdf3d9;
+    border: 1px solid #f0d48a;
+    border-left: 4px solid var(--amber);
+    border-radius: 2px;
+    padding: 16px 18px;
+    margin-top: 16px;
+  }
+  .callout h4 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: #7a5300;
+    margin-bottom: 6px;
+  }
+  .callout p, .callout ul {
+    font-size: 0.9rem;
+    color: #5c4300;
+    margin: 0;
+    line-height: 1.55;
+  }
+  .callout ul { padding-left: 18px; }
+  .callout ul li { margin-bottom: 4px; }
+
+  /* Red callout for urgent / stranded */
+  .callout-urgent {
+    background: #fbe4e4;
+    border: 1px solid #edb3b3;
+    border-left: 4px solid #c1332f;
+  }
+  .callout-urgent h4 { color: #8a1f1c; }
+  .callout-urgent p, .callout-urgent ul { color: #6e1815; }
+
+  /* Two-column tip grid */
+  .tip-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .tip-card {
+    background: var(--concrete);
+    border-left: 4px solid var(--mdot-green);
+    border-radius: 2px;
+    padding: 14px 16px;
+  }
+  .tip-card h4 {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--mdot-blue-dark);
+    margin-bottom: 4px;
+  }
+  .tip-card p {
+    font-size: 0.86rem;
+    color: #4a4a4a;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Travel CTA band */
+  .travel-cta {
+    max-width: 1000px;
+    margin: 10px auto 0;
+    padding: 0 24px 56px;
+  }
+  .travel-cta-inner {
+    background: var(--asphalt);
+    color: #fff;
+    border-radius: 4px;
+    padding: 30px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .travel-cta-inner h3 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+  .travel-cta-inner p {
+    font-size: 0.9rem;
+    color: #c8ccd0;
+    max-width: 50ch;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .tip-grid { grid-template-columns: 1fr; }
+    .page-hero h1 { font-size: 1.7rem; }
+    .travel-cta-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div data-include="../header.html"></div>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow">Safety</div>
+    <h1>Drive, ride, and walk safely in Michigan.</h1>
+    <p>Safety tips for drivers, motorcyclists, pedestrians, and commercial operators — with a few notes for anyone who isn't used to Michigan roads.</p>
+  </div>
+</section>
+
+<nav class="jump-nav" aria-label="Jump to section">
+  <div class="jump-nav-inner">
+    <a href="#driving-basics">Driving basics</a>
+    <a href="#work-zones">Work zones</a>
+    <a href="#winter-driving">Winter driving</a>
+    <a href="#railroad-crossings">Railroad crossings</a>
+    <a href="#motorcycle-safety">Motorcycle safety</a>
+    <a href="#pedestrian-safety">Pedestrian safety</a>
+    <a href="#commercial-vehicles">Commercial vehicles</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="topic" id="driving-basics">
+    <div class="topic-head">
+      <span class="topic-badge">01</span>
+      <h2>Driving basics</h2>
+    </div>
+    <p>Most crashes come down to a handful of avoidable habits. These three matter more than anything else you'll do behind the wheel.</p>
+
+    <div class="subhead">Defensive driving</div>
+    <ul>
+      <li>Keep a following distance of at least 3–4 seconds — more in rain, snow, or heavy traffic.</li>
+      <li>Scan the road ahead, not just the car in front of you, so you have time to react.</li>
+      <li>Assume other drivers might not see you, signal early, and never rely on someone else to yield.</li>
+    </ul>
+
+    <div class="subhead">Distracted driving</div>
+    <ul>
+      <li>Put the phone down — texting, scrolling, or even holding a call can take your eyes off the road for critical seconds.</li>
+      <li>Set your route, music, and climate controls before you start driving, not while you're moving.</li>
+      <li>If you need to deal with something urgent, pull over safely first.</li>
+    </ul>
+
+    <div class="subhead">Speed awareness</div>
+    <ul>
+      <li>Posted speed limits are for ideal conditions — slow down in rain, fog, snow, or heavy traffic.</li>
+      <li>Higher speeds mean longer stopping distances and less time to react.</li>
+      <li>Watch for reduced speed limits in work zones and school zones — they're enforced, and often with doubled fines.</li>
+    </ul>
+  </div>
+
+  <div class="topic" id="work-zones">
+    <div class="topic-head">
+      <span class="topic-badge">02</span>
+      <h2>Work zone safety</h2>
+    </div>
+    <p>Construction and maintenance crews work close to live traffic, often with little separation. A few seconds of inattention near a work zone can be deadly for a worker just doing their job.</p>
+    <ul>
+      <li>Slow down as soon as you see work zone signage, even if you don't see crews yet.</li>
+      <li>Merge early when a lane closure is posted — don't wait until the last second.</li>
+      <li>Watch for workers, equipment, and uneven pavement; conditions can change block to block.</li>
+      <li>Expect delays and build in extra time rather than rushing through.</li>
+    </ul>
+
+    <div class="subhead">Slow down and move over</div>
+    <p>Michigan's Move Over law applies to any stopped vehicle with flashing lights — police, tow trucks, road crews, and emergency vehicles. If you see flashing lights ahead:</p>
+    <ul>
+      <li>Move over a lane if you can do so safely.</li>
+      <li>If you can't change lanes, slow well below the posted limit as you pass.</li>
+      <li>This applies on any road, not just freeways.</li>
+    </ul>
+    <div class="callout">
+      <h4>Worker protection</h4>
+      <p>Road crews are working just feet from moving traffic. Treat every work zone like someone's life depends on you slowing down — because it does.</p>
+    </div>
+  </div>
+
+  <div class="topic" id="winter-driving">
+    <div class="topic-head">
+      <span class="topic-badge">03</span>
+      <h2>Winter driving</h2>
+    </div>
+    <p>If you're not used to driving in snow and ice, Michigan winters take some adjustment. Slow down, give yourself more room, and plan ahead.</p>
+
+    <div class="subhead">Driving on snow and ice</div>
+    <ul>
+      <li>Reduce your speed well before curves, exits, and intersections — braking on ice takes much longer than you'd expect.</li>
+      <li>Avoid sudden braking or steering; ease off the gas and let your vehicle slow gradually.</li>
+      <li>Bridges and overpasses freeze before the rest of the road — treat them with extra caution even when the pavement looks clear.</li>
+      <li>Keep extra distance from snowplows; they throw snow and ice, and often move slower than traffic.</li>
+    </ul>
+
+    <div class="subhead">Visibility tips</div>
+    <ul>
+      <li>Turn on your headlights any time visibility drops — it's often required by law, and it helps others see you too.</li>
+      <li>Clear all snow and ice off your entire vehicle before driving, not just the windshield.</li>
+      <li>Lake-effect snow can drop visibility to near zero in bands that move through fast. If you hit one, slow down and keep both hands on the wheel.</li>
+    </ul>
+
+    <div class="callout callout-urgent">
+      <h4>What to do if stranded</h4>
+      <ul>
+        <li>Stay with your vehicle — it's easier for rescuers to find, and it shelters you from the cold.</li>
+        <li>Run the engine only briefly to stay warm, and make sure the exhaust pipe is clear of snow to avoid carbon monoxide buildup.</li>
+        <li>Keep an emergency kit in your car: blanket, flashlight, phone charger, water, and warm clothing.</li>
+        <li>Use hazard lights or tie a bright cloth to your antenna or door to signal for help.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic" id="railroad-crossings">
+    <div class="topic-head">
+      <span class="topic-badge">04</span>
+      <h2>Railroad crossings</h2>
+    </div>
+    <ul>
+      <li>Always stop for flashing lights or lowered gates — never drive around them.</li>
+      <li>Never stop your vehicle on the tracks, even briefly; make sure there's room on the other side before crossing.</li>
+      <li>Trains are closer and faster than they appear — if a train is approaching, do not try to beat it across.</li>
+      <li>At crossings without gates or lights, stop, look both ways, and listen before crossing.</li>
+    </ul>
+  </div>
+
+  <div class="topic" id="motorcycle-safety">
+    <div class="topic-head">
+      <span class="topic-badge">05</span>
+      <h2>Motorcycle safety</h2>
+    </div>
+
+    <div class="subhead">Rider tips</div>
+    <ul>
+      <li>Ride within your skill level, especially on unfamiliar roads.</li>
+      <li>Increase following distance — motorcycles need more room to react and stop.</li>
+      <li>Be extra visible: use your headlight, wear bright or reflective gear, and avoid riding in a driver's blind spot.</li>
+    </ul>
+
+    <div class="subhead">Protective gear</div>
+    <ul>
+      <li>Wear a DOT-compliant helmet, plus eye protection if your helmet doesn't have a shield.</li>
+      <li>Sturdy jackets, gloves, long pants, and over-the-ankle boots help protect against road rash and impact.</li>
+    </ul>
+
+    <div class="subhead">Sharing the road</div>
+    <p>If you're driving a car or truck, motorcycles are smaller and easier to miss — especially at intersections and when changing lanes.</p>
+    <ul>
+      <li>Check mirrors and blind spots twice before merging or turning.</li>
+      <li>Give motorcycles a full lane — don't try to share a lane with a rider.</li>
+      <li>Allow extra following distance; motorcycles can slow down faster than a car.</li>
+    </ul>
+  </div>
+
+  <div class="topic" id="pedestrian-safety">
+    <div class="topic-head">
+      <span class="topic-badge">06</span>
+      <h2>Pedestrian safety</h2>
+    </div>
+
+    <div class="subhead">Crosswalk safety</div>
+    <ul>
+      <li>Drivers must yield to pedestrians in marked and unmarked crosswalks — stop and wait until they've fully crossed.</li>
+      <li>Pedestrians should make eye contact with drivers before stepping into the road when possible, and never assume a driver has seen them.</li>
+    </ul>
+
+    <div class="subhead">Walking at night</div>
+    <ul>
+      <li>Wear light or reflective clothing, and carry a flashlight or use a phone light if you're walking along a road without sidewalks.</li>
+      <li>Walk facing traffic if there's no sidewalk, so you can see and react to approaching vehicles.</li>
+    </ul>
+
+    <div class="subhead">School zones</div>
+    <ul>
+      <li>Slow down and watch for children in and around school zones, especially during arrival and dismissal times.</li>
+      <li>Always stop for a school bus with flashing red lights and an extended stop arm, from either direction, unless separated by a median.</li>
+    </ul>
+
+    <div class="subhead">Accessible crossings</div>
+    <p>MDOT works to improve crossings for people using wheelchairs, walkers, or who are visually impaired — including curb ramps, audible pedestrian signals, and detectable warning surfaces at intersections.</p>
+  </div>
+
+  <div class="topic" id="commercial-vehicles">
+    <div class="topic-head">
+      <span class="topic-badge">07</span>
+      <h2>Commercial vehicles</h2>
+    </div>
+    <p>Truck safety depends on more than just careful driving — proper cargo securement and regular inspections matter just as much.</p>
+
+    <div class="tip-grid">
+      <div class="tip-card">
+        <h4>Cargo securement</h4>
+        <p>Secure loads properly and check tie-downs before and during long hauls — shifting cargo is a leading cause of commercial vehicle crashes.</p>
+      </div>
+      <div class="tip-card">
+        <h4>Vehicle inspections</h4>
+        <p>Perform pre-trip inspections on brakes, tires, lights, and coupling devices every time you head out.</p>
+      </div>
+      <div class="tip-card">
+        <h4>Truck safety</h4>
+        <p>Account for longer stopping and turning distances, and be aware of your blind spots — other drivers may not realize how limited your visibility is.</p>
+      </div>
+      <div class="tip-card">
+        <h4>Weight &amp; permits</h4>
+        <p>Oversize and overweight loads need permits — see Permits &amp; Licensing before hauling through Michigan.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<section class="travel-cta">
+  <div class="travel-cta-inner">
+    <div>
+      <h3>Heading out on the road?</h3>
+      <p>Check Travel Information for public transit, rest areas, winter conditions, and Michigan's rules of the road.</p>
+    </div>
+    <a href="https://migovt.org/mdot/travel-info/" class="btn btn-primary">Travel Information</a>
+  </div>
+</section>
+
+<div data-include="../footer.html"></div>
+
+<script src="../includes.js"></script>
+</body>
+</html>
