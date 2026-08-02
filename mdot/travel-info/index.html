@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Information | MDOT</title>
+<link rel="icon" type="image/png" href="/mdot/images/mdot-favicon.png">
+<link rel="stylesheet" href="../shared.css">
+<style>
+  /* ---------- Page-specific styles (travel-info only) ---------- */
+
+  .page-hero {
+    background: var(--mdot-blue);
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.15)),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 14px);
+    color: #fff;
+    padding: 48px 24px;
+  }
+  .page-hero-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    color: #b9d0ef;
+    margin-bottom: 10px;
+  }
+  .page-hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 1.12;
+    margin-bottom: 14px;
+  }
+  .page-hero p {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: #e2e9f5;
+    max-width: 62ch;
+  }
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 20px;
+  }
+
+  .topic {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .topic:first-of-type { padding-top: 0; }
+  .topic-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .topic-badge {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 4px;
+    background: var(--mdot-blue-dark);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .topic h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .topic p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #3a3a3a;
+    margin-bottom: 14px;
+    max-width: 72ch;
+  }
+  .topic p:last-child { margin-bottom: 0; }
+  .topic ul {
+    margin: 0 0 14px 0;
+    padding-left: 20px;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #3a3a3a;
+  }
+  .topic ul:last-child { margin-bottom: 0; }
+  .topic li { margin-bottom: 6px; }
+  .topic li:last-child { margin-bottom: 0; }
+  .topic strong { color: var(--ink); }
+
+  /* Agency chips (public transit section) */
+  .agency-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .agency-card {
+    background: var(--concrete);
+    border-left: 4px solid var(--mdot-green);
+    border-radius: 2px;
+    padding: 14px 16px;
+  }
+  .agency-card h4 {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--mdot-blue-dark);
+    margin-bottom: 4px;
+  }
+  .agency-card p {
+    font-size: 0.86rem;
+    color: #4a4a4a;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Speed limit table */
+  .speed-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    font-size: 0.9rem;
+  }
+  .speed-table th, .speed-table td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .speed-table th {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 0.72rem;
+    color: #555;
+    background: var(--concrete);
+  }
+  .speed-table td.mph {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--mdot-blue-dark);
+  }
+
+  /* Amber callout (know before you go) */
+  .callout {
+    background: #fdf3d9;
+    border: 1px solid #f0d48a;
+    border-left: 4px solid var(--amber);
+    border-radius: 2px;
+    padding: 16px 18px;
+    margin-top: 16px;
+  }
+  .callout h4 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: #7a5300;
+    margin-bottom: 6px;
+  }
+  .callout p {
+    font-size: 0.9rem;
+    color: #5c4300;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* Safety CTA band */
+  .safety-cta {
+    max-width: 1000px;
+    margin: 10px auto 0;
+    padding: 0 24px 56px;
+  }
+  .safety-cta-inner {
+    background: var(--asphalt);
+    color: #fff;
+    border-radius: 4px;
+    padding: 30px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .safety-cta-inner h3 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+  .safety-cta-inner p {
+    font-size: 0.9rem;
+    color: #c8ccd0;
+    max-width: 50ch;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .agency-grid { grid-template-columns: 1fr; }
+    .page-hero h1 { font-size: 1.7rem; }
+    .speed-table { font-size: 0.82rem; }
+    .safety-cta-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div data-include="../header.html"></div>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow">Travel Information</div>
+    <h1>Getting around Michigan, mile by mile.</h1>
+    <p>Whether you're new to Michigan roads or just passing through Flint, here's what to know about getting around: public transit, rest stops, truck travel, winter driving, and the rules of the road.</p>
+  </div>
+</section>
+
+<main>
+
+  <div class="topic">
+    <div class="topic-head">
+      <span class="topic-badge">01</span>
+      <h2>Public transit</h2>
+    </div>
+    <p>MDOT doesn't run local bus routes directly, but it helps fund and coordinate transit across the state — connecting Michigan's cities through intercity bus service and supporting local transit agencies that run day-to-day routes in their communities.</p>
+    <p>In Flint, local bus service is run separately from MDOT by the city's own transit agency. If you're new to the area, check their site directly for routes, schedules, and fares before you head out.</p>
+    <div class="agency-grid">
+      <div class="agency-card">
+        <h4>Mass Transportation Authority (MTA)</h4>
+        <p>Flint's local public bus system, covering city and Genesee County routes.</p>
+      </div>
+      <div class="agency-card">
+        <h4>Intercity bus network</h4>
+        <p>MDOT-supported bus service connecting Flint to other Michigan cities and regional hubs.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-head">
+      <span class="topic-badge">02</span>
+      <h2>Rest areas &amp; amenities</h2>
+    </div>
+    <p>MDOT maintains rest areas and welcome centers along Michigan's highways, and we're steadily modernizing them with better lighting, accessible restrooms, pet exercise areas, vending, and EV charging where it makes sense.</p>
+    <p>If you're driving long distances, especially in winter, plan your stops — rest area spacing can be wider in less populated stretches, so don't wait until you're on empty to look for one.</p>
+  </div>
+
+  <div class="topic">
+    <div class="topic-head">
+      <span class="topic-badge">03</span>
+      <h2>Truck travel</h2>
+    </div>
+    <p>Commercial trucks share the same highways as everyone else, so knowing the basics helps traffic move safely for all drivers.</p>
+    <ul>
+      <li>Stay out of a truck's blind spots — if you can't see the driver's mirrors, they likely can't see you.</li>
+      <li>Give trucks extra room to brake and turn; they need more distance than passenger vehicles.</li>
+      <li>Oversize and overweight loads require permits — see <strong>Permits &amp; Licensing</strong> for details if you're hauling freight through Michigan.</li>
+      <li>Watch for designated truck routes and posted weight limits on local roads and bridges.</li>
+    </ul>
+  </div>
+
+  <div class="topic">
+    <div class="topic-head">
+      <span class="topic-badge">04</span>
+      <h2>Winter driving</h2>
+    </div>
+    <p>Michigan winters are no joke, and roads can change condition fast — especially if you're used to driving somewhere milder.</p>
+    <ul>
+      <li><strong>Bridges freeze before roads do.</strong> Even when the pavement looks clear, bridge decks ice over first — slow down as you approach.</li>
+      <li><strong>Lake-effect snow</strong> can drop visibility to near zero in bands that move through quickly. If you hit one, slow down and turn on your headlights.</li>
+      <li>Keep extra following distance — stopping takes longer on snow and ice.</li>
+      <li>Give snowplows room to work. Don't pass on the right, and stay back — plows throw snow and ice.</li>
+      <li>Keep a winter emergency kit in your car: blanket, flashlight, phone charger, and a few basics in case you're stuck waiting out a storm.</li>
+    </ul>
+    <div class="callout">
+      <h4>Know before you go</h4>
+      <p>Check conditions before a winter trip — road conditions can shift from clear to hazardous in a short drive, especially near the Great Lakes.</p>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-head">
+      <span class="topic-badge">05</span>
+      <h2>Speed limits &amp; the rules of the road</h2>
+    </div>
+    <p>Posted speed limits vary by road type, so pay attention to signage — especially when moving between freeways and local streets.</p>
+    <table class="speed-table">
+      <thead>
+        <tr>
+          <th>Road type</th>
+          <th>Typical limit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Rural freeways</td>
+          <td class="mph">Up to 75 mph</td>
+        </tr>
+        <tr>
+          <td>Urban freeways</td>
+          <td class="mph">65&ndash;70 mph</td>
+        </tr>
+        <tr>
+          <td>Rural highways</td>
+          <td class="mph">55 mph</td>
+        </tr>
+        <tr>
+          <td>City &amp; residential streets</td>
+          <td class="mph">25&ndash;35 mph</td>
+        </tr>
+        <tr>
+          <td>Work zones</td>
+          <td class="mph">Reduced — fines double</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:16px;">A few things that catch newcomers off guard:</p>
+    <ul>
+      <li><strong>The "Michigan Left."</strong> On many divided highways, you can't turn directly left at an intersection. Instead, continue past it, use the median crossover to U-turn, then turn right. It looks strange the first time, but it keeps traffic moving.</li>
+      <li><strong>Move Over law.</strong> If you see a stopped police car, tow truck, or road crew with flashing lights, move over a lane if you can, or slow down.</li>
+      <li><strong>Deer crossings.</strong> Michigan sees a lot of deer-vehicle collisions, especially around dawn, dusk, and fall. Stay alert on rural roads and near wooded areas.</li>
+      <li><strong>Right lane laws.</strong> On multi-lane freeways, slower traffic should generally keep right except when passing.</li>
+    </ul>
+  </div>
+
+</main>
+
+<section class="safety-cta">
+  <div class="safety-cta-inner">
+    <div>
+      <h3>Planning a trip?</h3>
+      <p>Visit our Safety page for work-zone safety, seasonal driving campaigns, and how MDOT keeps Michigan drivers safe.</p>
+    </div>
+    <a href="https://migovt.org/mdot/safety/" class="btn btn-primary">Go to Safety</a>
+  </div>
+</section>
+
+<div data-include="../footer.html"></div>
+
+<script src="../includes.js"></script>
+</body>
+</html>
