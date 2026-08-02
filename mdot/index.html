@@ -4,134 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MDOT | Michigan Department of Transportation</title>
-<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="icon" type="image/png" href="/images/mdot-favicon.png">
+<link rel="stylesheet" href="shared.css">
 <style>
-  :root {
-    --mdot-blue: #1c4fa0;
-    --mdot-blue-dark: #123670;
-    --mdot-green: #2e9e4f;
-    --asphalt: #21262b;
-    --asphalt-2: #2c333a;
-    --concrete: #ece9e2;
-    --paper: #faf9f6;
-    --amber: #f2a900;
-    --ink: #1a1d20;
-    --line: #d8d4c9;
-    --font-display: "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
-    --font-body: Arial, Helvetica, sans-serif;
-  }
+  /* ---------- Page-specific styles (index only) ---------- */
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--font-body);
-    color: var(--ink);
-    background: var(--paper);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a { color: inherit; }
-
-  /* ---------- Top utility bar ---------- */
-  .util-bar {
-    background: var(--asphalt);
-    color: #c8ccd0;
-    font-size: 0.78rem;
-  }
-  .util-bar .inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 6px 24px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .util-bar a {
-    text-decoration: none;
-    color: #c8ccd0;
-    margin-right: 18px;
-  }
-  .util-bar a:hover { color: #fff; }
-
-  /* ---------- Header ---------- */
-  header {
-    background: var(--paper);
-    border-bottom: 6px solid var(--mdot-blue);
-  }
-  .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-  }
-  header img {
-    height: 54px;
-    width: auto;
-    display: block;
-  }
-  nav ul {
-    display: flex;
-    list-style: none;
-    gap: 4px;
-    flex-wrap: wrap;
-  }
-  nav a {
-    display: block;
-    text-decoration: none;
-    color: var(--mdot-blue-dark);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.92rem;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    padding: 10px 14px;
-    border-radius: 2px;
-  }
-  nav a:hover { background: var(--concrete); }
-
-  /* ---------- Conditions strip (the "signature" element) ---------- */
-  .conditions {
-    background: var(--asphalt-2);
-    color: #fff;
-    border-bottom: 3px solid var(--amber);
-  }
-  .conditions .inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px 24px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-size: 0.88rem;
-    overflow-x: auto;
-  }
-  .conditions .tag {
-    flex: none;
-    background: var(--amber);
-    color: var(--asphalt);
-    font-family: var(--font-display);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: 0.72rem;
-    padding: 4px 10px;
-    border-radius: 2px;
-  }
-  .conditions .items {
-    display: flex;
-    gap: 28px;
-    white-space: nowrap;
-  }
-  .conditions .items span { color: #d3d7db; }
-  .conditions .items b { color: #fff; font-weight: 600; }
-
-  /* ---------- Hero: route-sign board ---------- */
+  /* Hero: route-sign board */
   .hero {
     background: var(--mdot-blue);
     background-image:
@@ -193,24 +71,8 @@
     gap: 12px;
     flex-wrap: wrap;
   }
-  .btn {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    font-size: 0.85rem;
-    text-decoration: none;
-    padding: 13px 22px;
-    border-radius: 2px;
-    border: 2px solid transparent;
-  }
-  .btn-primary { background: var(--amber); color: var(--asphalt); }
-  .btn-primary:hover { background: #ffb81c; }
-  .btn-ghost { border-color: rgba(255,255,255,0.55); color: #fff; }
-  .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
 
-  /* Mini map card in hero */
+  /* Mini status card in hero */
   .hero-panel {
     background: var(--paper);
     color: var(--ink);
@@ -261,34 +123,15 @@
   .mile-status.closed { background: #fbdcdc; color: #a3231f; }
   .mile-status.clear { background: #dcf3e3; color: #1e7a3c; }
 
-  /* ---------- Services: highway-shield tiles ---------- */
+  /* Services: highway-shield tiles */
   section.services {
     max-width: 1200px;
     margin: 0 auto;
     padding: 60px 24px 20px;
   }
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    border-bottom: 3px solid var(--ink);
-    padding-bottom: 12px;
-    margin-bottom: 28px;
-  }
-  .section-head h2 {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-  }
-  .section-head span {
-    font-size: 0.85rem;
-    color: #555;
-  }
-
   .tile-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
@@ -332,7 +175,7 @@
     letter-spacing: 0.04em;
   }
 
-  /* ---------- Split: news + projects ---------- */
+  /* Split: news + projects */
   .split {
     max-width: 1200px;
     margin: 56px auto 0;
@@ -405,109 +248,19 @@
     color: var(--amber);
   }
 
-  /* ---------- Footer ---------- */
-  footer {
-    margin-top: 70px;
-    background: var(--asphalt);
-    color: #b8bcc0;
-  }
-  .footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 24px 26px;
-    display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr 1fr;
-    gap: 32px;
-  }
-  .footer-inner img { height: 40px; margin-bottom: 12px; }
-  .footer-inner p { font-size: 0.82rem; line-height: 1.5; max-width: 32ch; }
-  footer h5 {
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
-    color: #fff;
-    margin-bottom: 12px;
-  }
-  footer ul { list-style: none; }
-  footer li { margin-bottom: 8px; }
-  footer a { text-decoration: none; color: #b8bcc0; font-size: 0.86rem; }
-  footer a:hover { color: #fff; }
-  .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.12);
-    text-align: center;
-    font-size: 0.76rem;
-    padding: 16px 24px;
-    color: #8a8f94;
-  }
-
-  /* ---------- Responsive ---------- */
   @media (max-width: 900px) {
     .hero-inner { grid-template-columns: 1fr; }
-    .tile-grid { grid-template-columns: repeat(2, 1fr); }
     .split { grid-template-columns: 1fr; }
-    .footer-inner { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 560px) {
     .tile-grid { grid-template-columns: 1fr; }
-    nav ul { gap: 0; }
-    .header-inner { flex-direction: column; align-items: flex-start; }
-    .footer-inner { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2rem; }
-  }
-
-  :focus-visible {
-    outline: 3px solid var(--amber);
-    outline-offset: 2px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { transition: none !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="util-bar">
-  <div class="inner">
-    <div>
-      <a href="#">Español</a>
-      <a href="#">Careers at MDOT</a>
-      <a href="#">Contact</a>
-    </div>
-    <div>
-      <a href="#">mi.gov</a>
-    </div>
-  </div>
-</div>
-
-<header>
-  <div class="header-inner">
-    <img src="/images/mdot.png" alt="MDOT — Michigan Department of Transportation">
-    <nav>
-      <ul>
-        <li><a href="#">Travel</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Safety</a></li>
-        <li><a href="#">Business</a></li>
-        <li><a href="#">About</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<div class="conditions">
-  <div class="inner">
-    <span class="tag">Live</span>
-    <div class="items">
-      <span>I-96 westbound at Fowlerville: <b>lane closure, delays</b></span>
-      <span>US-31 Grand Haven: <b>bridge work through Sept</b></span>
-      <span>I-75 Zilwaukee Bridge: <b>normal flow</b></span>
-      <span>Statewide winter prep: <b>salt stock at 92%</b></span>
-    </div>
-  </div>
-</div>
+<div data-include="header.html"></div>
 
 <section class="hero">
   <div class="hero-inner">
@@ -519,32 +272,32 @@
       <h1>Keeping Michigan moving, mile by mile.</h1>
       <p>Statewide road conditions, active construction, and the projects rebuilding Michigan's highways, bridges, and rail — updated as it happens.</p>
       <div class="hero-actions">
-        <a href="#" class="btn btn-primary">Check road conditions</a>
-        <a href="#" class="btn btn-ghost">View construction map</a>
+        <a href="https://migovt.org/mdot/travel-info/" class="btn btn-primary">Travel Information</a>
+        <a href="https://migovt.org/mdot/permits-licensing/" class="btn btn-ghost">Permits and Licensing</a>
       </div>
     </div>
 
     <div class="hero-panel">
-      <h2>Mile Markers &mdash; Southeast Michigan</h2>
+      <h2>Mile Markers &mdash; Flint</h2>
       <ul class="mile-list">
         <li>
-          <span class="mile-badge">I-94</span>
-          <span>Eastbound at Conner Ave</span>
+          <span class="mile-badge">I-475</span>
+          <span>Downtown Flint curve</span>
           <span class="mile-status slow">Slow</span>
         </li>
         <li>
-          <span class="mile-badge">I-75</span>
-          <span>Downtown Detroit curve</span>
-          <span class="mile-status closed">Closed</span>
-        </li>
-        <li>
-          <span class="mile-badge">I-696</span>
-          <span>Southfield to Royal Oak</span>
+          <span class="mile-badge">I-69</span>
+          <span>Flint to Bishop Airport</span>
           <span class="mile-status clear">Clear</span>
         </li>
         <li>
-          <span class="mile-badge">M-14</span>
-          <span>Ann Arbor to Plymouth</span>
+          <span class="mile-badge">M-21</span>
+          <span>Corunna Rd at Chevrolet Ave</span>
+          <span class="mile-status closed">Closed</span>
+        </li>
+        <li>
+          <span class="mile-badge">US-23</span>
+          <span>Flint to Fenton</span>
           <span class="mile-status clear">Clear</span>
         </li>
       </ul>
@@ -558,29 +311,17 @@
     <span>Most-requested MDOT services</span>
   </div>
   <div class="tile-grid">
-    <a href="#" class="tile">
+    <a href="https://migovt.org/mdot/travel-info/" class="tile">
       <span class="num">01</span>
-      <h3>Road Conditions</h3>
-      <p>Real-time lane closures, delays, and winter driving conditions on state highways.</p>
+      <h3>Travel Information</h3>
+      <p>Real-time lane closures, delays, and winter driving conditions on Flint-area roads.</p>
       <span class="arrow">View map →</span>
     </a>
-    <a href="#" class="tile">
+    <a href="https://migovt.org/mdot/safety/" class="tile">
       <span class="num">02</span>
-      <h3>Construction &amp; Closures</h3>
-      <p>Track active projects near you and see planned closures before you head out.</p>
-      <span class="arrow">See projects →</span>
-    </a>
-    <a href="#" class="tile">
-      <span class="num">03</span>
-      <h3>Permits &amp; Licensing</h3>
-      <p>Apply for oversize/overweight permits, driveway access, and utility permits.</p>
-      <span class="arrow">Start application →</span>
-    </a>
-    <a href="#" class="tile">
-      <span class="num">04</span>
-      <h3>Doing Business with MDOT</h3>
-      <p>Bidding, contracts, and certification information for vendors and contractors.</p>
-      <span class="arrow">Get started →</span>
+      <h3>Safety</h3>
+      <p>Work-zone safety information and MDOT's safety initiatives for Flint drivers.</p>
+      <span class="arrow">Learn more →</span>
     </a>
   </div>
 </section>
@@ -595,22 +336,22 @@
       <li>
         <div class="news-date"><span class="d">28</span><span class="m">Jul</span></div>
         <div>
-          <h4>US-31 bridge deck replacement enters final phase</h4>
-          <p>Work near Grand Haven shifts to single-lane traffic starting next week as crews finish deck pours.</p>
+          <h4>I-475 curve resurfacing enters final phase</h4>
+          <p>Work through downtown Flint shifts to single-lane traffic starting next week as crews finish paving.</p>
         </div>
       </li>
       <li>
         <div class="news-date"><span class="d">22</span><span class="m">Jul</span></div>
         <div>
-          <h4>MDOT opens fall paving bids for I-96 corridor</h4>
-          <p>Contractors can submit bids through August 15 for the next phase of the I-96 rehabilitation project.</p>
+          <h4>MDOT opens fall paving bids for the Flint corridor</h4>
+          <p>Contractors can submit bids through August 15 for the next phase of the I-475/I-69 rehabilitation project.</p>
         </div>
       </li>
       <li>
         <div class="news-date"><span class="d">15</span><span class="m">Jul</span></div>
         <div>
           <h4>Statewide "Give 'Em a Brake" campaign returns</h4>
-          <p>MDOT renews its work-zone safety campaign ahead of peak summer construction season.</p>
+          <p>MDOT renews its work-zone safety campaign ahead of peak summer construction season in Flint.</p>
         </div>
       </li>
     </ul>
@@ -622,50 +363,17 @@
       <span>Major projects</span>
     </div>
     <div class="project-box">
-      <h3>Zilwaukee Bridge rehab</h3>
-      <div class="project-row"><span>Deck resurfacing</span><span class="pct">68%</span></div>
-      <div class="project-row"><span>I-75 Flint corridor</span><span class="pct">41%</span></div>
-      <div class="project-row"><span>Gordie Howe approach ramps</span><span class="pct">84%</span></div>
-      <div class="project-row"><span>US-131 Kalamazoo interchange</span><span class="pct">22%</span></div>
+      <h3>Flint corridor rehab</h3>
+      <div class="project-row"><span>I-475 downtown curve resurfacing</span><span class="pct">68%</span></div>
+      <div class="project-row"><span>I-69 Flint to Bishop Airport</span><span class="pct">41%</span></div>
+      <div class="project-row"><span>M-21 Corunna Rd reconstruction</span><span class="pct">84%</span></div>
+      <div class="project-row"><span>US-23 Flint to Fenton widening</span><span class="pct">22%</span></div>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="footer-inner">
-    <div>
-      <img src="/images/mdot.png" alt="MDOT logo">
-      <p>The Michigan Department of Transportation plans, builds, and maintains the state's highways, bridges, and transit systems.</p>
-    </div>
-    <div>
-      <h5>Travel</h5>
-      <ul>
-        <li><a href="#">Road Conditions</a></li>
-        <li><a href="#">Construction Map</a></li>
-        <li><a href="#">Winter Driving</a></li>
-      </ul>
-    </div>
-    <div>
-      <h5>Business</h5>
-      <ul>
-        <li><a href="#">Bidding &amp; Contracts</a></li>
-        <li><a href="#">Permits</a></li>
-        <li><a href="#">Certification</a></li>
-      </ul>
-    </div>
-    <div>
-      <h5>About</h5>
-      <ul>
-        <li><a href="#">Leadership</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Contact Us</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    &copy; 2026 Michigan Department of Transportation. An official website of the State of Michigan.
-  </div>
-</footer>
+<div data-include="footer.html"></div>
 
+<script src="includes.js"></script>
 </body>
 </html>
