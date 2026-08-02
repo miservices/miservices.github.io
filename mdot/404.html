@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Permits &amp; Licensing | MDOT</title>
+<link rel="icon" type="image/png" href="/mdot/images/mdot-favicon.png">
+<link rel="stylesheet" href="../shared.css">
+<style>
+  /* ---------- Page-specific styles (permits-licensing only) ---------- */
+
+  .page-hero {
+    background: var(--mdot-blue);
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.15)),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 14px);
+    color: #fff;
+    padding: 48px 24px;
+  }
+  .page-hero-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    color: #b9d0ef;
+    margin-bottom: 10px;
+  }
+  .page-hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 1.12;
+    margin-bottom: 14px;
+  }
+  .page-hero p {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: #e2e9f5;
+    max-width: 62ch;
+  }
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 20px;
+  }
+
+  /* Intro callout distinguishing SOS vs MDOT */
+  .agency-note {
+    background: #fdf3d9;
+    border: 1px solid #f0d48a;
+    border-left: 4px solid var(--amber);
+    border-radius: 2px;
+    padding: 18px 20px;
+    margin-bottom: 44px;
+  }
+  .agency-note h4 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: #7a5300;
+    margin-bottom: 6px;
+  }
+  .agency-note p {
+    font-size: 0.9rem;
+    color: #5c4300;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .group {
+    margin-bottom: 48px;
+  }
+  .group-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .group-head h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .group-head span {
+    font-size: 0.82rem;
+    color: #555;
+  }
+  .group-intro {
+    font-size: 0.92rem;
+    color: #4a4a4a;
+    line-height: 1.6;
+    margin: 14px 0 22px;
+    max-width: 72ch;
+  }
+
+  /* Permit card */
+  .permit-card {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+  }
+  .permit-card:last-child { margin-bottom: 0; }
+  .permit-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .permit-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .permit-card .agency-tag {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .agency-tag.sos { background: #e6f1fb; color: var(--mdot-blue-dark); }
+  .agency-tag.mdot { background: #dcf3e3; color: #1e7a3c; }
+  .permit-card p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #3a3a3a;
+    max-width: 62ch;
+    margin: 0;
+  }
+  .permit-card .apply-btn {
+    flex: none;
+  }
+
+  /* Detail box inside TIP/CY card */
+  .detail-box {
+    margin-top: 18px;
+    background: var(--concrete);
+    border-radius: 3px;
+    padding: 16px 18px;
+  }
+  .detail-box h4 {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--mdot-blue-dark);
+    margin-bottom: 10px;
+  }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 20px;
+  }
+  .detail-item {
+    font-size: 0.88rem;
+    color: #3a3a3a;
+    line-height: 1.5;
+  }
+  .detail-item strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #555;
+    margin-bottom: 2px;
+  }
+  .detail-box .warn {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+    font-size: 0.86rem;
+    color: #6e1815;
+  }
+  .detail-box .warn strong { color: #8a1f1c; }
+
+  .btn-sm {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 0.78rem;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 2px;
+    background: var(--mdot-blue);
+    color: #fff;
+  }
+  .btn-sm:hover { background: var(--mdot-blue-dark); }
+  .btn-sm.green { background: var(--mdot-green); }
+  .btn-sm.green:hover { background: #237a3d; }
+
+  @media (max-width: 640px) {
+    .page-hero h1 { font-size: 1.7rem; }
+    .permit-card-top { flex-direction: column; align-items: flex-start; }
+    .detail-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div data-include="../header.html"></div>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow">Permits &amp; Licensing</div>
+    <h1>Find the right permit or license.</h1>
+    <p>Some driver credentials are issued by the Department of State, while road-use permits like highway advertising are handled directly by MDOT. Find what you need below.</p>
+  </div>
+</section>
+
+<main>
+
+  <div class="agency-note">
+    <h4>Two different agencies</h4>
+    <p>Driver's licenses, permits, and endorsements are issued by the Department of State (SOS), not MDOT. MDOT handles permits related to the road system itself, like highway advertising and right-of-way work. Each item below links to the correct place to apply.</p>
+  </div>
+
+  <div class="group">
+    <div class="group-head">
+      <h2>Driver credentials</h2>
+      <span>Handled by the Department of State</span>
+    </div>
+    <p class="group-intro">These credentials cover who's allowed to drive, and what — they're issued and renewed through the Department of State, not MDOT.</p>
+
+    <div class="permit-card">
+      <div class="permit-card-top">
+        <div>
+          <span class="agency-tag sos">Department of State</span>
+          <h3>Driver's license</h3>
+          <p>Required to legally drive a personal vehicle in Michigan. Covers new applications, renewals, and replacements.</p>
+        </div>
+        <a href="https://migovt.org/sos/drivers-licenses/#apply" class="btn-sm apply-btn">Apply</a>
+      </div>
+    </div>
+
+    <div class="permit-card">
+      <div class="permit-card-top">
+        <div>
+          <span class="agency-tag sos">Department of State</span>
+          <h3>Temporary Instruction Permit (TIP) &amp; motorcycle endorsement (CY)</h3>
+          <p>A Temporary Instruction Permit, sometimes called a CY endorsement, lets you legally ride a motorcycle on public roads while you work toward your full motorcycle endorsement.</p>
+        </div>
+        <a href="https://migovt.org/sos/drivers-licenses/#tip-cy" class="btn-sm apply-btn">Apply</a>
+      </div>
+      <div class="detail-box">
+        <h4>How the TIP works</h4>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <strong>Eligibility</strong>
+            Hold a valid driver's license and pay a $60 licensing fee.
+          </div>
+          <div class="detail-item">
+            <strong>Validity</strong>
+            Valid for 90 days from the date it's issued.
+          </div>
+          <div class="detail-item">
+            <strong>Supervision</strong>
+            Not required — you can ride on your own.
+          </div>
+          <div class="detail-item">
+            <strong>Restrictions</strong>
+            No passengers. Otherwise unrestricted while the permit is valid.
+          </div>
+        </div>
+        <div class="warn">
+          <strong>Heads up:</strong> Traffic violations are taken seriously on a TIP — a citation can get your permit revoked quickly, so ride carefully while you're working toward your full endorsement.
+        </div>
+      </div>
+    </div>
+
+    <div class="permit-card">
+      <div class="permit-card-top">
+        <div>
+          <span class="agency-tag sos">Department of State</span>
+          <h3>Chauffeur's license</h3>
+          <p>Required for drivers who operate a vehicle for hire, such as taxi or rideshare driving, beyond a standard license.</p>
+        </div>
+        <a href="https://migovt.org/sos/drivers-licenses/#chauffeurs" class="btn-sm apply-btn">Apply</a>
+      </div>
+    </div>
+
+    <div class="permit-card">
+      <div class="permit-card-top">
+        <div>
+          <span class="agency-tag sos">Department of State</span>
+          <h3>Commercial Driver's License (CDL)</h3>
+          <p>Required to operate commercial trucks, buses, and other large vehicles. Includes options for different vehicle classes and endorsements.</p>
+        </div>
+        <a href="https://migovt.org/sos/drivers-licenses/#cdl" class="btn-sm apply-btn">Apply</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-head">
+      <h2>MDOT permits</h2>
+      <span>Handled by MDOT</span>
+    </div>
+    <p class="group-intro">These permits relate to the state road system itself — using, working near, or advertising along state right-of-way.</p>
+
+    <div class="permit-card">
+      <div class="permit-card-top">
+        <div>
+          <span class="agency-tag mdot">MDOT</span>
+          <h3>Highway advertising permits</h3>
+          <p>Required for billboards and other outdoor advertising structures visible from state highways.</p>
+        </div>
+        <a href="https://migovt.org/mdot/permits-licensing/highway-ads/" class="btn-sm green apply-btn">Apply</a>
+      </div>
+    </div>
+
+    <div class="permit-card">
+      <div class="permit-card-top">
+        <div>
+          <span class="agency-tag mdot">MDOT</span>
+          <h3>Other permits &amp; licenses</h3>
+          <p>Don't see what you're looking for? Oversize/overweight loads, driveway access, utility work, and other right-of-way permits can still be applied for.</p>
+        </div>
+        <a href="https://migovt.org/mdot/permits-licensing/misc/" class="btn-sm green apply-btn">Apply</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div data-include="../footer.html"></div>
+
+<script src="../includes.js"></script>
+</body>
+</html>
