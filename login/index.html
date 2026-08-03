@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Account | MiGOVT.org</title>
+<title>Sign In | MiGOVT.org</title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,16 +21,18 @@
   --red: #b53a3a;
   --red-light: #fdf0f0;
   --red-border: #e8b4b4;
-  --gold: var(--trail-amber-text);
   --gold-light: #faf3e4;
   --gold-border: var(--trail-amber);
   --accent: var(--lake-mist);
   --accent-light: #e8f0f4;
-  --shadow: 0 20px 44px rgba(14,58,83,0.12);
 }
 
 html, body { height: 100%; }
-body { display: flex; flex-direction: column; min-height: 100vh; }
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 /* SLIM HEADER (replaces the old big hero) */
 .page-header {
@@ -50,11 +52,14 @@ body { display: flex; flex-direction: column; min-height: 100vh; }
 }
 
 .auth-wrap {
-  max-width: 680px;
+  max-width: 560px;
   width: 100%;
   margin: 0 auto;
-  padding: 48px 24px 64px;
+  padding: 48px 24px;
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .card {
   width: 100%;
@@ -62,8 +67,8 @@ body { display: flex; flex-direction: column; min-height: 100vh; }
   border: 1px solid var(--border);
   border-top: 4px solid var(--trail-amber);
   border-radius: 10px;
-  padding: 44px 40px;
-  box-shadow: var(--shadow);
+  padding: 48px 44px;
+  box-shadow: 0 20px 44px rgba(14,58,83,0.12);
 }
 .card-title {
   font-family: 'Fraunces', serif;
@@ -77,166 +82,141 @@ body { display: flex; flex-direction: column; min-height: 100vh; }
   font-size: 14px;
   color: var(--ink-soft);
   text-align: center;
-  margin: 0 0 30px;
+  margin: 0 0 26px;
   line-height: 1.55;
 }
-.progress-wrap { margin-bottom: 32px; }
-.already-have { font-size: 13px; color: var(--gray); text-align: center; margin-top: 18px; }
-.already-have a { color: var(--lake-deep); font-weight: 700; text-decoration: none; }
-.already-have a:hover { text-decoration: underline; }
-.progress-steps { display: flex; align-items: center; }
-.ps { display: flex; align-items: center; gap: 8px; flex: 1; }
-.ps:last-child { flex: 0; }
-.ps-circle {
-  width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border);
-  background: var(--white); color: #9ca3af; font-size: 12px; font-weight: 800;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s;
-}
-.ps-circle.active { background: var(--lake-deep); border-color: var(--lake-deep); color: white; }
-.ps-circle.done   { background: var(--green); border-color: var(--green); color: white; font-size: 13px; }
-.ps-label { font-size: 12px; font-weight: 600; color: #9ca3af; white-space: nowrap; transition: color 0.2s; }
-.ps-label.active { color: var(--lake-deep); }
-.ps-label.done   { color: var(--green); }
-.ps-line { flex: 1; height: 2px; background: var(--border); margin: 0 8px; transition: background 0.2s; }
-.ps-line.done { background: var(--green); }
-.step-header { margin-bottom: 26px; }
-.step-header h2 { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; color: var(--lake-deep); margin-bottom: 5px; }
-.step-header p { font-size: 13.5px; color: var(--gray); line-height: 1.55; }
-.step { display: none; }
-.step.active { display: block; }
 
-/* ROBLOX CONNECT */
-.roblox-connect-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 14px 0 8px; }
+/* REQUESTER BADGE */
+.requester-badge {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--paper-warm); border: 1px solid var(--border);
+  border-radius: 6px; padding: 13px 16px; margin-bottom: 26px;
+  font-size: 13px; color: var(--gray);
+}
+.requester-icon { color: var(--lake-deep); flex-shrink: 0; display: flex; align-items: center; }
+.requester-badge strong { color: var(--dark); font-size: 13.5px; display: block; }
+
+/* METHOD TABS */
+.method-tabs {
+  display: flex;
+  background: var(--paper-warm);
+  border-radius: 6px;
+  padding: 5px;
+  gap: 5px;
+  margin-bottom: 26px;
+}
+.method-tab {
+  flex: 1; padding: 11px 14px; border: none; background: transparent;
+  border-radius: 7px; font-family: 'Public Sans', sans-serif;
+  font-size: 13.5px; font-weight: 700; color: var(--gray);
+  cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.method-tab.active { background: var(--white); color: var(--lake-deep); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.method-tab:hover:not(.active) { color: var(--dark); }
+.tab-icon { width: 17px; height: 17px; flex-shrink: 0; }
+.rblx-tab-icon { background: var(--dark); clip-path: polygon(50% 0%,100% 50%,50% 100%,0% 50%); border-radius: 2px; }
+
+/* CONNECT PANEL */
+.connect-panel { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 6px 0 10px; }
+.rblx-pill { display: inline-flex; align-items: center; gap: 8px; background: #111827; color: #e5e7eb; border-radius: 20px; padding: 6px 16px; font-size: 12.5px; font-weight: 700; }
+.rblx-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)} }
+.connect-panel p { font-size: 13.5px; color: var(--gray); text-align: center; line-height: 1.6; max-width: 380px; }
+
 button.roblox-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  background: #111827; color: white; border: none; border-radius: 6px; padding: 14px 26px;
-  font-family: 'Public Sans', sans-serif; font-size: 14.5px; font-weight: 700; cursor: pointer;
-  transition: background 0.15s, transform 0.1s; width: auto;
+  background: #111827; color: white; border: none; border-radius: 6px;
+  padding: 14px 26px; font-family: 'Public Sans', sans-serif; font-size: 14.5px;
+  font-weight: 700; cursor: pointer; transition: background 0.15s, transform 0.1s; width: 100%;
 }
 button.roblox-btn:hover { background: #1f2937; transform: translateY(-1px); }
-.rblx-diamond { width: 17px; height: 17px; background: white; transform: rotate(45deg); border-radius: 2px; flex-shrink: 0; }
-.state-loading { display: none; flex-direction: column; align-items: center; gap: 14px; padding: 40px 0; text-align: center; }
-.spinner { width: 34px; height: 34px; border: 3px solid #e5e7eb; border-top-color: var(--lake-deep); border-radius: 50%; animation: spin 0.7s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.state-loading p { font-size: 14px; color: var(--gray); }
-.state-connected { display: none; width: 100%; padding: 8px 0; }
-.disconnect-link { font-size: 12px; color: var(--gray); cursor: pointer; text-decoration: underline; }
-.state-error { display: none; flex-direction: column; align-items: center; gap: 10px; padding: 22px; background: var(--red-light); border: 1px solid var(--red-border); border-radius: 8px; text-align: center; margin-top: 8px; }
-.state-error p { font-size: 13px; color: var(--red); line-height: 1.5; }
-.rblx-pill-header { display: inline-flex; align-items: center; gap: 8px; background: #111827; color: #e5e7eb; border-radius: 20px; padding: 6px 16px; font-size: 12.5px; font-weight: 700; }
-.rblx-pill-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; animation: pulse-dot 1.8s ease-in-out infinite; }
-@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)} }
-.rblx-scope-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 2px; }
-.rblx-scope-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--gray); }
-.rblx-scope-yes { color: var(--green); font-weight: 800; }
-.rblx-scope-no  { color: #9ca3af; font-weight: 800; }
-.rblx-scope-sep { color: #d1d5db; font-size: 14px; }
+.rblx-diamond { width: 15px; height: 15px; background: white; transform: rotate(45deg); border-radius: 2px; flex-shrink: 0; }
 
-/* LINKED CARD */
-.rblx-linked-card { width: 100%; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 16px 18px; gap: 12px; }
-.rblx-linked-left { display: flex; align-items: center; gap: 14px; }
-.rblx-avatar { width: 44px; height: 44px; border-radius: 9px; overflow: hidden; flex-shrink: 0; background: #111827; display: flex; align-items: center; justify-content: center; }
-.rblx-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.rblx-avatar-fallback { width: 17px; height: 17px; background: white; transform: rotate(45deg); border-radius: 2px; }
-.rblx-linked-info { display: flex; flex-direction: column; gap: 2px; }
-.rblx-linked-name { font-size: 15px; font-weight: 800; color: var(--dark); }
-.rblx-linked-pin  { font-size: 11.5px; color: var(--gray); font-family: monospace; }
-.rblx-linked-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
-.rblx-linked-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--green-light); border: 1px solid var(--green-border); border-radius: 12px; padding: 4px 11px; font-size: 11px; font-weight: 800; color: var(--green); }
-.rblx-linked-badge::before { content: '●'; font-size: 7px; }
-
-/* ALERTS */
-.alert { border-radius: 8px; padding: 15px 17px; font-size: 13px; line-height: 1.55; display: none; margin-top: 16px; }
-.alert.error   { background: var(--red-light);   border: 1px solid var(--red-border);   color: var(--red); }
-.alert.warning { background: var(--gold-light);  border: 1px solid var(--gold-border);  color: #92400e; }
-.alert.success { background: var(--green-light); border: 1px solid var(--green-border); color: #15803d; }
-.alert.info    { background: var(--accent-light);border: 1px solid #bfdbfe;             color: #1d4ed8; }
-.alert-title   { font-weight: 800; margin-bottom: 4px; font-size: 13.5px; }
-
-/* AUTH STEP */
-.auth-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--gray); font-size: 12.5px; font-weight: 600; }
-.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-.google-btn-wrap { position: relative; margin-bottom: 4px; }
-.google-recommended { position: absolute; top: -10px; right: 14px; background: var(--lake-deep); color: white; font-size: 10px; font-weight: 800; padding: 2px 9px; border-radius: 10px; letter-spacing: 0.04em; text-transform: uppercase; }
+/* GOOGLE BUTTON */
 button.google-btn {
   width: 100%; display: flex; align-items: center; justify-content: center; gap: 11px;
-  background: white; color: var(--dark); border: 1.5px solid var(--border); border-radius: 6px;
-  padding: 14px 22px; font-family: 'Public Sans', sans-serif; font-size: 14.5px; font-weight: 700;
-  cursor: pointer; transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  background: white; color: var(--dark); border: 1.5px solid var(--border);
+  border-radius: 6px; padding: 14px 22px; font-family: 'Public Sans', sans-serif;
+  font-size: 14.5px; font-weight: 700; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 button.google-btn:hover { background: #f8fafc; border-color: #9ca3af; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
 button.google-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .google-icon { width: 21px; height: 21px; flex-shrink: 0; }
-.email-toggle-link { font-size: 12.5px; color: var(--lake-mist); font-weight: 600; cursor: pointer; text-decoration: underline; text-align: center; margin-top: 10px; display: block; }
-.email-form { display: flex; flex-direction: column; gap: 16px; }
 
-/* FORM */
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.form-row.single { grid-template-columns: 1fr; }
+/* EMAIL FORM */
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 18px 0; color: var(--gray); font-size: 12px; font-weight: 600; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.email-panel { display: flex; flex-direction: column; gap: 16px; }
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field label { font-size: 13px; font-weight: 700; color: var(--dark); }
-.field label .req { color: var(--gold); margin-left: 2px; }
-.field label .opt { font-size: 11.5px; font-weight: 500; color: var(--gray); margin-left: 4px; }
 .field input {
-  height: 46px; border: 1.5px solid var(--border); border-radius: 6px; padding: 0 14px;
-  font-family: 'Public Sans', sans-serif; font-size: 14.5px; color: var(--dark); background: var(--white);
-  transition: border-color 0.15s, box-shadow 0.15s; outline: none; -webkit-appearance: none;
+  height: 46px; border: 1.5px solid var(--border); border-radius: 6px;
+  padding: 0 14px; font-family: 'Public Sans', sans-serif; font-size: 14.5px;
+  color: var(--dark); background: var(--white);
+  transition: border-color 0.15s, box-shadow 0.15s; outline: none;
 }
 .field input:focus { border-color: var(--lake-deep); box-shadow: 0 0 0 3px rgba(14,58,83,0.12); }
 .field input.error { border-color: var(--red); }
-.field .hint { font-size: 11.5px; color: var(--gray); line-height: 1.4; }
 .field .err-msg { font-size: 11.5px; color: var(--red); display: none; }
 .field input.error ~ .err-msg { display: block; }
-.pin-display { background: var(--paper-warm); border: 1.5px solid var(--border); border-radius: 6px; height: 46px; padding: 0 14px; display: flex; align-items: center; font-size: 14.5px; font-weight: 700; color: var(--lake-deep); font-family: monospace; letter-spacing: 0.05em; }
-.field input[readonly] { background: #f4f6f9; color: #374151; cursor: not-allowed; border-color: #e5e7eb; }
-.field input[readonly]:focus { border-color: #e5e7eb; box-shadow: none; }
-.locked-notice { display: none; margin-top: 10px; font-size: 12px; color: #6b7280; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px 12px; line-height: 1.5; }
-.locked-notice a { color: var(--lake-deep); font-weight: 700; }
-.section-divider { height: 1px; background: #f0f2f6; margin: 24px 0; }
-
-/* ACTIONS */
-.form-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 30px; padding-top: 24px; border-top: 1px solid #f0f2f6; }
-button.btn-back { background: none; border: 1.5px solid var(--border); color: var(--lake-deep); padding: 11px 22px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background 0.15s; width: auto; }
-button.btn-back:hover { background: var(--paper-warm); }
-button.btn-next { background: var(--lake-deep); color: white; border: none; padding: 12px 26px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.15s; width: auto; }
-button.btn-next:hover:not(:disabled) { background: var(--lake-night); }
-button.btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
-button.btn-submit { background: var(--green); color: white; border: none; padding: 12px 26px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.15s; width: auto; }
-button.btn-submit:hover:not(:disabled) { background: #245f3a; }
-button.btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
-button.btn-retry { background: var(--lake-deep); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; width: auto; }
+button.email-signin-btn {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px;
+  background: var(--lake-deep); color: white; border: none; border-radius: 6px;
+  padding: 14px 22px; font-family: 'Public Sans', sans-serif; font-size: 14.5px;
+  font-weight: 700; cursor: pointer; transition: background 0.15s; margin-top: 4px;
+}
+button.email-signin-btn:hover:not(:disabled) { background: var(--lake-night); }
+button.email-signin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .mini-spin { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.35); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.forgot-link { font-size: 12.5px; color: var(--lake-mist); font-weight: 600; text-align: right; cursor: pointer; text-decoration: underline; }
 
-/* AUTH CONNECTED CARD */
-.auth-linked-card { width: 100%; display: flex; align-items: center; justify-content: space-between; background: #f0f7ff; border: 1.5px solid #bfdbfe; border-radius: 10px; padding: 16px 18px; gap: 12px; }
+.create-link { font-size: 13px; color: var(--gray); text-align: center; margin-top: 8px; }
+.create-link a { color: var(--lake-deep); font-weight: 700; text-decoration: none; }
+.create-link a:hover { text-decoration: underline; }
 
-/* REVIEW */
-.review-group { margin-bottom: 22px; }
-.review-group-title { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--trail-amber-text); margin-bottom: 11px; }
-.review-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid #f3f4f6; gap: 12px; }
-.review-row:last-child { border-bottom: none; }
-.review-label { font-size: 12.5px; color: var(--gray); font-weight: 500; flex-shrink: 0; }
-.review-value { font-size: 14px; font-weight: 600; color: var(--dark); text-align: right; }
-.declaration-box { background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 22px 0; }
-.declaration-box p { font-size: 12.5px; color: var(--dark); line-height: 1.65; }
-.checkbox-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; }
-.checkbox-row input[type="checkbox"] { width: 17px; height: 17px; margin-top: 2px; flex-shrink: 0; accent-color: var(--lake-deep); cursor: pointer; }
-.checkbox-row label { font-size: 12.5px; font-weight: 600; color: var(--dark); cursor: pointer; line-height: 1.5; }
+/* LOADING */
+.state-loading { display: none; flex-direction: column; align-items: center; gap: 14px; padding: 40px 0; text-align: center; }
+.spinner { width: 34px; height: 34px; border: 3px solid #e5e7eb; border-top-color: var(--lake-deep); border-radius: 50%; animation: spin 0.7s linear infinite; }
+.state-loading p { font-size: 14px; color: var(--gray); }
 
-/* SUCCESS */
-.success-wrap { text-align: center; padding: 14px 0; }
-.success-icon-big { display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-.success-wrap h2 { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600; color: var(--lake-deep); margin-bottom: 9px; }
-.success-wrap p { font-size: 14px; color: var(--gray); line-height: 1.6; max-width: 440px; margin: 0 auto 22px; }
-.account-info-box { background: var(--green-light); border: 1px solid var(--green-border); border-radius: 8px; padding: 18px 22px; display: inline-block; text-align: left; margin-bottom: 22px; }
-.account-info-box .ai-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 3px; }
-.account-info-box .ai-value { font-size: 16px; font-weight: 800; color: var(--dark); font-family: monospace; }
-.next-steps { background: var(--paper-warm); border-radius: 8px; padding: 18px 22px; text-align: left; }
-.next-steps h3 { font-size: 13px; font-weight: 800; color: var(--lake-deep); margin-bottom: 11px; }
-.next-steps ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.next-steps li { font-size: 12.5px; color: var(--gray); line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
-.next-steps li::before { content: '›'; color: var(--trail-amber-text); font-weight: 800; flex-shrink: 0; }
-.footer-note { margin-top: 22px; font-size: 12.5px; background: var(--paper-warm); border-left: 3px solid var(--trail-amber); padding: 12px 16px; color: var(--ink-soft); line-height: 1.5; border-radius: 0 4px 4px 0; }
+/* VERIFIED */
+.state-verified { display: none; flex-direction: column; align-items: center; gap: 14px; padding: 8px 0; text-align: center; }
+.verified-card { width: 100%; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 16px 18px; }
+.verified-left { display: flex; align-items: center; gap: 14px; }
+.rblx-avatar { width: 44px; height: 44px; border-radius: 9px; overflow: hidden; flex-shrink: 0; background: #111827; display: flex; align-items: center; justify-content: center; }
+.rblx-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rblx-avatar-fallback { width: 17px; height: 17px; background: white; transform: rotate(45deg); border-radius: 2px; }
+.google-avatar { width: 44px; height: 44px; border-radius: 9px; overflow: hidden; flex-shrink: 0; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 19px; }
+.verified-name { font-size: 15px; font-weight: 800; color: var(--dark); }
+.verified-pin  { font-size: 11.5px; color: var(--gray); font-family: monospace; }
+.verified-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--green-light); border: 1px solid var(--green-border); border-radius: 12px; padding: 4px 11px; font-size: 11px; font-weight: 800; color: var(--green); }
+.verified-badge::before { content: '●'; font-size: 7px; }
+.not-you { font-size: 12px; color: var(--gray); cursor: pointer; text-decoration: underline; }
+
+/* REDIRECT */
+.redirect-wrap { display: none; flex-direction: column; align-items: center; gap: 10px; padding: 20px 0 8px; text-align: center; width: 100%; }
+.redirect-wrap .site-name { font-size: 13.5px; font-weight: 700; color: var(--dark); }
+.redirect-wrap p { font-size: 12.5px; color: var(--gray); }
+.redirect-bar { width: 100%; height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.redirect-fill { height: 100%; background: var(--lake-deep); border-radius: 2px; width: 0%; transition: width 2.5s linear; }
+
+/* ERROR */
+.state-error { display: none; flex-direction: column; align-items: center; gap: 10px; padding: 18px; background: var(--red-light); border: 1px solid var(--red-border); border-radius: 8px; text-align: center; }
+.state-error p { font-size: 13px; color: var(--red); line-height: 1.5; }
+button.btn-retry { background: var(--lake-deep); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; width: auto; }
+
+/* NO ACCOUNT */
+.no-account-wrap { display: none; flex-direction: column; align-items: center; gap: 10px; padding: 18px; background: var(--gold-light); border: 1px solid var(--gold-border); border-radius: 8px; text-align: center; }
+.no-account-wrap p { font-size: 13px; color: #92400e; line-height: 1.5; }
+.no-account-wrap .na-title { font-weight: 800; font-size: 14px; color: #78350f; margin-bottom: 2px; }
+button.btn-create { background: var(--lake-deep); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; width: auto; }
+
+.alert { border-radius: 8px; padding: 13px 15px; font-size: 13px; line-height: 1.55; margin-top: 4px; }
+.alert.error { background: var(--red-light); border: 1px solid var(--red-border); color: var(--red); }
+
+.footer-note { margin-top: 26px; font-size: 12.5px; background: var(--paper-warm); border-left: 3px solid var(--trail-amber); padding: 12px 16px; color: var(--ink-soft); line-height: 1.5; border-radius: 0 4px 4px 0; }
 footer {
   text-align: center;
   padding: 22px 20px 26px;
@@ -246,7 +226,9 @@ footer {
 }
 footer strong { color: var(--ink); }
 
-@media (max-width: 520px) { .card { padding: 30px 22px; } .form-row { grid-template-columns: 1fr; } }
+@media (max-width: 480px) {
+  .card { padding: 34px 24px; }
+}
 </style>
 </head>
 <body>
@@ -256,693 +238,429 @@ footer strong { color: var(--ink); }
 <main class="auth-wrap">
 <div class="card">
 
-  <div class="card-title">Create MiGOVT Account</div>
-  <p class="card-subtitle">Register for a state identity account linked to your Roblox verification and personal information.</p>
+  <div class="card-title">Sign In</div>
+  <p class="card-subtitle">State identity authentication for authorized Michigan government services.</p>
 
-  <!-- PROGRESS (4 steps) -->
-  <div class="progress-wrap" id="progressWrap">
-    <div class="progress-steps">
-      <div class="ps">
-        <div class="ps-circle active" id="pc1">1</div>
-        <div class="ps-label active" id="pl1">Verify</div>
-      </div>
-      <div class="ps-line" id="pline1"></div>
-      <div class="ps">
-        <div class="ps-circle" id="pc2">2</div>
-        <div class="ps-label" id="pl2">Account</div>
-      </div>
-      <div class="ps-line" id="pline2"></div>
-      <div class="ps">
-        <div class="ps-circle" id="pc3">3</div>
-        <div class="ps-label" id="pl3">Identity</div>
-      </div>
-      <div class="ps-line" id="pline3"></div>
-      <div class="ps">
-        <div class="ps-circle" id="pc4">4</div>
-        <div class="ps-label" id="pl4">Review</div>
-      </div>
+  <div class="requester-badge" id="requesterBadge" style="display:none;">
+    <div class="requester-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1"/><path d="M14 9h1"/><path d="M9 13h1"/><path d="M14 13h1"/><path d="M9 17h1"/><path d="M14 17h1"/></svg></div>
+    <div>
+      <strong id="requesterName">—</strong>
+      is requesting identity verification via MiGOVT login. 
     </div>
   </div>
 
-  <!-- ═══ STEP 1 — ROBLOX VERIFY ═══ -->
-  <div class="step active" id="step1">
-    <div class="step-header">
-      <h2>Step 1 — Verify Your Identity</h2>
-      <p>Connect your Roblox account to get started. Your Roblox User ID is your Personal Identification Number (PIN) and will be linked to your MiGOVT account.</p>
+  <!-- ═══ SIGN-IN PANEL ═══ -->
+  <div id="stateConnect">
+
+    <!-- METHOD TABS -->
+    <div class="method-tabs">
+      <button class="method-tab active" id="tabRoblox" onclick="switchTab('roblox')">
+        <div class="tab-icon rblx-tab-icon"></div>
+        Roblox
+      </button>
+      <button class="method-tab" id="tabGoogle" onclick="switchTab('google')">
+        <svg class="tab-icon google-icon" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Google
+      </button>
+      <button class="method-tab" id="tabEmail" onclick="switchTab('email')">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email
+      </button>
     </div>
 
-    <div id="stateConnect" class="roblox-connect-wrap">
-      <div class="rblx-pill-header">
-        <div class="rblx-pill-dot"></div>
-        <span>Roblox Identity Verification</span>
-      </div>
-      <p style="font-size:13px;color:var(--gray);line-height:1.6;text-align:center;max-width:400px;">MiGOVT uses your Roblox account to verify your identity and retrieve your Personal Identification Number (PIN). No game data is ever accessed.</p>
-      <button class="roblox-btn" onclick="connectRoblox()">
+    <!-- ROBLOX PANEL -->
+    <div class="connect-panel" id="panelRoblox">
+      <div class="rblx-pill"><div class="rblx-dot"></div>Roblox Identity Verification</div>
+      <p>Sign in with your Roblox account to verify your identity and authorize access.</p>
+      <button class="roblox-btn" onclick="doConnectRoblox()">
         <div class="rblx-diamond"></div>
-        Link Roblox Account
+        Sign In with Roblox
       </button>
-      <div class="rblx-scope-row">
-        <div class="rblx-scope-item"><span class="rblx-scope-yes">✓</span> Username &amp; User ID</div>
-        <div class="rblx-scope-sep">·</div>
-        <div class="rblx-scope-item"><span class="rblx-scope-no">✗</span> Robux or inventory</div>
-        <div class="rblx-scope-sep">·</div>
-        <div class="rblx-scope-item"><span class="rblx-scope-no">✗</span> Friends or activity</div>
-      </div>
     </div>
 
-    <div id="stateLoading" class="state-loading">
-      <div class="spinner"></div>
-      <p id="loadingMsg">Verifying your Roblox account…</p>
+    <!-- GOOGLE PANEL -->
+    <div class="connect-panel" id="panelGoogle" style="display:none;">
+      <p>Sign in with the Google account linked to your MiGOVT account.</p>
+      <button class="google-btn" id="googleSignInBtn" onclick="doSignInGoogle()">
+        <svg class="google-icon" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Continue with Google
+      </button>
+      <div class="alert error" id="googleError" style="display:none;width:100%;"></div>
     </div>
 
-    <div id="stateConnected" class="state-connected">
-      <div class="rblx-linked-card">
-        <div class="rblx-linked-left">
-          <div class="rblx-avatar" id="rblxAvatarWrap">
-            <div class="rblx-avatar-fallback"></div>
-          </div>
-          <div class="rblx-linked-info">
-            <div class="rblx-linked-name" id="connUsername"></div>
-            <div class="rblx-linked-pin" id="connPin"></div>
-          </div>
+    <!-- EMAIL PANEL -->
+    <div class="connect-panel" id="panelEmail" style="display:none;">
+      <div class="email-panel" style="width:100%;">
+        <div class="field">
+          <label for="emailInput">Email Address</label>
+          <input type="email" id="emailInput" placeholder="you@example.com">
+          <span class="err-msg">Enter a valid email address.</span>
         </div>
-        <div class="rblx-linked-right">
-          <div class="rblx-linked-badge">Linked</div>
-          <span class="disconnect-link" onclick="doDisconnect()">Remove</span>
+        <div class="field">
+          <label for="passwordInput">Password</label>
+          <input type="password" id="passwordInput" placeholder="Your password">
+          <span class="err-msg">Password is required.</span>
         </div>
-      </div>
-    </div>
-
-    <div id="stateError" class="state-error">
-      <p id="errorMsg">Something went wrong.</p>
-      <button class="btn-retry" onclick="doRetry()">Try Again</button>
-    </div>
-
-    <div class="alert warning" id="alertDuplicate">
-      <div class="alert-title">MiGOVT Account Already Exists</div>
-      A MiGOVT account is already linked to this Roblox account (PIN). You cannot create a duplicate account. If you need help, please contact support.
-    </div>
-
-    <div class="form-actions">
-      <span></span>
-      <button class="btn-next" id="nextBtn1" onclick="goStep(2)" disabled>Continue <span>›</span></button>
-    </div>
-  </div>
-
-  <!-- ═══ STEP 2 — ACCOUNT (Google / Email) ═══ -->
-  <div class="step" id="step2">
-    <div class="step-header">
-      <h2>Step 2 — Create Your Account</h2>
-      <p>Link a Google account or create an email and password to sign in to MiGOVT.</p>
-    </div>
-
-    <div id="authSetupWrap">
-      <!-- Google (recommended) -->
-      <div class="google-btn-wrap">
-        <span class="google-recommended">Recommended</span>
-        <button class="google-btn" id="googleBtn" onclick="signInWithGoogle()">
-          <svg class="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-          </svg>
-          Continue with Google
+        <div style="text-align:right;"><span class="forgot-link" onclick="doForgotPassword()">Forgot password?</span></div>
+        <button class="email-signin-btn" id="emailSignInBtn" onclick="doSignInEmail()">
+          <span id="emailSignInText">Sign In</span>
+          <div class="mini-spin" id="emailSignInSpin"></div>
         </button>
-      </div>
-
-      <div class="auth-divider" id="authDivider">or</div>
-
-      <!-- Email / password -->
-      <div class="email-form" id="emailForm" style="display:none;">
-        <div class="field">
-          <label for="authEmail">Email Address <span class="req">*</span></label>
-          <input type="email" id="authEmail" placeholder="you@example.com">
-          <span class="err-msg">A valid email is required.</span>
-        </div>
-        <div class="field">
-          <label for="authPassword">Password <span class="req">*</span></label>
-          <input type="password" id="authPassword" placeholder="At least 8 characters">
-          <div class="hint">Minimum 8 characters.</div>
-          <span class="err-msg">Password must be at least 8 characters.</span>
-        </div>
-        <div class="field">
-          <label for="authPasswordConfirm">Confirm Password <span class="req">*</span></label>
-          <input type="password" id="authPasswordConfirm" placeholder="Repeat password">
-          <span class="err-msg">Passwords do not match.</span>
-        </div>
-        <button class="btn-next" style="width:100%;justify-content:center;" id="emailContinueBtn" onclick="handleEmailAuth()">
-          <span id="emailContinueText">Continue with Email</span>
-          <div class="mini-spin" id="emailContinueSpin"></div>
-        </button>
-      </div>
-      <span class="email-toggle-link" id="emailToggle" onclick="toggleEmailForm()">Use email &amp; password instead</span>
-    </div>
-
-    <!-- Shown after auth linked -->
-    <div id="authConnectedWrap" style="display:none;">
-      <div class="auth-linked-card">
-        <div class="rblx-linked-left" style="gap:10px;">
-          <div style="width:38px;height:38px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;" id="authIconEl"></div>
-          <div class="rblx-linked-info">
-            <div class="rblx-linked-name" id="authNameEl" style="font-size:13px;"></div>
-            <div class="rblx-linked-pin" id="authMethodEl" style="color:#2563eb;"></div>
-          </div>
-        </div>
-        <div class="rblx-linked-right">
-          <div class="rblx-linked-badge" style="background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8;">Linked</div>
-          <span class="disconnect-link" onclick="disconnectAuth()">Change</span>
-        </div>
+        <div class="alert error" id="emailError" style="display:none;"></div>
       </div>
     </div>
 
-    <div class="alert error" id="step2AuthError" style="margin-top:16px;"></div>
-
-    <div class="form-actions">
-      <button class="btn-back" onclick="goStep(1)">‹ Back</button>
-      <button class="btn-next" id="nextBtn2" onclick="goStep(3)" disabled>Continue <span>›</span></button>
+    <div class="create-link">
+      Don't have a MiGOVT account? <a id="createLink" href="/signup/">Create one</a>
     </div>
   </div>
 
-  <!-- ═══ STEP 3 — IDENTITY INFO ═══ -->
-  <div class="step" id="step3">
-    <div class="step-header">
-      <h2>Step 3 — Identity Information</h2>
-      <p>Provide your personal information to complete your MiGOVT account.</p>
-    </div>
-
-    <div class="alert success" id="alertRegistered">
-      <div class="alert-title">Found in State Registry</div>
-      Your identity was found in the State Registry and has been pre-filled below. Fields are locked — if any information is incorrect, update it via the <a href="https://miservices.github.io/sos/incorrect-details/" target="_blank" style="color:inherit;font-weight:700;text-decoration:underline;">Secretary of State website</a>.
-    </div>
-    <div class="alert info" id="alertNotRegistered">
-      <div class="alert-title">Not Found in State Registry</div>
-      Your PIN was not found in the State Registry. Please fill in your information below to register with the state.
-    </div>
-
-    <div class="section-divider"></div>
-
-    <div class="form-row single">
-      <div class="field">
-        <label>Personal Identification Number (PIN)</label>
-        <div class="pin-display" id="pinDisplay">—</div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="field">
-        <label for="firstName">First Name <span class="req">*</span></label>
-        <input type="text" id="firstName" placeholder="e.g. James">
-        <span class="err-msg">First name is required.</span>
-      </div>
-      <div class="field">
-        <label for="lastName">Last Name <span class="req">*</span></label>
-        <input type="text" id="lastName" placeholder="e.g. Sullivan">
-        <span class="err-msg">Last name is required.</span>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="field">
-        <label for="middleName">Middle Name <span class="opt">(optional)</span></label>
-        <input type="text" id="middleName" placeholder="e.g. Robert">
-      </div>
-      <div class="field">
-        <label for="dob">Date of Birth <span class="req">*</span></label>
-        <input type="date" id="dob">
-        <span class="err-msg">Date of birth is required.</span>
-      </div>
-    </div>
-
-    <div class="locked-notice" id="lockedNotice">
-      Your information is locked because it was found in the State Registry. If anything is incorrect, update it via the <a href="https://miservices.github.io/sos/incorrect-details/" target="_blank">Secretary of State website</a>.
-    </div>
-
-    <div class="alert error" id="step3Error"></div>
-
-    <div class="form-actions">
-      <button class="btn-back" onclick="goStep(2)">‹ Back</button>
-      <button class="btn-next" id="nextBtn3" onclick="handleStep3Next()">
-        <span id="nextBtn3Text">Continue</span>
-        <div class="mini-spin" id="nextBtn3Spin"></div>
-        <span>›</span>
-      </button>
-    </div>
+  <!-- LOADING -->
+  <div id="stateLoading" class="state-loading">
+    <div class="spinner"></div>
+    <p id="loadingMsg">Verifying your identity…</p>
   </div>
 
-  <!-- ═══ STEP 4 — REVIEW ═══ -->
-  <div class="step" id="step4">
-    <div class="step-header">
-      <h2>Step 4 — Review &amp; Confirm</h2>
-      <p>Review the information below before creating your MiGOVT account.</p>
-    </div>
-
-    <div class="review-group">
-      <div class="review-group-title">Roblox Identity</div>
-      <div class="review-row"><span class="review-label">Roblox Username</span><span class="review-value" id="rv-username">—</span></div>
-      <div class="review-row"><span class="review-label">Personal Identification Number (PIN)</span><span class="review-value" id="rv-pin">—</span></div>
-    </div>
-    <div class="review-group">
-      <div class="review-group-title">Account</div>
-      <div class="review-row"><span class="review-label">Sign-in Method</span><span class="review-value" id="rv-authmethod">—</span></div>
-      <div class="review-row"><span class="review-label">Email Address</span><span class="review-value" id="rv-authemail">—</span></div>
-    </div>
-    <p style="font-size:12px;color:var(--gray);line-height:1.55;margin-top:-8px;margin-bottom:22px;">Your email address will be shared with authorized state services to confirm and manage your MiGOVT account.</p>
-    <div class="review-group">
-      <div class="review-group-title">Personal Information</div>
-      <div class="review-row"><span class="review-label">Full Name</span><span class="review-value" id="rv-name">—</span></div>
-      <div class="review-row"><span class="review-label">Date of Birth</span><span class="review-value" id="rv-dob">—</span></div>
-    </div>
-
-    <div class="declaration-box">
-      <p>By creating this MiGOVT account, I confirm that the information provided is accurate and that I am the rightful owner of the Roblox account linked above. I understand that this account is subject to state identity policies, and that my email address will be shared with authorized state services to confirm and manage my account.</p>
-      <div class="checkbox-row">
-        <input type="checkbox" id="declareCheck" onchange="toggleCreate()">
-        <label for="declareCheck">I confirm the above information is accurate and I agree to the terms.</label>
+  <!-- VERIFIED -->
+  <div id="stateVerified" class="state-verified">
+    <div class="verified-card">
+      <div class="verified-left">
+        <div id="verifiedAvatarWrap"></div>
+        <div>
+          <div class="verified-name" id="vUsername"></div>
+          <div class="verified-pin"  id="vPin"></div>
+        </div>
       </div>
+      <div class="verified-badge">Verified</div>
     </div>
-
-    <div class="alert error" id="step4Error"></div>
-
-    <div class="form-actions">
-      <button class="btn-back" onclick="goStep(3)">‹ Back</button>
-      <button class="btn-submit" id="createBtn" onclick="createAccount()" disabled>
-        <span id="createBtnText">Create MiGOVT Account</span>
-        <div class="mini-spin" id="createBtnSpin"></div>
-      </button>
+    <span class="not-you" onclick="doReset()">Not you? Sign in with a different account</span>
+    <div id="redirectWrap" class="redirect-wrap">
+      <div class="site-name" id="redirectSiteName"></div>
+      <p>Redirecting you back…</p>
+      <div class="redirect-bar"><div class="redirect-fill" id="redirectFill"></div></div>
     </div>
+    <button class="roblox-btn" id="confirmBtn" onclick="doRedirect()" style="margin-top:4px;">
+      Authorize &amp; Continue →
+    </button>
   </div>
 
-  <!-- ═══ SUCCESS ═══ -->
-  <div class="step" id="stepSuccess">
-    <div class="success-wrap">
-      <div class="success-icon-big" aria-hidden="true">
-        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="26" cy="26" r="25" stroke="#2d7a4a" stroke-width="2" fill="#e8f3ec"/>
-          <path d="M16 27L22.5 33.5L36 19" stroke="#2d7a4a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <h2>Account Created</h2>
-      <p>Your MiGOVT account has been successfully created and linked to your State Identity Record.</p>
-      <div class="account-info-box">
-        <div class="ai-label">Your PIN</div>
-        <div class="ai-value" id="successPin">—</div>
-      </div>
-      <div class="next-steps">
-        <h3>What's Next</h3>
-        <ul>
-          <li>You can now log into MiGOVT with your linked account.</li>
-          <li>Your identity is linked to the State Registry and accessible to authorized state services.</li>
-          <li>Keep your account information up to date through your MiGOVT profile.</li>
-        </ul>
-      </div>
-      <div style="margin-top:22px;">
-        <a href="/login/" style="display:inline-block;background:var(--lake-deep);color:white;font-size:14px;font-weight:700;padding:12px 26px;border-radius:6px;text-decoration:none;">Sign In to MiGOVT →</a>
-      </div>
-    </div>
+  <!-- NO ACCOUNT -->
+  <div id="stateNoAccount" class="no-account-wrap">
+    <div class="na-title">No MiGOVT Account Found</div>
+    <p>No MiGOVT account is linked to this sign-in method. You'll need to create one first.</p>
+    <button class="btn-create" id="goCreateBtn" onclick="goCreate()">Create MiGOVT Account</button>
   </div>
 
-  <div class="footer-note" id="footerNote">
-    Identity verification is required during account creation. All accounts are subject to state identity registration and audit logging. Your email address will be shared with authorized state services to confirm and manage your account.
+  <!-- ERROR -->
+  <div id="stateError" class="state-error">
+    <p id="errorMsg">Something went wrong.</p>
+    <button class="btn-retry" onclick="doReset()">Try Again</button>
   </div>
 
-  <p class="already-have">Already have a MiGOVT account? <a href="/login/">Sign in</a></p>
+  <div class="footer-note">
+    MiGOVT shares your name, date of birth, PIN, and email address with authorized state services to verify and manage your account.
+  </div>
+
 </div>
 </main>
 
 <footer>
-  <strong>Department of Technology</strong> · MiGOVT.org · MiGOVT Create Account
+  <strong>Department of Technology</strong> · MiGOVT.org · Login
 </footer>
 
-<!-- FIREBASE — SOS -->
+<!-- MiGOVT Firebase + Auth -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-  const sosApp = initializeApp({
-    apiKey: "AIzaSyCzMDtySiPOXM5J15ePmjyUZRn_Zcyz2w0",
-    authDomain: "misos-f7956.firebaseapp.com",
-    projectId: "misos-f7956",
-    storageBucket: "misos-f7956.firebasestorage.app",
-    messagingSenderId: "696781263120",
-    appId: "1:696781263120:web:0a2b3c56d8ad9ede0f5595"
-  }, "sos");
-  window._sosDb = getFirestore(sosApp);
-  window._sosHelpers = { doc, getDoc, setDoc };
-  window._sosReady = true;
-  document.dispatchEvent(new Event('sosReady'));
-</script>
-
-<!-- FIREBASE — MiGOVT + Auth -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-  import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where }
+  import { getFirestore, collection, getDocs, query, where }
     from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-  import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup }
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail }
     from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
-  const migovtApp = initializeApp({
+  const migovtConfig = {
     apiKey: "AIzaSyCWJBf_xxGj8JWbfwzzEHmtdzMmiLTGTas",
     authDomain: "mipass-77b56.firebaseapp.com",
     projectId: "mipass-77b56",
     storageBucket: "mipass-77b56.firebasestorage.app",
     messagingSenderId: "326401354685",
     appId: "1:326401354685:web:dee9e48de3975a72d600d4"
-  }, "migovt");
-
-  window._migovtDb   = getFirestore(migovtApp);
-  window._migovtAuth = getAuth(migovtApp);
-  window._migovtHelpers = { collection, doc, getDoc, getDocs, setDoc, query, where };
+  };
+  const app = initializeApp(migovtConfig, "migovt");
+  window._migovtDb   = getFirestore(app);
+  window._migovtAuth = getAuth(app);
+  window._migovtQ    = { collection, getDocs, query, where };
   window._GoogleAuthProvider = GoogleAuthProvider;
   window._signInWithPopup    = signInWithPopup;
-  window._createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+  window._signInWithEmailAndPassword = signInWithEmailAndPassword;
+  window._sendPasswordResetEmail     = sendPasswordResetEmail;
   window._migovtReady = true;
   document.dispatchEvent(new Event('migovtReady'));
 </script>
 
-<!-- MAIN LOGIC -->
 <script>
 const ROBLOX_CLIENT_ID = '3400793010980287379';
-const REDIRECT_URI     = window.location.origin + '/signup/';
+const REDIRECT_URI     = window.location.origin + '/login/';
 const WORKER_URL       = 'https://roblox-oauth.takosull0.workers.dev/';
+const SS_STATE         = 'migovt_login_state';
+const SS_REDIRECT      = 'migovt_login_redirect';
+const SS_RNAME         = 'migovt_login_rname';
 
-let currentStep = 1;
-let robloxData  = { id: '', username: '' };
-let connected   = false;
-let registeredInRegistry = false;
-let authUser    = null;
-let authMethodLabel = '';
+let userData       = null;
+let redirectTarget = null;
+let activeTab      = 'roblox';
 
-function waitFor(flag, evt) {
+function waitFor(flag, ev) {
   if (window[flag]) return Promise.resolve();
-  return new Promise(r => document.addEventListener(evt, r, { once: true }));
+  return new Promise(r => document.addEventListener(ev, r, { once: true }));
 }
-function buildFullName(f, m, l) { return [f, m, l].filter(Boolean).join(' '); }
-function showAlert(id, show) { document.getElementById(id).style.display = show ? 'block' : 'none'; }
 
-// ── PROGRESS ──
-function updateProgress(step) {
-  for (let i = 1; i <= 4; i++) {
-    const c = document.getElementById('pc' + i);
-    const l = document.getElementById('pl' + i);
-    c.className = 'ps-circle'; l.className = 'ps-label';
-    if (i < step)        { c.classList.add('done');   c.innerHTML = '✓'; l.classList.add('done'); }
-    else if (i === step) { c.classList.add('active'); c.innerHTML = i;   l.classList.add('active'); }
-    else                 { c.innerHTML = i; }
-    if (i < 4) document.getElementById('pline' + i).classList.toggle('done', i < step);
+function ui(state) {
+  ['stateConnect','stateLoading','stateVerified','stateNoAccount','stateError'].forEach(id => {
+    const el = document.getElementById(id);
+    el.style.display = (id === state) ? (id === 'stateConnect' ? 'block' : 'flex') : 'none';
+  });
+}
+
+function showError(msg) { document.getElementById('errorMsg').textContent = msg; ui('stateError'); }
+function doReset() { userData = null; ui('stateConnect'); }
+
+// ── TABS ──
+function switchTab(tab) {
+  activeTab = tab;
+  ['roblox','google','email'].forEach(t => {
+    document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('active', t === tab);
+    document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1)).style.display = t === tab ? 'flex' : 'none';
+  });
+}
+
+// ── INIT ──
+function init() {
+  const params   = new URLSearchParams(window.location.search);
+  const redirect = params.get('redirect_uri');
+  const siteName = params.get('site_name') || 'The requesting service';
+
+  if (redirect) {
+    sessionStorage.setItem(SS_REDIRECT, redirect);
+    sessionStorage.setItem(SS_RNAME, siteName);
+  }
+
+  redirectTarget = sessionStorage.getItem(SS_REDIRECT);
+  const rName    = sessionStorage.getItem(SS_RNAME) || siteName;
+
+  if (redirectTarget) {
+    document.getElementById('requesterBadge').style.display = 'flex';
+    document.getElementById('requesterName').textContent = rName;
+    document.getElementById('redirectSiteName').textContent = rName;
+    const createBase = '/signup/';
+    document.getElementById('createLink').href = createBase +
+      '?redirect_uri=' + encodeURIComponent(redirectTarget) + '&site_name=' + encodeURIComponent(rName);
+  }
+
+  const code  = params.get('code');
+  const state = params.get('state');
+  if (code) {
+    window.history.replaceState({}, '', window.location.pathname);
+    handleRobloxCallback(code, state);
+  } else {
+    ui('stateConnect');
   }
 }
 
-// ── STEP NAV ──
-function goStep(n) {
-  const cur = document.getElementById('step' + currentStep);
-  if (cur) cur.classList.remove('active');
-  if (n === 'success') {
-    document.getElementById('stepSuccess').classList.add('active');
-    document.getElementById('progressWrap').style.display = 'none';
-    document.getElementById('footerNote').style.display = 'none';
-    return;
-  }
-  currentStep = n;
-  document.getElementById('step' + n).classList.add('active');
-  updateProgress(n);
-  if (n === 4) populateReview();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ── STEP 1: ROBLOX UI STATES ──
-function uiState(s) {
-  document.getElementById('stateConnect').style.display   = s === 'connect'   ? 'flex' : 'none';
-  document.getElementById('stateLoading').style.display   = s === 'loading'   ? 'flex' : 'none';
-  document.getElementById('stateConnected').style.display = s === 'connected' ? 'flex' : 'none';
-  document.getElementById('stateError').style.display     = s === 'error'     ? 'flex' : 'none';
-}
-function showError(msg) { document.getElementById('errorMsg').textContent = msg; uiState('error'); document.getElementById('nextBtn1').disabled = true; }
-function doRetry() { showAlert('alertDuplicate', false); uiState('connect'); }
-function doDisconnect() { connected = false; robloxData = { id:'', username:'' }; showAlert('alertDuplicate', false); uiState('connect'); document.getElementById('nextBtn1').disabled = true; }
-
-// ── AVATAR HEADSHOT ──
-async function loadAvatar(userId) {
-  try {
-    const res  = await fetch('https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=' + userId + '&size=48x48&format=Png');
-    const data = await res.json();
-    const url  = data?.data?.[0]?.imageUrl;
-    if (url) {
-      document.getElementById('rblxAvatarWrap').innerHTML =
-        '<img src="' + url + '" alt="Avatar" onerror="this.parentElement.innerHTML=\'<div class=\\\'rblx-avatar-fallback\\\'></div>\'">';
-    }
-  } catch(e) {}
-}
-
-// ── STEP 1: OAUTH ──
-function connectRoblox() {
+// ── ROBLOX FLOW ──
+function doConnectRoblox() {
   const state = crypto.randomUUID();
-  sessionStorage.setItem('migovt_oauth_state', state);
+  sessionStorage.setItem(SS_STATE, state);
   const p = new URLSearchParams({ client_id: ROBLOX_CLIENT_ID, redirect_uri: REDIRECT_URI, response_type: 'Code', scope: 'openid profile', state });
   window.location.href = 'https://authorize.roblox.com/?' + p.toString();
 }
 
-async function handleOAuthCallback() {
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get('code'), stateParam = params.get('state'), saved = sessionStorage.getItem('migovt_oauth_state');
-  if (!code) return;
-  window.history.replaceState({}, '', window.location.pathname);
-  sessionStorage.removeItem('migovt_oauth_state');
-  uiState('loading');
-  document.getElementById('loadingMsg').textContent = 'Verifying your Roblox account…';
-  if (stateParam !== saved) { showError('Security validation failed. Please try connecting again.'); return; }
+async function handleRobloxCallback(code, stateParam) {
+  const saved = sessionStorage.getItem(SS_STATE);
+  sessionStorage.removeItem(SS_STATE);
+  ui('stateLoading');
+  document.getElementById('loadingMsg').textContent = 'Verifying your identity…';
+  if (stateParam !== saved) { showError('Security validation failed. Please try again.'); return; }
   try {
     const res  = await fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ code }) });
     const data = await res.json();
     if (!data.userId || !data.username) throw new Error(data.error || 'Could not retrieve account details.');
-    await afterRobloxAuth(data.userId, data.username);
-  } catch(err) { showError('Connection failed: ' + err.message); }
+    document.getElementById('loadingMsg').textContent = 'Looking up your MiGOVT account…';
+    await waitFor('_migovtReady', 'migovtReady');
+    const { collection, getDocs, query, where } = window._migovtQ;
+    const snap = await getDocs(query(collection(window._migovtDb, 'mipass'), where('pin', '==', String(data.userId))));
+    if (snap.empty) { ui('stateNoAccount'); return; }
+    const doc = snap.docs[0].data();
+    userData = { pin: String(data.userId), name: doc.name, dateOfBirth: doc.dateOfBirth, robloxUsername: data.username };
+    // Build verified card with avatar
+    document.getElementById('vUsername').textContent = data.username;
+    document.getElementById('vPin').textContent      = 'PIN: ' + data.userId;
+    document.getElementById('verifiedAvatarWrap').innerHTML = '<div class="rblx-avatar"><div class="rblx-avatar-fallback"></div></div>';
+    loadRobloxAvatar(data.userId);
+    showVerified();
+  } catch(err) { showError('Sign in failed: ' + err.message); }
 }
 
-async function afterRobloxAuth(userId, username) {
-  document.getElementById('loadingMsg').textContent = 'Checking for existing MiGOVT account…';
-  await waitFor('_migovtReady', 'migovtReady');
-  const { collection, getDocs, query, where } = window._migovtHelpers;
+async function loadRobloxAvatar(userId) {
   try {
-    const snap = await getDocs(query(collection(window._migovtDb, 'mipass'), where('pin', '==', String(userId))));
-    robloxData = { id: userId, username };
-    document.getElementById('connUsername').textContent = username;
-    document.getElementById('connPin').textContent = 'PIN: ' + userId;
-    uiState('connected');
-    loadAvatar(userId);
-    if (!snap.empty) { showAlert('alertDuplicate', true); document.getElementById('nextBtn1').disabled = true; return; }
-    connected = true;
-    showAlert('alertDuplicate', false);
-    document.getElementById('nextBtn1').disabled = false;
-  } catch(err) { showError('Could not verify account status: ' + err.message); }
+    const res = await fetch('https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=' + userId + '&size=48x48&format=Png');
+    const data = await res.json();
+    const url = data?.data?.[0]?.imageUrl;
+    if (url) {
+      document.getElementById('verifiedAvatarWrap').innerHTML =
+        '<div class="rblx-avatar"><img src="' + url + '" alt="Avatar" onerror="this.parentElement.innerHTML=\'<div class=\\\'rblx-avatar-fallback\\\'></div>\'"></div>';
+    }
+  } catch(e) {}
 }
 
-// ── STEP 2: GOOGLE ──
-async function signInWithGoogle() {
-  const btn = document.getElementById('googleBtn');
+// ── GOOGLE FLOW ──
+async function doSignInGoogle() {
+  const btn = document.getElementById('googleSignInBtn');
   btn.disabled = true;
-  showAlert('step2AuthError', false);
+  document.getElementById('googleError').style.display = 'none';
   await waitFor('_migovtReady', 'migovtReady');
   try {
     const result = await window._signInWithPopup(window._migovtAuth, new window._GoogleAuthProvider());
-    authUser = result.user;
-    authMethodLabel = 'Google';
-    showAuthConnected('<svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>', authUser.displayName || authUser.email, 'Google Account');
-    document.getElementById('nextBtn2').disabled = false;
+    const user   = result.user;
+    ui('stateLoading');
+    document.getElementById('loadingMsg').textContent = 'Looking up your MiGOVT account…';
+    // Look up by Firebase UID (document ID) or email
+    const { collection, getDocs, query, where } = window._migovtQ;
+    // Try by uid first
+    const { getDoc, doc } = await (async () => {
+      const mod = await import('https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js');
+      return mod;
+    })();
+    const docSnap = await getDoc(doc(window._migovtDb, 'mipass', user.uid));
+    if (!docSnap.exists()) {
+      // fallback: query by email
+      const snap = await getDocs(query(collection(window._migovtDb, 'mipass'), where('email', '==', user.email)));
+      if (snap.empty) { ui('stateNoAccount'); return; }
+      const d = snap.docs[0].data();
+      userData = { pin: d.pin, name: d.name, dateOfBirth: d.dateOfBirth, robloxUsername: d.robloxUsername || '' };
+    } else {
+      const d = docSnap.data();
+      userData = { pin: d.pin, name: d.name, dateOfBirth: d.dateOfBirth, robloxUsername: d.robloxUsername || '' };
+    }
+    document.getElementById('vUsername').textContent = userData.name;
+    document.getElementById('vPin').textContent      = 'PIN: ' + userData.pin;
+    document.getElementById('verifiedAvatarWrap').innerHTML = '<div class="google-avatar"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div>';
+    showVerified();
   } catch(err) {
-    const e = document.getElementById('step2AuthError');
-    e.textContent = (err.message || 'Google sign-in failed.'); e.style.display = 'block';
+    ui('stateConnect');
+    const e = document.getElementById('googleError');
+    e.textContent = (err.message || 'Google sign-in failed.');
+    e.style.display = 'block';
     btn.disabled = false;
   }
 }
 
-// ── STEP 2: EMAIL ──
-function toggleEmailForm() {
-  const f = document.getElementById('emailForm'), showing = f.style.display !== 'none';
-  f.style.display = showing ? 'none' : 'flex';
-  document.getElementById('emailToggle').textContent = showing ? 'Use email & password instead' : 'Hide email form';
-}
-
-async function handleEmailAuth() {
-  const eEl = document.getElementById('authEmail'), pEl = document.getElementById('authPassword'), cEl = document.getElementById('authPasswordConfirm');
+// ── EMAIL FLOW ──
+async function doSignInEmail() {
+  const emailEl = document.getElementById('emailInput'), passEl = document.getElementById('passwordInput');
   let valid = true;
-  [eEl, pEl, cEl].forEach(el => el.classList.remove('error'));
-  showAlert('step2AuthError', false);
-  if (!eEl.value.trim() || !/\S+@\S+\.\S+/.test(eEl.value)) { eEl.classList.add('error'); valid = false; }
-  if (pEl.value.length < 8) { pEl.classList.add('error'); valid = false; }
-  if (pEl.value !== cEl.value) { cEl.classList.add('error'); valid = false; }
+  emailEl.classList.remove('error'); passEl.classList.remove('error');
+  document.getElementById('emailError').style.display = 'none';
+  if (!emailEl.value.trim() || !/\S+@\S+\.\S+/.test(emailEl.value)) { emailEl.classList.add('error'); valid = false; }
+  if (!passEl.value) { passEl.classList.add('error'); valid = false; }
   if (!valid) return;
-  const btn = document.getElementById('emailContinueBtn');
+  const btn = document.getElementById('emailSignInBtn');
   btn.disabled = true;
-  document.getElementById('emailContinueText').textContent = 'Creating…';
-  document.getElementById('emailContinueSpin').style.display = 'inline-block';
+  document.getElementById('emailSignInText').textContent = 'Signing in…';
+  document.getElementById('emailSignInSpin').style.display = 'inline-block';
   await waitFor('_migovtReady', 'migovtReady');
   try {
-    const cred = await window._createUserWithEmailAndPassword(window._migovtAuth, eEl.value.trim(), pEl.value);
-    authUser = cred.user;
-    authMethodLabel = 'Email & Password';
-    showAuthConnected('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>', authUser.email, 'Email & Password');
-    document.getElementById('nextBtn2').disabled = false;
+    const cred = await window._signInWithEmailAndPassword(window._migovtAuth, emailEl.value.trim(), passEl.value);
+    const user = cred.user;
+    ui('stateLoading');
+    document.getElementById('loadingMsg').textContent = 'Looking up your MiGOVT account…';
+    const { getDoc, doc } = await (async () => {
+      const mod = await import('https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js');
+      return mod;
+    })();
+    const docSnap = await getDoc(doc(window._migovtDb, 'mipass', user.uid));
+    if (!docSnap.exists()) { ui('stateNoAccount'); return; }
+    const d = docSnap.data();
+    userData = { pin: d.pin, name: d.name, dateOfBirth: d.dateOfBirth, robloxUsername: d.robloxUsername || '' };
+    document.getElementById('vUsername').textContent = userData.name;
+    document.getElementById('vPin').textContent      = 'PIN: ' + userData.pin;
+    document.getElementById('verifiedAvatarWrap').innerHTML = '<div class="google-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>';
+    showVerified();
   } catch(err) {
-    const e = document.getElementById('step2AuthError');
-    e.textContent = (err.message || 'Could not create account.'); e.style.display = 'block';
+    ui('stateConnect');
+    const e = document.getElementById('emailError');
+    let msg = err.message || 'Sign-in failed.';
+    if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') msg = 'Incorrect email or password.';
+    e.textContent = msg; e.style.display = 'block';
     btn.disabled = false;
-    document.getElementById('emailContinueText').textContent = 'Continue with Email';
-    document.getElementById('emailContinueSpin').style.display = 'none';
+    document.getElementById('emailSignInText').textContent = 'Sign In';
+    document.getElementById('emailSignInSpin').style.display = 'none';
   }
 }
 
-function showAuthConnected(icon, name, method) {
-  document.getElementById('authIconEl').innerHTML  = icon;
-  document.getElementById('authNameEl').textContent  = name;
-  document.getElementById('authMethodEl').textContent = method;
-  document.getElementById('authConnectedWrap').style.display = 'block';
-  document.getElementById('authSetupWrap').style.display = 'none';
-}
-
-function disconnectAuth() {
-  authUser = null; authMethodLabel = '';
-  document.getElementById('authConnectedWrap').style.display = 'none';
-  document.getElementById('authSetupWrap').style.display = '';
-  document.getElementById('emailForm').style.display = 'none';
-  document.getElementById('emailToggle').textContent = 'Use email & password instead';
-  document.getElementById('googleBtn').disabled = false;
-  document.getElementById('nextBtn2').disabled = true;
-  try { if (window._migovtAuth?.currentUser) window._migovtAuth.currentUser.delete().catch(()=>{}); } catch(e){}
-}
-
-// ── STEP 3: REGISTRY ──
-function lockFields()   { ['firstName','middleName','lastName','dob'].forEach(id => document.getElementById(id).setAttribute('readonly',true));  document.getElementById('lockedNotice').style.display='block'; }
-function unlockFields() { ['firstName','middleName','lastName','dob'].forEach(id => document.getElementById(id).removeAttribute('readonly'));     document.getElementById('lockedNotice').style.display='none'; }
-
-async function loadRegistryData(pin) {
-  await waitFor('_sosReady', 'sosReady');
-  const { doc, getDoc } = window._sosHelpers;
-  try {
-    const snap = await getDoc(doc(window._sosDb, 'registry', String(pin)));
-    if (snap.exists()) {
-      registeredInRegistry = true;
-      const d = snap.data();
-      if (d.firstName)  document.getElementById('firstName').value  = d.firstName;
-      if (d.middleName) document.getElementById('middleName').value = d.middleName;
-      if (d.lastName)   document.getElementById('lastName').value   = d.lastName;
-      if (d.dateOfBirth || d.dob) document.getElementById('dob').value = d.dateOfBirth || d.dob;
-      showAlert('alertRegistered', true); showAlert('alertNotRegistered', false); lockFields();
-    } else {
-      registeredInRegistry = false;
-      showAlert('alertRegistered', false); showAlert('alertNotRegistered', true); unlockFields();
-    }
-  } catch(err) { registeredInRegistry = false; showAlert('alertRegistered', false); showAlert('alertNotRegistered', true); unlockFields(); }
-}
-
-async function enterStep3() {
-  document.getElementById('pinDisplay').textContent = robloxData.id || '—';
-  showAlert('alertRegistered', false); showAlert('alertNotRegistered', false); showAlert('step3Error', false);
-  unlockFields();
-  if (robloxData.id) {
-    document.getElementById('nextBtn3').disabled = true;
-    document.getElementById('nextBtn3Text').textContent = 'Loading…';
-    document.getElementById('nextBtn3Spin').style.display = 'inline-block';
-    await loadRegistryData(robloxData.id);
-    document.getElementById('nextBtn3').disabled = false;
-    document.getElementById('nextBtn3Text').textContent = 'Continue';
-    document.getElementById('nextBtn3Spin').style.display = 'none';
+async function doForgotPassword() {
+  const emailEl = document.getElementById('emailInput');
+  const email   = emailEl.value.trim();
+  const errEl   = document.getElementById('emailError');
+  if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    emailEl.classList.add('error');
+    errEl.textContent = 'Enter your email address above first.';
+    errEl.style.display = 'block';
+    return;
   }
-}
-
-async function handleStep3Next() {
-  let valid = true;
-  ['firstName','lastName','dob'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) { el.classList.add('error'); valid = false; } else el.classList.remove('error');
-  });
-  if (!valid) return;
-  showAlert('step3Error', false);
-  const btn = document.getElementById('nextBtn3');
-  btn.disabled = true; document.getElementById('nextBtn3Text').textContent = 'Saving…'; document.getElementById('nextBtn3Spin').style.display = 'inline-block';
-  const fn = document.getElementById('firstName').value.trim(), mn = document.getElementById('middleName').value.trim(), ln = document.getElementById('lastName').value.trim(), dob = document.getElementById('dob').value;
+  await waitFor('_migovtReady', 'migovtReady');
   try {
-    if (!registeredInRegistry) {
-      await waitFor('_sosReady', 'sosReady');
-      const { doc, setDoc } = window._sosHelpers;
-      await setDoc(doc(window._sosDb, 'registry', String(robloxData.id)), {
-        pin: String(robloxData.id), robloxId: String(robloxData.id), robloxUsername: robloxData.username,
-        firstName: fn, middleName: mn || null, lastName: ln, fullName: buildFullName(fn,mn,ln),
-        dateOfBirth: dob, status:'registered', citizenshipStatus:null, applicationNumber:null,
-        priorLegalNames:[], registeredAt: new Date().toISOString(), source:'migovt'
-      });
-      registeredInRegistry = true;
-    }
-    btn.disabled = false; document.getElementById('nextBtn3Text').textContent = 'Continue'; document.getElementById('nextBtn3Spin').style.display = 'none';
-    goStep(4);
+    await window._sendPasswordResetEmail(window._migovtAuth, email);
+    errEl.style.background = '#dcfce7'; errEl.style.borderColor = '#86efac'; errEl.style.color = '#15803d';
+    errEl.textContent = 'Password reset email sent. Check your inbox.';
+    errEl.style.display = 'block';
   } catch(err) {
-    btn.disabled = false; document.getElementById('nextBtn3Text').textContent = 'Continue'; document.getElementById('nextBtn3Spin').style.display = 'none';
-    const e = document.getElementById('step3Error'); e.textContent = (err.message||'An error occurred.'); e.style.display = 'block';
+    errEl.style.background = ''; errEl.style.borderColor = ''; errEl.style.color = '';
+    errEl.textContent = (err.message || 'Could not send reset email.');
+    errEl.style.display = 'block';
   }
 }
 
-// ── STEP 4: REVIEW ──
-function populateReview() {
-  const fn = document.getElementById('firstName').value.trim(), mn = document.getElementById('middleName').value.trim(), ln = document.getElementById('lastName').value.trim(), dob = document.getElementById('dob').value;
-  document.getElementById('rv-username').textContent  = robloxData.username || '—';
-  document.getElementById('rv-pin').textContent       = robloxData.id       || '—';
-  document.getElementById('rv-name').textContent      = buildFullName(fn,mn,ln) || '—';
-  document.getElementById('rv-authmethod').textContent = authMethodLabel || '—';
-  document.getElementById('rv-authemail').textContent  = authUser?.email || authUser?.displayName || '—';
-  document.getElementById('rv-dob').textContent = dob ? new Date(dob+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '—';
-}
-
-function toggleCreate() { document.getElementById('createBtn').disabled = !document.getElementById('declareCheck').checked; }
-
-// ── CREATE ACCOUNT ──
-async function createAccount() {
-  const btn = document.getElementById('createBtn'), errBox = document.getElementById('step4Error');
-  btn.disabled = true; document.getElementById('createBtnText').textContent = 'Creating…'; document.getElementById('createBtnSpin').style.display = 'inline-block'; errBox.style.display = 'none';
-  const fn = document.getElementById('firstName').value.trim(), mn = document.getElementById('middleName').value.trim(), ln = document.getElementById('lastName').value.trim(), dob = document.getElementById('dob').value;
-  try {
-    await waitFor('_migovtReady', 'migovtReady');
-    const { collection, doc, getDocs, setDoc, query, where } = window._migovtHelpers;
-    const snap = await getDocs(query(collection(window._migovtDb,'mipass'), where('pin','==',String(robloxData.id))));
-    if (!snap.empty) throw new Error('A MiGOVT account already exists for this PIN. Please sign in instead.');
-    if (!authUser) throw new Error('No authentication method linked. Please go back and link an account.');
-    // Use Firebase Auth UID as the document ID — real, persistent, unique
-    await setDoc(doc(window._migovtDb, 'mipass', authUser.uid), {
-      uid:            authUser.uid,
-      name:           buildFullName(fn,mn,ln),
-      dateOfBirth:    dob,
-      pin:            String(robloxData.id),
-      robloxUsername: robloxData.username,
-      authMethod:     authMethodLabel,
-      email:          authUser.email || null,
-      createdAt:      new Date().toISOString()
-    });
-    document.getElementById('successPin').textContent = robloxData.id;
-    goStep('success');
-  } catch(err) {
-    btn.disabled = false; document.getElementById('createBtnText').textContent = 'Create MiGOVT Account'; document.getElementById('createBtnSpin').style.display = 'none';
-    btn.disabled = !document.getElementById('declareCheck').checked;
-    errBox.textContent = (err.message||'Account creation failed.'); errBox.style.display = 'block';
+// ── VERIFIED COMMON ──
+function showVerified() {
+  ui('stateVerified');
+  if (redirectTarget) {
+    document.getElementById('redirectWrap').style.display = 'flex';
+    document.getElementById('confirmBtn').style.display   = 'none';
+    setTimeout(() => { document.getElementById('redirectFill').style.width = '100%'; }, 50);
+    setTimeout(() => doRedirect(), 2600);
+  } else {
+    document.getElementById('redirectWrap').style.display = 'none';
+    document.getElementById('confirmBtn').style.display   = '';
   }
 }
 
-// ── OVERRIDE goStep to hook step3 init ──
-const _orig = goStep;
-window.goStep = async function(n) {
-  if (n === 3) { _orig(3); await enterStep3(); return; }
-  _orig(n);
-};
+function doRedirect() {
+  if (!redirectTarget || !userData) return;
+  const url = new URL(redirectTarget);
+  url.searchParams.set('mipass_pin',  userData.pin);
+  url.searchParams.set('mipass_name', userData.name);
+  url.searchParams.set('mipass_dob',  userData.dateOfBirth);
+  url.searchParams.set('mipass_user', userData.robloxUsername);
+  window.location.href = url.toString();
+}
 
-// ── EXPOSE GLOBALS ──
-window.connectRoblox    = connectRoblox;
-window.doDisconnect     = doDisconnect;
-window.doRetry          = doRetry;
-window.signInWithGoogle = signInWithGoogle;
-window.toggleEmailForm  = toggleEmailForm;
-window.handleEmailAuth  = handleEmailAuth;
-window.disconnectAuth   = disconnectAuth;
-window.handleStep3Next  = handleStep3Next;
-window.toggleCreate     = toggleCreate;
-window.createAccount    = createAccount;
+function goCreate() {
+  const redirect = sessionStorage.getItem(SS_REDIRECT) || '';
+  const rName    = sessionStorage.getItem(SS_RNAME) || '';
+  let url = '/signup/';
+  if (redirect) url += '?redirect_uri=' + encodeURIComponent(redirect) + '&site_name=' + encodeURIComponent(rName);
+  window.location.href = url;
+}
 
-window.addEventListener('DOMContentLoaded', () => { uiState('connect'); handleOAuthCallback(); });
+window.doConnectRoblox  = doConnectRoblox;
+window.doSignInGoogle   = doSignInGoogle;
+window.doSignInEmail    = doSignInEmail;
+window.doForgotPassword = doForgotPassword;
+window.switchTab        = switchTab;
+window.doReset          = doReset;
+window.doRedirect       = doRedirect;
+window.goCreate         = goCreate;
+
+window.addEventListener('DOMContentLoaded', init);
 </script>
 <script src="/partials.js"></script>
 </body>
