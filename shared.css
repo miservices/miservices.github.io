@@ -110,6 +110,439 @@
   background: var(--lake-night);
 }
 
+/* ============================================================
+   AUTH PAGES (login / signup / account)
+   ------------------------------------------------------------
+   Purely cosmetic — no real authentication happens here. Any
+   "signed in" state is stored only in sessionStorage on the
+   visitor's own browser (cleared when the tab closes) and is
+   never sent anywhere. See /login/, /signup/, /account/.
+   ============================================================ */
+
+.auth-hero {
+  background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+  border-bottom: 1px solid var(--nav-border);
+  padding: 48px 24px 38px;
+  text-align: center;
+}
+
+.auth-hero-inner { max-width: 480px; margin: 0 auto; }
+
+.auth-eyebrow {
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--trail-amber-text);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.auth-hero h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(26px, 4.4vw, 34px);
+  line-height: 1.2;
+  margin: 0 0 12px;
+  color: var(--lake-deep);
+}
+
+.auth-hero p {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.auth-wrap {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 36px 24px 64px;
+}
+
+/* ---------- Requester badge (redirect_uri flow) ---------- */
+
+.auth-requester {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  border-left: 4px solid var(--trail-amber);
+  border-radius: 7px;
+  padding: 13px 16px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.auth-requester svg { width: 20px; height: 20px; stroke: var(--lake-deep); flex-shrink: 0; }
+.auth-requester strong { color: var(--ink); display: block; font-size: 13.5px; }
+
+/* ---------- Card ---------- */
+
+.auth-card {
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  border-radius: 10px;
+  padding: 30px 28px;
+}
+
+.auth-google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1.5px solid var(--nav-border);
+  border-radius: 7px;
+  padding: 12px 18px;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.auth-google-btn:hover { background: var(--paper-warm); border-color: var(--lake-mist); }
+.auth-google-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.auth-google-btn svg.g-icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--nav-border); }
+
+.auth-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.auth-field:last-of-type { margin-bottom: 0; }
+
+.auth-field label {
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--ink);
+}
+
+.auth-field label .opt { font-weight: 500; color: var(--ink-soft); font-size: 11.5px; margin-left: 3px; }
+
+.auth-field input {
+  height: 42px;
+  border: 1.5px solid var(--nav-border);
+  border-radius: 6px;
+  padding: 0 13px;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--paper);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.auth-field input:focus {
+  border-color: var(--lake-mist);
+  box-shadow: 0 0 0 3px rgba(76,124,146,0.15);
+}
+
+.auth-field input.field-error { border-color: #c0392b; }
+.auth-field input[readonly] { background: var(--paper-warm); color: var(--ink-soft); cursor: not-allowed; }
+
+.auth-field-msg { font-size: 11.5px; color: #9a3b34; display: none; }
+.auth-field input.field-error ~ .auth-field-msg { display: block; }
+
+.auth-hint { font-size: 11.5px; color: var(--ink-soft); line-height: 1.5; }
+
+.auth-row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: -6px 0 16px;
+  font-size: 12.5px;
+}
+
+.auth-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 16px 0 18px;
+}
+
+.auth-checkbox-row input { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--lake-deep); flex-shrink: 0; }
+.auth-checkbox-row label { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+
+.auth-link-btn {
+  background: none;
+  border: none;
+  color: var(--lake-deep);
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 12.5px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+}
+
+.auth-submit-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--lake-deep);
+  color: var(--paper);
+  border: none;
+  border-radius: 7px;
+  padding: 13px 18px;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.auth-submit-btn:hover:not(:disabled) { background: var(--lake-night); }
+.auth-submit-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.auth-spinner {
+  width: 15px; height: 15px;
+  border: 2px solid rgba(243,239,230,0.4);
+  border-top-color: var(--paper);
+  border-radius: 50%;
+  animation: auth-spin 0.7s linear infinite;
+  display: none;
+}
+
+@keyframes auth-spin { to { transform: rotate(360deg); } }
+
+.auth-alert {
+  border-radius: 7px;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  margin-bottom: 16px;
+  display: none;
+}
+
+.auth-alert.show { display: block; }
+.auth-alert.error { background: #f5e2e0; border: 1px solid #e8b9b3; color: #9a3b34; }
+.auth-alert.success { background: #e2f0e4; border: 1px solid #b9dcbe; color: #2b6b3a; }
+.auth-alert.info { background: var(--paper-warm); border: 1px solid var(--nav-border); color: var(--ink-soft); }
+
+.auth-switch {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.auth-switch a { color: var(--lake-deep); font-weight: 700; text-decoration: none; }
+.auth-switch a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+.auth-demo-note {
+  margin-top: 22px;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ---------- Success state (signup) ---------- */
+
+.auth-success-wrap { display: none; text-align: center; padding: 6px 0; }
+
+.auth-success-icon {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: #e2f0e4;
+  border: 1px solid #b9dcbe;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.auth-success-icon svg { width: 26px; height: 26px; stroke: #2b6b3a; }
+
+.auth-success-wrap h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 21px;
+  color: var(--lake-deep);
+  margin: 0 0 8px;
+}
+
+.auth-success-wrap p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+}
+
+/* ---------- Account page ---------- */
+
+.account-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  border-radius: 10px;
+  padding: 22px 24px;
+  margin-bottom: 24px;
+}
+
+.account-avatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--lake-deep);
+  color: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.account-profile-name {
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.account-profile-email { font-size: 13px; color: var(--ink-soft); }
+
+.account-section {
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  border-radius: 10px;
+  padding: 26px 26px 24px;
+  margin-bottom: 20px;
+}
+
+.account-section h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--lake-deep);
+  margin: 0 0 4px;
+}
+
+.account-section .section-sub {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin: 0 0 18px;
+}
+
+.account-locked-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--paper-warm);
+  border: 1px solid var(--nav-border);
+  border-radius: 7px;
+  padding: 13px 16px;
+  margin-bottom: 16px;
+}
+
+.account-locked-row .info { display: flex; align-items: center; gap: 11px; }
+
+.account-locked-row .method-icon {
+  width: 34px; height: 34px;
+  border-radius: 7px;
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.account-locked-row .method-icon svg { width: 17px; height: 17px; stroke: var(--lake-deep); }
+
+.account-locked-row .method-name {
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.account-locked-row .method-sub { font-size: 11.5px; color: var(--ink-soft); }
+
+.account-locked-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  border-radius: 100px;
+  padding: 4px 10px;
+  flex-shrink: 0;
+}
+
+.account-locked-badge svg { width: 12px; height: 12px; stroke: currentColor; }
+
+.account-signed-out {
+  text-align: center;
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  border-radius: 10px;
+  padding: 44px 28px;
+}
+
+.account-signed-out .icon {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--paper-warm);
+  border: 1px solid var(--nav-border);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px;
+}
+
+.account-signed-out .icon svg { width: 24px; height: 24px; stroke: var(--lake-mist); }
+
+.account-signed-out h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--lake-deep);
+  margin: 0 0 8px;
+}
+
+.account-signed-out p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+}
+
+.account-signout-btn {
+  width: 100%;
+  background: var(--paper);
+  color: #9a3b34;
+  border: 1.5px solid #e8b9b3;
+  border-radius: 7px;
+  padding: 12px 18px;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.account-signout-btn:hover { background: #f5e2e0; }
+
 :root {
   --lake-deep: #0e3a53;
   --lake-mist: #4c7c92;
@@ -149,17 +582,6 @@ button:focus-visible {
   outline: 3px solid var(--lake-deep);
   outline-offset: 3px;
   border-radius: 2px;
-}
-
-/* ---------- Sticky wrapper for banner + header ----------
-   Wraps the disclaimer banner and site header (see partials.js)
-   so they stay pinned to the top of the viewport while scrolling.
-   The mobile nav panel lives inside this wrapper too, so it stays
-   anchored under the header and scrolls internally if needed. */
-.site-chrome-sticky {
-  position: sticky;
-  top: 0;
-  z-index: 50;
 }
 
 /* ---------- Disclaimer banner ---------- */
@@ -208,8 +630,9 @@ button:focus-visible {
   font-family: 'Public Sans', sans-serif;
   font-weight: 700;
   font-size: 21px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   color: var(--paper);
+  text-transform: uppercase;
   flex-shrink: 0;
   padding: 6px 2px;
 }
@@ -418,7 +841,7 @@ button:focus-visible {
     display: none;
     background: var(--paper-warm);
     border-top: 3px solid var(--trail-amber);
-    max-height: calc(100vh - 68px - 40px);
+    max-height: 70vh;
     overflow-y: auto;
     padding: 8px 16px 20px;
   }
