@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Account | MiPASS | MiGOVT.org</title>
+<title>Create Account | MiGOVT | MiGOVT.org</title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,43 +26,34 @@
   --gold-border: var(--trail-amber);
   --accent: var(--lake-mist);
   --accent-light: #e8f0f4;
-  --shadow: 0 14px 30px rgba(14,58,83,0.1);
+  --shadow: 0 20px 44px rgba(14,58,83,0.12);
 }
-.page-hero {
-  background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+
+html, body { height: 100%; }
+body { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* SLIM HEADER (replaces the old big hero) */
+.page-header {
+  background: var(--paper);
   border-bottom: 1px solid var(--nav-border);
-  padding: 48px 24px 40px;
+  padding: 22px 24px;
   text-align: center;
 }
-.page-hero-inner { max-width: 640px; margin: 0 auto; }
-.eyebrow {
-  font-family: 'Public Sans', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  color: var(--trail-amber-text);
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.page-hero h1 {
+.page-header h1 {
   font-family: 'Fraunces', serif;
   font-weight: 600;
-  font-size: clamp(28px, 4.5vw, 40px);
-  line-height: 1.15;
-  margin: 0 0 12px;
+  font-size: 22px;
+  line-height: 1.2;
+  margin: 0;
   color: var(--lake-deep);
+  letter-spacing: -0.01em;
 }
-.page-hero p.lede {
-  font-size: 15.5px;
-  line-height: 1.65;
-  color: var(--ink-soft);
-  margin: 0 auto;
-  max-width: 520px;
-}
+
 .auth-wrap {
-  max-width: 600px;
+  max-width: 680px;
+  width: 100%;
   margin: 0 auto;
-  padding: 40px 24px 64px;
+  padding: 48px 24px 64px;
   flex: 1;
 }
 .card {
@@ -71,167 +61,182 @@
   background: var(--white);
   border: 1px solid var(--border);
   border-top: 4px solid var(--trail-amber);
-  border-radius: 8px;
-  padding: 32px 28px;
+  border-radius: 10px;
+  padding: 44px 40px;
   box-shadow: var(--shadow);
 }
-.progress-wrap { margin-bottom: 28px; }
-.already-have { font-size: 12px; color: var(--gray); text-align: center; margin-top: 16px; }
+.card-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--lake-deep);
+  margin: 0 0 6px;
+  text-align: center;
+}
+.card-subtitle {
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin: 0 0 30px;
+  line-height: 1.55;
+}
+.progress-wrap { margin-bottom: 32px; }
+.already-have { font-size: 13px; color: var(--gray); text-align: center; margin-top: 18px; }
 .already-have a { color: var(--lake-deep); font-weight: 700; text-decoration: none; }
 .already-have a:hover { text-decoration: underline; }
 .progress-steps { display: flex; align-items: center; }
-.ps { display: flex; align-items: center; gap: 7px; flex: 1; }
+.ps { display: flex; align-items: center; gap: 8px; flex: 1; }
 .ps:last-child { flex: 0; }
 .ps-circle {
-  width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border);
-  background: var(--white); color: #9ca3af; font-size: 11px; font-weight: 800;
+  width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border);
+  background: var(--white); color: #9ca3af; font-size: 12px; font-weight: 800;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s;
 }
 .ps-circle.active { background: var(--lake-deep); border-color: var(--lake-deep); color: white; }
-.ps-circle.done   { background: var(--green); border-color: var(--green); color: white; font-size: 12px; }
-.ps-label { font-size: 11px; font-weight: 600; color: #9ca3af; white-space: nowrap; transition: color 0.2s; }
+.ps-circle.done   { background: var(--green); border-color: var(--green); color: white; font-size: 13px; }
+.ps-label { font-size: 12px; font-weight: 600; color: #9ca3af; white-space: nowrap; transition: color 0.2s; }
 .ps-label.active { color: var(--lake-deep); }
 .ps-label.done   { color: var(--green); }
 .ps-line { flex: 1; height: 2px; background: var(--border); margin: 0 8px; transition: background 0.2s; }
 .ps-line.done { background: var(--green); }
-.step-header { margin-bottom: 22px; }
-.step-header h2 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--lake-deep); margin-bottom: 4px; }
-.step-header p { font-size: 12.5px; color: var(--gray); line-height: 1.55; }
+.step-header { margin-bottom: 26px; }
+.step-header h2 { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; color: var(--lake-deep); margin-bottom: 5px; }
+.step-header p { font-size: 13.5px; color: var(--gray); line-height: 1.55; }
 .step { display: none; }
 .step.active { display: block; }
 
 /* ROBLOX CONNECT */
-.roblox-connect-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 10px 0 6px; }
+.roblox-connect-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 14px 0 8px; }
 button.roblox-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  background: #111827; color: white; border: none; border-radius: 4px; padding: 12px 24px;
-  font-family: 'Public Sans', sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  background: #111827; color: white; border: none; border-radius: 6px; padding: 14px 26px;
+  font-family: 'Public Sans', sans-serif; font-size: 14.5px; font-weight: 700; cursor: pointer;
   transition: background 0.15s, transform 0.1s; width: auto;
 }
 button.roblox-btn:hover { background: #1f2937; transform: translateY(-1px); }
-.rblx-diamond { width: 16px; height: 16px; background: white; transform: rotate(45deg); border-radius: 2px; flex-shrink: 0; }
-.state-loading { display: none; flex-direction: column; align-items: center; gap: 12px; padding: 32px 0; text-align: center; }
-.spinner { width: 32px; height: 32px; border: 3px solid #e5e7eb; border-top-color: var(--lake-deep); border-radius: 50%; animation: spin 0.7s linear infinite; }
+.rblx-diamond { width: 17px; height: 17px; background: white; transform: rotate(45deg); border-radius: 2px; flex-shrink: 0; }
+.state-loading { display: none; flex-direction: column; align-items: center; gap: 14px; padding: 40px 0; text-align: center; }
+.spinner { width: 34px; height: 34px; border: 3px solid #e5e7eb; border-top-color: var(--lake-deep); border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.state-loading p { font-size: 13px; color: var(--gray); }
+.state-loading p { font-size: 14px; color: var(--gray); }
 .state-connected { display: none; width: 100%; padding: 8px 0; }
-.disconnect-link { font-size: 11.5px; color: var(--gray); cursor: pointer; text-decoration: underline; }
-.state-error { display: none; flex-direction: column; align-items: center; gap: 10px; padding: 20px; background: var(--red-light); border: 1px solid var(--red-border); border-radius: 8px; text-align: center; margin-top: 8px; }
-.state-error p { font-size: 12.5px; color: var(--red); line-height: 1.5; }
-.rblx-pill-header { display: inline-flex; align-items: center; gap: 7px; background: #111827; color: #e5e7eb; border-radius: 20px; padding: 5px 14px; font-size: 11.5px; font-weight: 700; }
+.disconnect-link { font-size: 12px; color: var(--gray); cursor: pointer; text-decoration: underline; }
+.state-error { display: none; flex-direction: column; align-items: center; gap: 10px; padding: 22px; background: var(--red-light); border: 1px solid var(--red-border); border-radius: 8px; text-align: center; margin-top: 8px; }
+.state-error p { font-size: 13px; color: var(--red); line-height: 1.5; }
+.rblx-pill-header { display: inline-flex; align-items: center; gap: 8px; background: #111827; color: #e5e7eb; border-radius: 20px; padding: 6px 16px; font-size: 12.5px; font-weight: 700; }
 .rblx-pill-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; animation: pulse-dot 1.8s ease-in-out infinite; }
 @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)} }
 .rblx-scope-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 2px; }
-.rblx-scope-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--gray); }
+.rblx-scope-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--gray); }
 .rblx-scope-yes { color: var(--green); font-weight: 800; }
 .rblx-scope-no  { color: #9ca3af; font-weight: 800; }
 .rblx-scope-sep { color: #d1d5db; font-size: 14px; }
 
 /* LINKED CARD */
-.rblx-linked-card { width: 100%; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 9px; padding: 14px 16px; gap: 12px; }
-.rblx-linked-left { display: flex; align-items: center; gap: 12px; }
-.rblx-avatar { width: 42px; height: 42px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: #111827; display: flex; align-items: center; justify-content: center; }
+.rblx-linked-card { width: 100%; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 16px 18px; gap: 12px; }
+.rblx-linked-left { display: flex; align-items: center; gap: 14px; }
+.rblx-avatar { width: 44px; height: 44px; border-radius: 9px; overflow: hidden; flex-shrink: 0; background: #111827; display: flex; align-items: center; justify-content: center; }
 .rblx-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.rblx-avatar-fallback { width: 16px; height: 16px; background: white; transform: rotate(45deg); border-radius: 2px; }
+.rblx-avatar-fallback { width: 17px; height: 17px; background: white; transform: rotate(45deg); border-radius: 2px; }
 .rblx-linked-info { display: flex; flex-direction: column; gap: 2px; }
-.rblx-linked-name { font-size: 14px; font-weight: 800; color: var(--dark); }
-.rblx-linked-pin  { font-size: 11px; color: var(--gray); font-family: monospace; }
+.rblx-linked-name { font-size: 15px; font-weight: 800; color: var(--dark); }
+.rblx-linked-pin  { font-size: 11.5px; color: var(--gray); font-family: monospace; }
 .rblx-linked-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
-.rblx-linked-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--green-light); border: 1px solid var(--green-border); border-radius: 12px; padding: 3px 10px; font-size: 10.5px; font-weight: 800; color: var(--green); }
+.rblx-linked-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--green-light); border: 1px solid var(--green-border); border-radius: 12px; padding: 4px 11px; font-size: 11px; font-weight: 800; color: var(--green); }
 .rblx-linked-badge::before { content: '●'; font-size: 7px; }
 
 /* ALERTS */
-.alert { border-radius: 8px; padding: 14px 16px; font-size: 12.5px; line-height: 1.55; display: none; margin-top: 14px; }
+.alert { border-radius: 8px; padding: 15px 17px; font-size: 13px; line-height: 1.55; display: none; margin-top: 16px; }
 .alert.error   { background: var(--red-light);   border: 1px solid var(--red-border);   color: var(--red); }
 .alert.warning { background: var(--gold-light);  border: 1px solid var(--gold-border);  color: #92400e; }
 .alert.success { background: var(--green-light); border: 1px solid var(--green-border); color: #15803d; }
 .alert.info    { background: var(--accent-light);border: 1px solid #bfdbfe;             color: #1d4ed8; }
-.alert-title   { font-weight: 800; margin-bottom: 4px; font-size: 13px; }
+.alert-title   { font-weight: 800; margin-bottom: 4px; font-size: 13.5px; }
 
 /* AUTH STEP */
-.auth-divider { display: flex; align-items: center; gap: 12px; margin: 18px 0; color: var(--gray); font-size: 12px; font-weight: 600; }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--gray); font-size: 12.5px; font-weight: 600; }
 .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 .google-btn-wrap { position: relative; margin-bottom: 4px; }
-.google-recommended { position: absolute; top: -10px; right: 14px; background: var(--lake-deep); color: white; font-size: 9.5px; font-weight: 800; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.04em; text-transform: uppercase; }
+.google-recommended { position: absolute; top: -10px; right: 14px; background: var(--lake-deep); color: white; font-size: 10px; font-weight: 800; padding: 2px 9px; border-radius: 10px; letter-spacing: 0.04em; text-transform: uppercase; }
 button.google-btn {
-  width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
-  background: white; color: var(--dark); border: 1.5px solid var(--border); border-radius: 4px;
-  padding: 12px 20px; font-family: 'Public Sans', sans-serif; font-size: 13.5px; font-weight: 700;
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 11px;
+  background: white; color: var(--dark); border: 1.5px solid var(--border); border-radius: 6px;
+  padding: 14px 22px; font-family: 'Public Sans', sans-serif; font-size: 14.5px; font-weight: 700;
   cursor: pointer; transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 button.google-btn:hover { background: #f8fafc; border-color: #9ca3af; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
 button.google-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.google-icon { width: 20px; height: 20px; flex-shrink: 0; }
-.email-toggle-link { font-size: 12px; color: var(--lake-mist); font-weight: 600; cursor: pointer; text-decoration: underline; text-align: center; margin-top: 8px; display: block; }
-.email-form { display: flex; flex-direction: column; gap: 12px; }
+.google-icon { width: 21px; height: 21px; flex-shrink: 0; }
+.email-toggle-link { font-size: 12.5px; color: var(--lake-mist); font-weight: 600; cursor: pointer; text-decoration: underline; text-align: center; margin-top: 10px; display: block; }
+.email-form { display: flex; flex-direction: column; gap: 16px; }
 
 /* FORM */
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
 .form-row.single { grid-template-columns: 1fr; }
-.field { display: flex; flex-direction: column; gap: 5px; }
-.field label { font-size: 12.5px; font-weight: 700; color: var(--dark); }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 13px; font-weight: 700; color: var(--dark); }
 .field label .req { color: var(--gold); margin-left: 2px; }
-.field label .opt { font-size: 11px; font-weight: 500; color: var(--gray); margin-left: 4px; }
+.field label .opt { font-size: 11.5px; font-weight: 500; color: var(--gray); margin-left: 4px; }
 .field input {
-  height: 42px; border: 1.5px solid var(--border); border-radius: 4px; padding: 0 12px;
-  font-family: 'Public Sans', sans-serif; font-size: 13.5px; color: var(--dark); background: var(--white);
+  height: 46px; border: 1.5px solid var(--border); border-radius: 6px; padding: 0 14px;
+  font-family: 'Public Sans', sans-serif; font-size: 14.5px; color: var(--dark); background: var(--white);
   transition: border-color 0.15s, box-shadow 0.15s; outline: none; -webkit-appearance: none;
 }
 .field input:focus { border-color: var(--lake-deep); box-shadow: 0 0 0 3px rgba(14,58,83,0.12); }
 .field input.error { border-color: var(--red); }
-.field .hint { font-size: 11px; color: var(--gray); line-height: 1.4; }
-.field .err-msg { font-size: 11px; color: var(--red); display: none; }
+.field .hint { font-size: 11.5px; color: var(--gray); line-height: 1.4; }
+.field .err-msg { font-size: 11.5px; color: var(--red); display: none; }
 .field input.error ~ .err-msg { display: block; }
-.pin-display { background: var(--paper-warm); border: 1.5px solid var(--border); border-radius: 4px; height: 42px; padding: 0 12px; display: flex; align-items: center; font-size: 13.5px; font-weight: 700; color: var(--lake-deep); font-family: monospace; letter-spacing: 0.05em; }
+.pin-display { background: var(--paper-warm); border: 1.5px solid var(--border); border-radius: 6px; height: 46px; padding: 0 14px; display: flex; align-items: center; font-size: 14.5px; font-weight: 700; color: var(--lake-deep); font-family: monospace; letter-spacing: 0.05em; }
 .field input[readonly] { background: #f4f6f9; color: #374151; cursor: not-allowed; border-color: #e5e7eb; }
 .field input[readonly]:focus { border-color: #e5e7eb; box-shadow: none; }
-.locked-notice { display: none; margin-top: 8px; font-size: 11px; color: #6b7280; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px 11px; line-height: 1.5; }
+.locked-notice { display: none; margin-top: 10px; font-size: 12px; color: #6b7280; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px 12px; line-height: 1.5; }
 .locked-notice a { color: var(--lake-deep); font-weight: 700; }
-.section-divider { height: 1px; background: #f0f2f6; margin: 20px 0; }
+.section-divider { height: 1px; background: #f0f2f6; margin: 24px 0; }
 
 /* ACTIONS */
-.form-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 26px; padding-top: 20px; border-top: 1px solid #f0f2f6; }
-button.btn-back { background: none; border: 1.5px solid var(--border); color: var(--lake-deep); padding: 10px 20px; border-radius: 4px; font-family: 'Public Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: background 0.15s; width: auto; }
+.form-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 30px; padding-top: 24px; border-top: 1px solid #f0f2f6; }
+button.btn-back { background: none; border: 1.5px solid var(--border); color: var(--lake-deep); padding: 11px 22px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background 0.15s; width: auto; }
 button.btn-back:hover { background: var(--paper-warm); }
-button.btn-next { background: var(--lake-deep); color: white; border: none; padding: 11px 24px; border-radius: 4px; font-family: 'Public Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background 0.15s; width: auto; }
+button.btn-next { background: var(--lake-deep); color: white; border: none; padding: 12px 26px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.15s; width: auto; }
 button.btn-next:hover:not(:disabled) { background: var(--lake-night); }
 button.btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
-button.btn-submit { background: var(--green); color: white; border: none; padding: 11px 24px; border-radius: 4px; font-family: 'Public Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background 0.15s; width: auto; }
+button.btn-submit { background: var(--green); color: white; border: none; padding: 12px 26px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.15s; width: auto; }
 button.btn-submit:hover:not(:disabled) { background: #245f3a; }
 button.btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
-button.btn-retry { background: var(--lake-deep); color: white; border: none; padding: 9px 18px; border-radius: 4px; font-family: 'Public Sans', sans-serif; font-size: 12.5px; font-weight: 700; cursor: pointer; width: auto; }
-.mini-spin { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.35); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+button.btn-retry { background: var(--lake-deep); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-family: 'Public Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; width: auto; }
+.mini-spin { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.35); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
 
 /* AUTH CONNECTED CARD */
-.auth-linked-card { width: 100%; display: flex; align-items: center; justify-content: space-between; background: #f0f7ff; border: 1.5px solid #bfdbfe; border-radius: 9px; padding: 14px 16px; gap: 12px; }
+.auth-linked-card { width: 100%; display: flex; align-items: center; justify-content: space-between; background: #f0f7ff; border: 1.5px solid #bfdbfe; border-radius: 10px; padding: 16px 18px; gap: 12px; }
 
 /* REVIEW */
-.review-group { margin-bottom: 20px; }
-.review-group-title { font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--trail-amber-text); margin-bottom: 10px; }
-.review-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #f3f4f6; gap: 12px; }
+.review-group { margin-bottom: 22px; }
+.review-group-title { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--trail-amber-text); margin-bottom: 11px; }
+.review-row { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid #f3f4f6; gap: 12px; }
 .review-row:last-child { border-bottom: none; }
-.review-label { font-size: 12px; color: var(--gray); font-weight: 500; flex-shrink: 0; }
-.review-value { font-size: 13px; font-weight: 600; color: var(--dark); text-align: right; }
-.declaration-box { background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 16px; margin: 20px 0; }
-.declaration-box p { font-size: 12px; color: var(--dark); line-height: 1.65; }
-.checkbox-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; }
-.checkbox-row input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; accent-color: var(--lake-deep); cursor: pointer; }
-.checkbox-row label { font-size: 12px; font-weight: 600; color: var(--dark); cursor: pointer; line-height: 1.5; }
+.review-label { font-size: 12.5px; color: var(--gray); font-weight: 500; flex-shrink: 0; }
+.review-value { font-size: 14px; font-weight: 600; color: var(--dark); text-align: right; }
+.declaration-box { background: #f8fafc; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 22px 0; }
+.declaration-box p { font-size: 12.5px; color: var(--dark); line-height: 1.65; }
+.checkbox-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; }
+.checkbox-row input[type="checkbox"] { width: 17px; height: 17px; margin-top: 2px; flex-shrink: 0; accent-color: var(--lake-deep); cursor: pointer; }
+.checkbox-row label { font-size: 12.5px; font-weight: 600; color: var(--dark); cursor: pointer; line-height: 1.5; }
 
 /* SUCCESS */
-.success-wrap { text-align: center; padding: 10px 0; }
-.success-icon-big { font-size: 3rem; margin-bottom: 12px; }
-.success-wrap h2 { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--lake-deep); margin-bottom: 8px; }
-.success-wrap p { font-size: 13px; color: var(--gray); line-height: 1.6; max-width: 400px; margin: 0 auto 20px; }
-.account-info-box { background: var(--green-light); border: 1px solid var(--green-border); border-radius: 8px; padding: 16px 20px; display: inline-block; text-align: left; margin-bottom: 20px; }
-.account-info-box .ai-label { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 3px; }
-.account-info-box .ai-value { font-size: 15px; font-weight: 800; color: var(--dark); font-family: monospace; }
-.next-steps { background: var(--paper-warm); border-radius: 8px; padding: 16px 20px; text-align: left; }
-.next-steps h3 { font-size: 12.5px; font-weight: 800; color: var(--lake-deep); margin-bottom: 10px; }
-.next-steps ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
-.next-steps li { font-size: 12px; color: var(--gray); line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
+.success-wrap { text-align: center; padding: 14px 0; }
+.success-icon-big { font-size: 3.2rem; margin-bottom: 14px; }
+.success-wrap h2 { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600; color: var(--lake-deep); margin-bottom: 9px; }
+.success-wrap p { font-size: 14px; color: var(--gray); line-height: 1.6; max-width: 440px; margin: 0 auto 22px; }
+.account-info-box { background: var(--green-light); border: 1px solid var(--green-border); border-radius: 8px; padding: 18px 22px; display: inline-block; text-align: left; margin-bottom: 22px; }
+.account-info-box .ai-label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 3px; }
+.account-info-box .ai-value { font-size: 16px; font-weight: 800; color: var(--dark); font-family: monospace; }
+.next-steps { background: var(--paper-warm); border-radius: 8px; padding: 18px 22px; text-align: left; }
+.next-steps h3 { font-size: 13px; font-weight: 800; color: var(--lake-deep); margin-bottom: 11px; }
+.next-steps ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.next-steps li { font-size: 12.5px; color: var(--gray); line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
 .next-steps li::before { content: '›'; color: var(--trail-amber-text); font-weight: 800; flex-shrink: 0; }
-.footer-note { margin-top: 20px; font-size: 12px; background: var(--paper-warm); border-left: 3px solid var(--trail-amber); padding: 10px 14px; color: var(--ink-soft); line-height: 1.5; border-radius: 0 4px 4px 0; }
+.footer-note { margin-top: 22px; font-size: 12.5px; background: var(--paper-warm); border-left: 3px solid var(--trail-amber); padding: 12px 16px; color: var(--ink-soft); line-height: 1.5; border-radius: 0 4px 4px 0; }
 footer {
   text-align: center;
   padding: 22px 20px 26px;
@@ -241,23 +246,22 @@ footer {
 }
 footer strong { color: var(--ink); }
 
-@media (max-width: 520px) { .card { padding: 24px 20px; } .form-row { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .card { padding: 30px 22px; } .form-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
 <div id="site-chrome"></div>
 
-<section class="page-hero">
-  <div class="page-hero-inner">
-    <div class="eyebrow">MiPASS</div>
-    <h1>Create Your Account</h1>
-    <p class="lede">Register for a state identity account linked to your Roblox verification and personal information.</p>
-  </div>
-</section>
+<div class="page-header">
+  <h1>MiGOVT Account Creation</h1>
+</div>
 
 <main class="auth-wrap">
 <div class="card">
+
+  <div class="card-title">Create Your Account</div>
+  <p class="card-subtitle">Register for a state identity account linked to your Roblox verification and personal information.</p>
 
   <!-- PROGRESS (4 steps) -->
   <div class="progress-wrap" id="progressWrap">
@@ -288,7 +292,7 @@ footer strong { color: var(--ink); }
   <div class="step active" id="step1">
     <div class="step-header">
       <h2>Step 1 — Verify Your Identity</h2>
-      <p>Connect your Roblox account to get started. Your Roblox User ID is your Personal Identification Number (PIN) and will be linked to your MiPASS account.</p>
+      <p>Connect your Roblox account to get started. Your Roblox User ID is your Personal Identification Number (PIN) and will be linked to your MiGOVT account.</p>
     </div>
 
     <div id="stateConnect" class="roblox-connect-wrap">
@@ -296,7 +300,7 @@ footer strong { color: var(--ink); }
         <div class="rblx-pill-dot"></div>
         <span>Roblox Identity Verification</span>
       </div>
-      <p style="font-size:12.5px;color:var(--gray);line-height:1.6;text-align:center;max-width:380px;">MiPASS uses your Roblox account to verify your identity and retrieve your Personal Identification Number (PIN). No game data is ever accessed.</p>
+      <p style="font-size:13px;color:var(--gray);line-height:1.6;text-align:center;max-width:400px;">MiGOVT uses your Roblox account to verify your identity and retrieve your Personal Identification Number (PIN). No game data is ever accessed.</p>
       <button class="roblox-btn" onclick="connectRoblox()">
         <div class="rblx-diamond"></div>
         Link Roblox Account
@@ -339,8 +343,8 @@ footer strong { color: var(--ink); }
     </div>
 
     <div class="alert warning" id="alertDuplicate">
-      <div class="alert-title">⚠️ MiPASS Account Already Exists</div>
-      A MiPASS account is already linked to this Roblox account (PIN). You cannot create a duplicate account. If you need help, please contact support.
+      <div class="alert-title">⚠️ MiGOVT Account Already Exists</div>
+      A MiGOVT account is already linked to this Roblox account (PIN). You cannot create a duplicate account. If you need help, please contact support.
     </div>
 
     <div class="form-actions">
@@ -353,7 +357,7 @@ footer strong { color: var(--ink); }
   <div class="step" id="step2">
     <div class="step-header">
       <h2>Step 2 — Create Your Account</h2>
-      <p>Link a Google account or create an email and password to sign in to MiPASS.</p>
+      <p>Link a Google account or create an email and password to sign in to MiGOVT.</p>
     </div>
 
     <div id="authSetupWrap">
@@ -416,7 +420,7 @@ footer strong { color: var(--ink); }
       </div>
     </div>
 
-    <div class="alert error" id="step2AuthError" style="margin-top:14px;"></div>
+    <div class="alert error" id="step2AuthError" style="margin-top:16px;"></div>
 
     <div class="form-actions">
       <button class="btn-back" onclick="goStep(1)">‹ Back</button>
@@ -428,7 +432,7 @@ footer strong { color: var(--ink); }
   <div class="step" id="step3">
     <div class="step-header">
       <h2>Step 3 — Identity Information</h2>
-      <p>Provide your personal information to complete your MiPASS account.</p>
+      <p>Provide your personal information to complete your MiGOVT account.</p>
     </div>
 
     <div class="alert success" id="alertRegistered">
@@ -493,7 +497,7 @@ footer strong { color: var(--ink); }
   <div class="step" id="step4">
     <div class="step-header">
       <h2>Step 4 — Review &amp; Confirm</h2>
-      <p>Review the information below before creating your MiPASS account.</p>
+      <p>Review the information below before creating your MiGOVT account.</p>
     </div>
 
     <div class="review-group">
@@ -513,7 +517,7 @@ footer strong { color: var(--ink); }
     </div>
 
     <div class="declaration-box">
-      <p>By creating this MiPASS account, I confirm that the information provided is accurate and that I am the rightful owner of the Roblox account linked above. I understand that this account is subject to state identity policies.</p>
+      <p>By creating this MiGOVT account, I confirm that the information provided is accurate and that I am the rightful owner of the Roblox account linked above. I understand that this account is subject to state identity policies.</p>
       <div class="checkbox-row">
         <input type="checkbox" id="declareCheck" onchange="toggleCreate()">
         <label for="declareCheck">I confirm the above information is accurate and I agree to the terms.</label>
@@ -525,7 +529,7 @@ footer strong { color: var(--ink); }
     <div class="form-actions">
       <button class="btn-back" onclick="goStep(3)">‹ Back</button>
       <button class="btn-submit" id="createBtn" onclick="createAccount()" disabled>
-        <span id="createBtnText">Create MiPASS Account</span>
+        <span id="createBtnText">Create MiGOVT Account</span>
         <div class="mini-spin" id="createBtnSpin"></div>
       </button>
     </div>
@@ -536,7 +540,7 @@ footer strong { color: var(--ink); }
     <div class="success-wrap">
       <div class="success-icon-big">🎉</div>
       <h2>Account Created!</h2>
-      <p>Your MiPASS account has been successfully created and linked to your State Identity Record.</p>
+      <p>Your MiGOVT account has been successfully created and linked to your State Identity Record.</p>
       <div class="account-info-box">
         <div class="ai-label">Your PIN</div>
         <div class="ai-value" id="successPin">—</div>
@@ -544,13 +548,13 @@ footer strong { color: var(--ink); }
       <div class="next-steps">
         <h3>What's Next</h3>
         <ul>
-          <li>You can now log into MiPASS with your linked account.</li>
+          <li>You can now log into MiGOVT with your linked account.</li>
           <li>Your identity is linked to the State Registry and accessible to authorized state services.</li>
-          <li>Keep your account information up to date through your MiPASS profile.</li>
+          <li>Keep your account information up to date through your MiGOVT profile.</li>
         </ul>
       </div>
-      <div style="margin-top:20px;">
-        <a href="/login/" style="display:inline-block;background:var(--lake-deep);color:white;font-size:13px;font-weight:700;padding:11px 24px;border-radius:4px;text-decoration:none;">Sign In to MiPASS →</a>
+      <div style="margin-top:22px;">
+        <a href="/login/" style="display:inline-block;background:var(--lake-deep);color:white;font-size:14px;font-weight:700;padding:12px 26px;border-radius:6px;text-decoration:none;">Sign In to MiGOVT →</a>
       </div>
     </div>
   </div>
@@ -559,12 +563,12 @@ footer strong { color: var(--ink); }
     🔒 Identity verification is required during account creation. All accounts are subject to state identity registration and audit logging.
   </div>
 
-  <p class="already-have">Already have a MiPASS account? <a href="/login/">Sign in</a></p>
+  <p class="already-have">Already have a MiGOVT account? <a href="/login/">Sign in</a></p>
 </div>
 </main>
 
 <footer>
-  <strong>Department of Technology</strong> · MiGOVT.org · MiPASS Create Account
+  <strong>Department of Technology</strong> · MiGOVT.org · MiGOVT Create Account
 </footer>
 
 <!-- FIREBASE — SOS -->
@@ -585,7 +589,7 @@ footer strong { color: var(--ink); }
   document.dispatchEvent(new Event('sosReady'));
 </script>
 
-<!-- FIREBASE — MiPASS + Auth -->
+<!-- FIREBASE — MiGOVT + Auth -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
   import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where }
@@ -593,23 +597,23 @@ footer strong { color: var(--ink); }
   import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup }
     from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
-  const mipassApp = initializeApp({
+  const migovtApp = initializeApp({
     apiKey: "AIzaSyCWJBf_xxGj8JWbfwzzEHmtdzMmiLTGTas",
     authDomain: "mipass-77b56.firebaseapp.com",
     projectId: "mipass-77b56",
     storageBucket: "mipass-77b56.firebasestorage.app",
     messagingSenderId: "326401354685",
     appId: "1:326401354685:web:dee9e48de3975a72d600d4"
-  }, "mipass");
+  }, "migovt");
 
-  window._mipassDb   = getFirestore(mipassApp);
-  window._mipassAuth = getAuth(mipassApp);
-  window._mipassHelpers = { collection, doc, getDoc, getDocs, setDoc, query, where };
+  window._migovtDb   = getFirestore(migovtApp);
+  window._migovtAuth = getAuth(migovtApp);
+  window._migovtHelpers = { collection, doc, getDoc, getDocs, setDoc, query, where };
   window._GoogleAuthProvider = GoogleAuthProvider;
   window._signInWithPopup    = signInWithPopup;
   window._createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-  window._mipassReady = true;
-  document.dispatchEvent(new Event('mipassReady'));
+  window._migovtReady = true;
+  document.dispatchEvent(new Event('migovtReady'));
 </script>
 
 <!-- MAIN LOGIC -->
@@ -689,17 +693,17 @@ async function loadAvatar(userId) {
 // ── STEP 1: OAUTH ──
 function connectRoblox() {
   const state = crypto.randomUUID();
-  sessionStorage.setItem('mipass_oauth_state', state);
+  sessionStorage.setItem('migovt_oauth_state', state);
   const p = new URLSearchParams({ client_id: ROBLOX_CLIENT_ID, redirect_uri: REDIRECT_URI, response_type: 'Code', scope: 'openid profile', state });
   window.location.href = 'https://authorize.roblox.com/?' + p.toString();
 }
 
 async function handleOAuthCallback() {
   const params = new URLSearchParams(window.location.search);
-  const code = params.get('code'), stateParam = params.get('state'), saved = sessionStorage.getItem('mipass_oauth_state');
+  const code = params.get('code'), stateParam = params.get('state'), saved = sessionStorage.getItem('migovt_oauth_state');
   if (!code) return;
   window.history.replaceState({}, '', window.location.pathname);
-  sessionStorage.removeItem('mipass_oauth_state');
+  sessionStorage.removeItem('migovt_oauth_state');
   uiState('loading');
   document.getElementById('loadingMsg').textContent = 'Verifying your Roblox account…';
   if (stateParam !== saved) { showError('Security validation failed. Please try connecting again.'); return; }
@@ -712,11 +716,11 @@ async function handleOAuthCallback() {
 }
 
 async function afterRobloxAuth(userId, username) {
-  document.getElementById('loadingMsg').textContent = 'Checking for existing MiPASS account…';
-  await waitFor('_mipassReady', 'mipassReady');
-  const { collection, getDocs, query, where } = window._mipassHelpers;
+  document.getElementById('loadingMsg').textContent = 'Checking for existing MiGOVT account…';
+  await waitFor('_migovtReady', 'migovtReady');
+  const { collection, getDocs, query, where } = window._migovtHelpers;
   try {
-    const snap = await getDocs(query(collection(window._mipassDb, 'mipass'), where('pin', '==', String(userId))));
+    const snap = await getDocs(query(collection(window._migovtDb, 'mipass'), where('pin', '==', String(userId))));
     robloxData = { id: userId, username };
     document.getElementById('connUsername').textContent = username;
     document.getElementById('connPin').textContent = 'PIN: ' + userId;
@@ -734,9 +738,9 @@ async function signInWithGoogle() {
   const btn = document.getElementById('googleBtn');
   btn.disabled = true;
   showAlert('step2AuthError', false);
-  await waitFor('_mipassReady', 'mipassReady');
+  await waitFor('_migovtReady', 'migovtReady');
   try {
-    const result = await window._signInWithPopup(window._mipassAuth, new window._GoogleAuthProvider());
+    const result = await window._signInWithPopup(window._migovtAuth, new window._GoogleAuthProvider());
     authUser = result.user;
     authMethodLabel = 'Google';
     showAuthConnected('🔵', authUser.displayName || authUser.email, 'Google Account');
@@ -768,9 +772,9 @@ async function handleEmailAuth() {
   btn.disabled = true;
   document.getElementById('emailContinueText').textContent = 'Creating…';
   document.getElementById('emailContinueSpin').style.display = 'inline-block';
-  await waitFor('_mipassReady', 'mipassReady');
+  await waitFor('_migovtReady', 'migovtReady');
   try {
-    const cred = await window._createUserWithEmailAndPassword(window._mipassAuth, eEl.value.trim(), pEl.value);
+    const cred = await window._createUserWithEmailAndPassword(window._migovtAuth, eEl.value.trim(), pEl.value);
     authUser = cred.user;
     authMethodLabel = 'Email & Password';
     showAuthConnected('📧', authUser.email, 'Email & Password');
@@ -800,7 +804,7 @@ function disconnectAuth() {
   document.getElementById('emailToggle').textContent = 'Use email & password instead';
   document.getElementById('googleBtn').disabled = false;
   document.getElementById('nextBtn2').disabled = true;
-  try { if (window._mipassAuth?.currentUser) window._mipassAuth.currentUser.delete().catch(()=>{}); } catch(e){}
+  try { if (window._migovtAuth?.currentUser) window._migovtAuth.currentUser.delete().catch(()=>{}); } catch(e){}
 }
 
 // ── STEP 3: REGISTRY ──
@@ -861,7 +865,7 @@ async function handleStep3Next() {
         pin: String(robloxData.id), robloxId: String(robloxData.id), robloxUsername: robloxData.username,
         firstName: fn, middleName: mn || null, lastName: ln, fullName: buildFullName(fn,mn,ln),
         dateOfBirth: dob, status:'registered', citizenshipStatus:null, applicationNumber:null,
-        priorLegalNames:[], registeredAt: new Date().toISOString(), source:'mipass'
+        priorLegalNames:[], registeredAt: new Date().toISOString(), source:'migovt'
       });
       registeredInRegistry = true;
     }
@@ -892,13 +896,13 @@ async function createAccount() {
   btn.disabled = true; document.getElementById('createBtnText').textContent = 'Creating…'; document.getElementById('createBtnSpin').style.display = 'inline-block'; errBox.style.display = 'none';
   const fn = document.getElementById('firstName').value.trim(), mn = document.getElementById('middleName').value.trim(), ln = document.getElementById('lastName').value.trim(), dob = document.getElementById('dob').value;
   try {
-    await waitFor('_mipassReady', 'mipassReady');
-    const { collection, doc, getDocs, setDoc, query, where } = window._mipassHelpers;
-    const snap = await getDocs(query(collection(window._mipassDb,'mipass'), where('pin','==',String(robloxData.id))));
-    if (!snap.empty) throw new Error('A MiPASS account already exists for this PIN. Please sign in instead.');
+    await waitFor('_migovtReady', 'migovtReady');
+    const { collection, doc, getDocs, setDoc, query, where } = window._migovtHelpers;
+    const snap = await getDocs(query(collection(window._migovtDb,'mipass'), where('pin','==',String(robloxData.id))));
+    if (!snap.empty) throw new Error('A MiGOVT account already exists for this PIN. Please sign in instead.');
     if (!authUser) throw new Error('No authentication method linked. Please go back and link an account.');
     // Use Firebase Auth UID as the document ID — real, persistent, unique
-    await setDoc(doc(window._mipassDb, 'mipass', authUser.uid), {
+    await setDoc(doc(window._migovtDb, 'mipass', authUser.uid), {
       uid:            authUser.uid,
       name:           buildFullName(fn,mn,ln),
       dateOfBirth:    dob,
@@ -911,7 +915,7 @@ async function createAccount() {
     document.getElementById('successPin').textContent = robloxData.id;
     goStep('success');
   } catch(err) {
-    btn.disabled = false; document.getElementById('createBtnText').textContent = 'Create MiPASS Account'; document.getElementById('createBtnSpin').style.display = 'none';
+    btn.disabled = false; document.getElementById('createBtnText').textContent = 'Create MiGOVT Account'; document.getElementById('createBtnSpin').style.display = 'none';
     btn.disabled = !document.getElementById('declareCheck').checked;
     errBox.textContent = '⚠️ ' + (err.message||'Account creation failed.'); errBox.style.display = 'block';
   }
