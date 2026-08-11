@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Department of Natural Resources | MiGOVT.org</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Shared site-wide styles (banner, header, nav, confirm modal) -->
+<link rel="stylesheet" href="/shared.css">
+
+<!-- ============================================================
+     HOW TO USE THIS TEMPLATE
+     ============================================================
+     This is the default home page for a state executive agency
+     (e.g. DNR, MDOT, Treasury, LARA). To stand up a new agency
+     site:
+
+     1. Find/replace every {{PLACEHOLDER}} token below and in the
+        <style> block. A full list of tokens is in the comment
+        just above </style>.
+     2. Swap AGENCY_ACCENT / AGENCY_ACCENT_DARK / AGENCY_ACCENT_SOFT
+        for a palette that fits the agency (defaults below are the
+        same lake-blue used site-wide, so an agency can also just
+        leave them as-is for a consistent look).
+     3. Replace the four "Quick links" tiles and the three
+        "Programs & services" cards with the agency's real top
+        tasks — keep the count (4 and 3) or adjust the CSS grid
+        column counts if you add/remove cards.
+     4. Replace the "Latest" list with real news/alerts, or delete
+        the whole <section class="latest-band"> if the agency
+        doesn't publish updates.
+     5. Update the contact block and footer columns.
+     6. Leave .confirm-link classes on every outbound/internal link
+        — confirm-nav.js depends on them site-wide.
+     ============================================================ -->
+
+<style>
+  /* ============================================================
+     PLACEHOLDER TOKENS USED IN THIS FILE
+     ------------------------------------------------------------
+     Department of Natural Resources          Full agency name, e.g. "Department of Natural Resources"
+     DNR       Short form, e.g. "DNR"
+     dnr          URL path segment, e.g. "dnr"
+     Michigan's land, water, and wildlife       One line under the eyebrow, e.g. "Michigan's land, water, and wildlife"
+     The DNR manages 4.6 million acres of public land, more than 100 state parks, and the fish and wildlife that call them home — so every Michigander has a place to hunt, fish, camp, and get outside.       1–2 sentence mission statement for the hero
+     #5c7a3f        Primary agency accent hex (defaults to trail amber)
+     #3f5629   Darker shade of the accent, for hovers/text
+     (517) 284-0000         Public contact phone number
+     dnr-info@michigan.gov         Public contact email
+     525 W. Allegan St., Lansing, MI       Mailing / office address
+     Mon–Fri, 8am–5pm         Office hours line
+     ============================================================ */
+
+  :root {
+    /* Agency accent — override per agency. Falls back to the
+       site's trail-amber if left as-is. */
+    --agency-accent: #5c7a3f;
+    --agency-accent-dark: #3f5629;
+  }
+
+  /* ---------- Hero ---------- */
+
+  .agency-hero {
+    position: relative;
+    background: linear-gradient(160deg, var(--lake-deep) 0%, var(--lake-mist) 100%);
+    overflow: hidden;
+    padding: 72px 24px 84px;
+  }
+
+  .agency-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 12% 18%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 45%);
+    pointer-events: none;
+  }
+
+  .agency-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .agency-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.22);
+    margin-bottom: 22px;
+  }
+
+  /* Replace this inline SVG with the agency's real seal/icon mark.
+     Keep the wrapping <div class="agency-badge"> sizing so it lines
+     up with every other agency page. */
+  .agency-badge svg { width: 30px; height: 30px; stroke: var(--paper); }
+
+  .agency-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--agency-accent);
+    margin-bottom: 16px;
+  }
+
+  .agency-eyebrow .line { width: 22px; height: 1.5px; background: var(--agency-accent); }
+
+  .agency-hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(32px, 5.4vw, 52px);
+    line-height: 1.1;
+    color: var(--paper);
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .agency-hero .tagline {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--agency-accent);
+    margin: 0 0 18px;
+  }
+
+  .agency-hero p.mission {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: rgba(243,239,230,0.86);
+    max-width: 560px;
+    margin: 0 auto 34px;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-cta-primary,
+  .hero-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 13px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .hero-cta-primary {
+    background: var(--agency-accent);
+    color: var(--lake-night);
+  }
+  .hero-cta-primary:hover { background: var(--paper); }
+
+  .hero-cta-secondary {
+    color: var(--paper);
+    border: 1.5px solid rgba(243,239,230,0.5);
+  }
+  .hero-cta-secondary:hover { border-color: var(--agency-accent); background: rgba(255,255,255,0.08); }
+
+  /* ---------- Quick links strip ---------- */
+
+  .quicklinks-wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 54px 24px 10px;
+  }
+
+  .section-eyebrow {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--agency-accent-dark);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--lake-deep);
+    margin: 0 0 26px;
+    max-width: 580px;
+  }
+
+  .quicklink-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  @media (max-width: 820px) { .quicklink-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .quicklink-grid { grid-template-columns: 1fr; } }
+
+  .quicklink-tile {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .quicklink-tile:hover { border-color: var(--agency-accent); transform: translateY(-2px); }
+
+  .quicklink-tile .icon {
+    width: 34px; height: 34px;
+    border-radius: 7px;
+    background: var(--paper-warm);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .quicklink-tile .icon svg { width: 17px; height: 17px; stroke: var(--lake-deep); }
+
+  .quicklink-tile span.label {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+
+  /* ---------- Programs & services ---------- */
+
+  .programs-wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 58px 24px;
+  }
+
+  .section-head {
+    max-width: 620px;
+    margin: 0 0 28px;
+  }
+
+  .section-head p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 8px 0 0;
+  }
+
+  .program-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  @media (max-width: 900px) { .program-grid { grid-template-columns: 1fr; } }
+
+  .program-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 10px;
+    padding: 26px 24px 24px;
+  }
+
+  .program-card .icon {
+    width: 42px; height: 42px;
+    border-radius: 8px;
+    background: var(--paper-warm);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .program-card .icon svg { width: 22px; height: 22px; stroke: var(--lake-deep); }
+
+  .program-card h3 {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+
+  .program-card p.blurb {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+    flex: 1;
+  }
+
+  .program-card .see-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--lake-deep);
+    text-decoration: none;
+  }
+
+  .program-card .see-more svg {
+    width: 14px; height: 14px; stroke: currentColor;
+    transition: transform 0.15s ease;
+  }
+
+  .program-card .see-more:hover svg { transform: translateX(3px); }
+
+  /* ---------- Latest / alerts band ---------- */
+
+  .latest-band {
+    background: var(--paper-warm);
+    border-top: 1px solid var(--nav-border);
+    border-bottom: 1px solid var(--nav-border);
+  }
+
+  .latest-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 54px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 36px;
+  }
+
+  @media (max-width: 820px) { .latest-inner { grid-template-columns: 1fr; } }
+
+  .latest-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--nav-border);
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .latest-list li {
+    background: var(--nav-bg);
+    padding: 16px 18px;
+  }
+
+  .latest-list a {
+    display: block;
+    text-decoration: none;
+  }
+
+  .latest-date {
+    display: block;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--agency-accent-dark);
+    margin-bottom: 5px;
+  }
+
+  .latest-title {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  /* ---------- Contact card ---------- */
+
+  .contact-card {
+    background: var(--lake-deep);
+    border-radius: 10px;
+    padding: 30px 28px;
+    color: var(--paper);
+  }
+
+  .contact-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0 0 6px;
+  }
+
+  .contact-card p.sub {
+    font-size: 13px;
+    color: rgba(243,239,230,0.7);
+    margin: 0 0 20px;
+  }
+
+  .contact-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .contact-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .contact-row .icon svg { width: 17px; height: 17px; stroke: var(--agency-accent); flex-shrink: 0; margin-top: 2px; }
+
+  .contact-row .text {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: rgba(243,239,230,0.9);
+  }
+
+  .contact-row .text strong { display: block; color: var(--paper); font-weight: 700; margin-bottom: 1px; }
+
+  footer.agency-footer {
+    text-align: center;
+    padding: 24px 20px 28px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px solid rgba(90,70,50,0.15);
+  }
+
+  footer.agency-footer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <!-- Shared banner + header + mobile nav get injected here by partials.js -->
+  <div id="site-chrome"></div>
+
+  <!-- ============ HERO ============ -->
+  <section class="agency-hero">
+    <div class="agency-hero-inner">
+      <div class="agency-badge">
+        <!-- Replace with the agency's icon/seal mark -->
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4.5v6c0 5-3.8 8.7-9 9.5-5.2-.8-9-4.5-9-9.5v-6z"/></svg>
+      </div>
+      <div class="agency-eyebrow"><span class="line"></span> State of Michigan &middot; DNR <span class="line"></span></div>
+      <h1>Department of Natural Resources</h1>
+      <p class="tagline">Michigan's land, water, and wildlife</p>
+      <p class="mission">The DNR manages 4.6 million acres of public land, more than 100 state parks, and the fish and wildlife that call them home — so every Michigander has a place to hunt, fish, camp, and get outside.</p>
+
+      <div class="hero-cta-row">
+        <a class="hero-cta-primary confirm-link" href="/dnr/services/">
+          Browse services
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="hero-cta-secondary confirm-link" href="/dnr/about/">About the department</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUICK LINKS ============
+       Replace these 4 tiles with the agency's real top tasks. -->
+  <section class="quicklinks-wrap">
+    <div class="section-eyebrow">Quick links</div>
+    <h2 class="section-title">Things people come here to do</h2>
+
+    <div class="quicklink-grid">
+      <a class="quicklink-tile confirm-link" href="/dnr/hunting-fishing/licenses/">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg></div>
+        <span class="label">Buy a License</span>
+      </a>
+      <a class="quicklink-tile confirm-link" href="/dnr/state-parks/reservations/">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <span class="label">Reserve a Campsite</span>
+      </a>
+      <a class="quicklink-tile confirm-link" href="/dnr/state-parks/passes/">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+        <span class="label">Get a Park Pass</span>
+      </a>
+      <a class="quicklink-tile confirm-link" href="/dnr/report/">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h2l2-5h10l2 5h2"/><path d="M5 13v5h14v-5"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg></div>
+        <span class="label">Report a Violation</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAMS & SERVICES ============
+       Replace these 3 cards with the agency's real program areas. -->
+  <section class="programs-wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">Programs &amp; services</div>
+      <h2 class="section-title" style="margin-bottom:0;">What DNR does</h2>
+      <p>From forest management to boating safety, here's how the department is organized.</p>
+    </div>
+
+    <div class="program-grid">
+      <div class="program-card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>State Parks & Recreation</h3>
+        <p class="blurb">Camping, trails, cabins, and day-use areas across more than 100 state parks and recreation areas.</p>
+        <a class="see-more confirm-link" href="/dnr/state-parks/">
+          Learn more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <div class="program-card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-7h6v7"/></svg></div>
+        <h3>Hunting & Fishing</h3>
+        <p class="blurb">Licenses, season dates, catch limits, and safety courses for hunters and anglers statewide.</p>
+        <a class="see-more confirm-link" href="/dnr/hunting-fishing/">
+          Learn more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <div class="program-card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h3>Forestry & Land Management</h3>
+        <p class="blurb">Sustainable timber management, wildfire prevention, and stewardship of state forest land.</p>
+        <a class="see-more confirm-link" href="/dnr/forestry/">
+          Learn more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LATEST + CONTACT ============
+       Replace the latest_list items with real news, or delete this
+       whole section if the agency doesn't publish updates. -->
+  <section class="latest-band">
+    <div class="latest-inner">
+      <div>
+        <div class="section-eyebrow">Latest</div>
+        <h2 class="section-title" style="font-size:22px; margin-bottom:18px;">From DNR</h2>
+        <ul class="latest-list">
+          <li><a class="confirm-link" href="/dnr/news/fall-color-tour-2026/"><span class="latest-date">Aug 4, 2026</span><span class="latest-title">Fall color tour routes posted for northern Michigan</span></a></li>
+          <li><a class="confirm-link" href="/dnr/news/boat-launch-closures/"><span class="latest-date">Jul 28, 2026</span><span class="latest-title">Temporary boat launch closures for dock repair</span></a></li>
+          <li><a class="confirm-link" href="/dnr/news/deer-season-dates/"><span class="latest-date">Jul 15, 2026</span><span class="latest-title">2026 deer hunting season dates announced</span></a></li>
+        </ul>
+      </div>
+
+      <div class="contact-card">
+        <h3>Contact DNR</h3>
+        <p class="sub">Reach the department directly.</p>
+        <div class="contact-rows">
+          <div class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.34 1.79.65 2.65a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.43-1.22a2 2 0 012.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0122 16.92z"/></svg></div>
+            <div class="text"><strong>Phone</strong>(517) 284-0000</div>
+          </div>
+          <div class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
+            <div class="text"><strong>Email</strong>dnr-info@michigan.gov</div>
+          </div>
+          <div class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6.5-9 12-9 12s-9-5.5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="text"><strong>Office</strong>525 W. Allegan St., Lansing, MI</div>
+          </div>
+          <div class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+            <div class="text"><strong>Hours</strong>Mon–Fri, 8am–5pm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="agency-footer">
+    <strong>Department of Natural Resources</strong> · migovt.org · State Government
+  </footer>
+
+  <!-- Injects banner + header + mobile nav into #site-chrome above -->
+  <script src="/partials.js"></script>
+
+  <!-- Confirms before navigating away on any link marked confirm-link -->
+  <script src="/confirm-nav.js"></script>
+
+</body>
+</html>
