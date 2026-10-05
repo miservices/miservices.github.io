@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/shared.css">
 <style>
-:root {
   --border: var(--nav-border);
   --white: var(--nav-bg);
   --gray: var(--ink-soft);
@@ -114,7 +113,6 @@ body {
 .method-tab.active { background: var(--white); color: var(--lake-deep); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
 .method-tab:hover:not(.active) { color: var(--dark); }
 .tab-icon { width: 17px; height: 17px; flex-shrink: 0; }
-.rblx-tab-icon { background: var(--dark); clip-path: polygon(50% 0%,100% 50%,50% 100%,0% 50%); border-radius: 2px; }
 
 /* CONNECT PANEL */
 .connect-panel { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 6px 0 10px; }
@@ -130,7 +128,6 @@ button.roblox-btn {
   font-weight: 700; cursor: pointer; transition: background 0.15s, transform 0.1s; width: 100%;
 }
 button.roblox-btn:hover { background: #1f2937; transform: translateY(-1px); }
-.rblx-diamond { width: 15px; height: 15px; background: white; transform: rotate(45deg); border-radius: 2px; flex-shrink: 0; }
 
 /* GOOGLE BUTTON */
 button.google-btn {
@@ -187,7 +184,6 @@ button.email-signin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .verified-left { display: flex; align-items: center; gap: 14px; }
 .rblx-avatar { width: 44px; height: 44px; border-radius: 9px; overflow: hidden; flex-shrink: 0; background: #111827; display: flex; align-items: center; justify-content: center; }
 .rblx-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.rblx-avatar-fallback { width: 17px; height: 17px; background: white; transform: rotate(45deg); border-radius: 2px; }
 .google-avatar { width: 44px; height: 44px; border-radius: 9px; overflow: hidden; flex-shrink: 0; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 19px; }
 .verified-name { font-size: 15px; font-weight: 800; color: var(--dark); }
 .verified-pin  { font-size: 11.5px; color: var(--gray); font-family: monospace; }
@@ -229,438 +225,344 @@ footer strong { color: var(--ink); }
 @media (max-width: 480px) {
   .card { padding: 34px 24px; }
 }
+
+.gl{width:17px;height:17px;flex-shrink:0;display:block}
+.rblx-avatar .gl{width:22px;height:22px;color:#fff}
+.mark{display:inline-flex;width:17px;height:17px;align-items:center;justify-content:center}
+.mark img{width:100%;height:100%;object-fit:contain;display:block}
+.method-tab:focus-visible,button:focus-visible,a:focus-visible,.linkbtn:focus-visible{outline:3px solid rgba(14,58,83,.45);outline-offset:2px}
+.method-tab[aria-selected="true"]{background:var(--white);color:var(--lake-deep);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--gray);text-decoration:underline;cursor:pointer;font-size:12px}
+.forgot-link{background:none;border:0;padding:0;font-family:inherit}
+.btn-link{display:inline-flex;align-items:center;justify-content:center;background:var(--lake-deep);color:#fff;border-radius:6px;padding:13px 24px;font-weight:700;font-size:14.5px;text-decoration:none;width:100%}
+.btn-link:hover{background:var(--lake-night)}
+.alert.ok{background:#dcfce7;border:1px solid #86efac;color:#15803d}
+.redirect-fill.go{width:100%}
+.verified-avatar{width:44px;height:44px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.verified-avatar.dark{background:#111827}
+.verified-avatar img{width:100%;height:100%;object-fit:cover}
+.verified-email{font-size:12px;color:var(--gray)}
+.hidden{display:none!important}
+.state-loading:not(.hidden),.state-verified:not(.hidden),.no-account-wrap:not(.hidden),.state-error:not(.hidden),.redirect-wrap:not(.hidden){display:flex}
+
 </style>
 </head>
 <body>
-
+<script>window.__GL = '<svg class="gl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h4M8 9v4"/><circle cx="15.5" cy="10.5" r="0.6" fill="currentColor"/><circle cx="17.5" cy="12.5" r="0.6" fill="currentColor"/><path d="M6.5 6h11a4.5 4.5 0 0 1 4.4 3.6l.9 4.6a2.8 2.8 0 0 1-4.9 2.3L16 14H8l-1.9 2.5a2.8 2.8 0 0 1-4.9-2.3l.9-4.6A4.5 4.5 0 0 1 6.5 6z"/></svg>';</script>
 <div id="site-chrome"></div>
-
 <main class="auth-wrap">
 <div class="card">
-
-  <div class="card-title">MiGOVT Login</div>
+  <h1 class="card-title">MiGOVT Login</h1>
   <p class="card-subtitle">State identity authentication for authorized Michigan government services.</p>
 
-  <div class="requester-badge" id="requesterBadge" style="display:none;">
-    <div class="requester-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1"/><path d="M14 9h1"/><path d="M9 13h1"/><path d="M14 13h1"/><path d="M9 17h1"/><path d="M14 17h1"/></svg></div>
-    <div>
-      <strong id="requesterName">—</strong>
-      is requesting identity verification via MiGOVT login. 
-    </div>
+  <div class="requester-badge hidden" id="requesterBadge">
+    <div class="requester-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1"/></svg></div>
+    <div><strong id="requesterName">-</strong>is requesting identity verification through MiGOVT.</div>
   </div>
 
-  <!-- ═══ SIGN-IN PANEL ═══ -->
   <div id="stateConnect">
-
-    <!-- METHOD TABS -->
-    <div class="method-tabs">
-      <button class="method-tab active" id="tabRoblox" onclick="switchTab('roblox')">
-        <div class="tab-icon rblx-tab-icon"></div>
-        Roblox
-      </button>
-      <button class="method-tab" id="tabGoogle" onclick="switchTab('google')">
-        <svg class="tab-icon google-icon" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-        Google
-      </button>
-      <button class="method-tab" id="tabEmail" onclick="switchTab('email')">
-        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        Email
-      </button>
+    <div class="method-tabs" role="tablist" aria-label="Sign-in method">
+      <button class="method-tab" role="tab" id="tabRoblox" aria-selected="true" aria-controls="panelRoblox" data-tab="roblox" type="button"><span class="mark"><img src="/images/roblox-logo.svg" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{innerHTML:window.__GL}).firstChild)"></span>Roblox</button>
+      <button class="method-tab" role="tab" id="tabGoogle" aria-selected="false" aria-controls="panelGoogle" data-tab="google" tabindex="-1" type="button"><svg class="tab-icon google-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google</button>
+      <button class="method-tab" role="tab" id="tabEmail" aria-selected="false" aria-controls="panelEmail" data-tab="email" tabindex="-1" type="button"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Email</button>
     </div>
 
-    <!-- ROBLOX PANEL -->
-    <div class="connect-panel" id="panelRoblox">
-      <div class="rblx-pill"><div class="rblx-dot"></div>Roblox Identity Verification</div>
-      <p>Sign in with your Roblox account to verify your identity and authorize access.</p>
-      <button class="roblox-btn" onclick="doConnectRoblox()">
-        <div class="rblx-diamond"></div>
-        Sign In with Roblox
-      </button>
+    <div class="connect-panel" id="panelRoblox" role="tabpanel" aria-labelledby="tabRoblox">
+      <div class="rblx-pill"><div class="rblx-dot"></div>Roblox identity verification</div>
+      <p>Sign in with your Roblox account to verify your identity. MiGOVT only reads your username and user ID.</p>
+      <button class="roblox-btn" id="robloxBtn" type="button"><span class="mark"><img src="/images/roblox-logo.svg" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{innerHTML:window.__GL}).firstChild)"></span>Sign in with Roblox</button>
+      <div class="alert error hidden" id="robloxError" role="alert" style="width:100%"></div>
     </div>
 
-    <!-- GOOGLE PANEL -->
-    <div class="connect-panel" id="panelGoogle" style="display:none;">
+    <div class="connect-panel hidden" id="panelGoogle" role="tabpanel" aria-labelledby="tabGoogle">
       <p>Sign in with the Google account linked to your MiGOVT account.</p>
-      <button class="google-btn" id="googleSignInBtn" onclick="doSignInGoogle()">
-        <svg class="google-icon" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-        Continue with Google
-      </button>
-      <div class="alert error" id="googleError" style="display:none;width:100%;"></div>
+      <button class="google-btn" id="googleBtn" type="button"><svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Continue with Google</button>
+      <div class="alert error hidden" id="googleError" role="alert" style="width:100%"></div>
     </div>
 
-    <!-- EMAIL PANEL -->
-    <div class="connect-panel" id="panelEmail" style="display:none;">
-      <div class="email-panel" style="width:100%;">
+    <div class="connect-panel hidden" id="panelEmail" role="tabpanel" aria-labelledby="tabEmail">
+      <form class="email-panel" id="emailForm" style="width:100%" novalidate>
         <div class="field">
-          <label for="emailInput">Email Address</label>
-          <input type="email" id="emailInput" placeholder="you@example.com">
+          <label for="emailInput">Email address</label>
+          <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="username email" inputmode="email">
           <span class="err-msg">Enter a valid email address.</span>
         </div>
         <div class="field">
           <label for="passwordInput">Password</label>
-          <input type="password" id="passwordInput" placeholder="Your password">
+          <input type="password" id="passwordInput" placeholder="Your password" autocomplete="current-password">
           <span class="err-msg">Password is required.</span>
         </div>
-        <div style="text-align:right;"><span class="forgot-link" onclick="doForgotPassword()">Forgot password?</span></div>
-        <button class="email-signin-btn" id="emailSignInBtn" onclick="doSignInEmail()">
-          <span id="emailSignInText">Sign In</span>
-          <div class="mini-spin" id="emailSignInSpin"></div>
-        </button>
-        <div class="alert error" id="emailError" style="display:none;"></div>
-      </div>
+        <div style="text-align:right"><button type="button" class="forgot-link" id="forgotBtn">Forgot password?</button></div>
+        <button class="email-signin-btn" id="emailBtn" type="submit"><span id="emailBtnText">Sign in</span><div class="mini-spin" id="emailSpin"></div></button>
+        <div class="alert error hidden" id="emailError" role="alert"></div>
+      </form>
     </div>
 
-    <div class="create-link">
-      Don't have a MiGOVT account? <a id="createLink" href="/signup/">Create one</a>
-    </div>
+    <p class="create-link">Don't have a MiGOVT account? <a id="createLink" href="/signup/">Create one</a></p>
   </div>
 
-  <!-- LOADING -->
-  <div id="stateLoading" class="state-loading">
-    <div class="spinner"></div>
-    <p id="loadingMsg">Verifying your identity…</p>
-  </div>
+  <div id="stateLoading" class="state-loading hidden" role="status" aria-live="polite"><div class="spinner"></div><p id="loadingMsg">Verifying your identity...</p></div>
 
-  <!-- VERIFIED -->
-  <div id="stateVerified" class="state-verified">
+  <div id="stateVerified" class="state-verified hidden">
     <div class="verified-card">
       <div class="verified-left">
-        <div id="verifiedAvatarWrap"></div>
-        <div>
-          <div class="verified-name" id="vUsername"></div>
-          <div class="verified-pin"  id="vPin"></div>
-        </div>
+        <div id="vAvatar"></div>
+        <div><div class="verified-name" id="vName"></div><div class="verified-pin" id="vPin"></div></div>
       </div>
       <div class="verified-badge">Verified</div>
     </div>
-    <span class="not-you" onclick="doReset()">Not you? Sign in with a different account</span>
-    <div id="redirectWrap" class="redirect-wrap">
+    <button type="button" class="linkbtn" id="notYou">Not you? Sign in with a different account</button>
+    <div id="redirectWrap" class="redirect-wrap hidden" role="status">
       <div class="site-name" id="redirectSiteName"></div>
-      <p>Redirecting you back…</p>
+      <p>Redirecting you back...</p>
       <div class="redirect-bar"><div class="redirect-fill" id="redirectFill"></div></div>
+      <button type="button" class="linkbtn" id="goNow">Continue now</button>
     </div>
-    <button class="roblox-btn" id="confirmBtn" onclick="doRedirect()" style="margin-top:4px;">
-      Authorize &amp; Continue →
-    </button>
+    <a class="btn-link hidden" id="homeBtn" href="/">Continue to MiGOVT</a>
   </div>
 
-  <!-- NO ACCOUNT -->
-  <div id="stateNoAccount" class="no-account-wrap">
-    <div class="na-title">No MiGOVT Account Found</div>
-    <p>No MiGOVT account is linked to this sign-in method. You'll need to create one first.</p>
-    <button class="btn-create" id="goCreateBtn" onclick="goCreate()">Create MiGOVT Account</button>
+  <div id="stateNoAccount" class="no-account-wrap hidden" role="alert">
+    <div class="na-title">No MiGOVT account found</div>
+    <p>No MiGOVT account is linked to this sign-in method. Create one first, then come back.</p>
+    <button class="btn-create" id="goCreateBtn" type="button">Create a MiGOVT account</button>
+    <button class="linkbtn" id="noAcctBack" type="button">Try a different sign-in method</button>
   </div>
 
-  <!-- ERROR -->
-  <div id="stateError" class="state-error">
+  <div id="stateError" class="state-error hidden" role="alert">
     <p id="errorMsg">Something went wrong.</p>
-    <button class="btn-retry" onclick="doReset()">Try Again</button>
+    <button class="btn-retry" id="retryBtn" type="button">Try again</button>
   </div>
 
-  <div class="footer-note">
-    MiGOVT shares your name, date of birth, PIN, and email address with authorized state services to verify and manage your account.
-  </div>
-
+  <div class="footer-note">MiGOVT shares your name, date of birth, PIN, and email address with the service that asked you to sign in, so it can verify and manage your account there.</div>
 </div>
 </main>
+<footer><strong>Department of Technology</strong> &middot; MiGOVT.org &middot; Login</footer>
 
-<footer>
-  <strong>Department of Technology</strong> · MiGOVT.org · Login
-</footer>
-
-<!-- MiGOVT Firebase + Auth -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, where }
-    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail }
-    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+  import { getFirestore, collection, doc, getDoc, getDocs, query, where, limit } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
-  const migovtConfig = {
+  const app = initializeApp({
     apiKey: "AIzaSyCWJBf_xxGj8JWbfwzzEHmtdzMmiLTGTas",
     authDomain: "mipass-77b56.firebaseapp.com",
     projectId: "mipass-77b56",
     storageBucket: "mipass-77b56.firebasestorage.app",
     messagingSenderId: "326401354685",
     appId: "1:326401354685:web:dee9e48de3975a72d600d4"
-  };
-  const app = initializeApp(migovtConfig, "migovt");
-  window._migovtDb   = getFirestore(app);
-  window._migovtAuth = getAuth(app);
-  window._migovtQ    = { collection, getDocs, query, where };
-  window._GoogleAuthProvider = GoogleAuthProvider;
-  window._signInWithPopup    = signInWithPopup;
-  window._signInWithEmailAndPassword = signInWithEmailAndPassword;
-  window._sendPasswordResetEmail     = sendPasswordResetEmail;
-  window._migovtReady = true;
-  document.dispatchEvent(new Event('migovtReady'));
-</script>
+  }, "migovt");
+  const db = getFirestore(app), auth = getAuth(app);
 
-<script>
-const ROBLOX_CLIENT_ID = '3400793010980287379';
-const REDIRECT_URI     = window.location.origin + '/login/';
-const WORKER_URL       = 'https://roblox-oauth.takosull0.workers.dev/';
-const SS_STATE         = 'migovt_login_state';
-const SS_REDIRECT      = 'migovt_login_redirect';
-const SS_RNAME         = 'migovt_login_rname';
+  const ROBLOX_CLIENT_ID = '3400793010980287379';
+  const REDIRECT_URI = location.origin + '/login/';
+  const WORKER_URL = 'https://roblox-oauth.takosull0.workers.dev/';
+  const SS_STATE = 'migovt_login_state', SS_REDIRECT = 'migovt_login_redirect', SS_RNAME = 'migovt_login_rname';
+  const $ = id => document.getElementById(id);
+  const show = (id, on = true) => $(id).classList.toggle('hidden', !on);
+  const ss = { get: k => { try { return sessionStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch {} }, del: k => { try { sessionStorage.removeItem(k); } catch {} } };
 
-let userData       = null;
-let redirectTarget = null;
-let activeTab      = 'roblox';
-
-function waitFor(flag, ev) {
-  if (window[flag]) return Promise.resolve();
-  return new Promise(r => document.addEventListener(ev, r, { once: true }));
-}
-
-function ui(state) {
-  ['stateConnect','stateLoading','stateVerified','stateNoAccount','stateError'].forEach(id => {
-    const el = document.getElementById(id);
-    el.style.display = (id === state) ? (id === 'stateConnect' ? 'block' : 'flex') : 'none';
-  });
-}
-
-function showError(msg) { document.getElementById('errorMsg').textContent = msg; ui('stateError'); }
-function doReset() { userData = null; ui('stateConnect'); }
-
-// ── TABS ──
-function switchTab(tab) {
-  activeTab = tab;
-  ['roblox','google','email'].forEach(t => {
-    document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('active', t === tab);
-    document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1)).style.display = t === tab ? 'flex' : 'none';
-  });
-}
-
-// ── INIT ──
-function init() {
-  const params   = new URLSearchParams(window.location.search);
-  const redirect = params.get('redirect_uri');
-  const siteName = params.get('site_name') || 'The requesting service';
-
-  if (redirect) {
-    sessionStorage.setItem(SS_REDIRECT, redirect);
-    sessionStorage.setItem(SS_RNAME, siteName);
+  /* Only send people back to MiGOVT itself or one of its subdomains, over https. */
+  function safeRedirect(u) {
+    if (!u) return null;
+    try {
+      const x = new URL(u);
+      const h = x.hostname.toLowerCase();
+      const ok = x.protocol === 'https:' && (h === 'migovt.org' || h.endsWith('.migovt.org'));
+      return ok ? x.toString() : null;
+    } catch { return null; }
   }
 
-  redirectTarget = sessionStorage.getItem(SS_REDIRECT);
-  const rName    = sessionStorage.getItem(SS_RNAME) || siteName;
+  let userData = null, redirectTarget = null, rName = 'The requesting service', timers = [];
+  const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
+  const STATES = ['stateConnect', 'stateLoading', 'stateVerified', 'stateNoAccount', 'stateError'];
+  const ui = s => STATES.forEach(id => show(id, id === s));
+  const showError = m => { $('errorMsg').textContent = m; ui('stateError'); };
+  const initials = s => String(s || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0].toUpperCase()).join('');
 
-  if (redirectTarget) {
-    document.getElementById('requesterBadge').style.display = 'flex';
-    document.getElementById('requesterName').textContent = rName;
-    document.getElementById('redirectSiteName').textContent = rName;
-    const createBase = '/signup/';
-    document.getElementById('createLink').href = createBase +
-      '?redirect_uri=' + encodeURIComponent(redirectTarget) + '&site_name=' + encodeURIComponent(rName);
-  }
-
-  const code  = params.get('code');
-  const state = params.get('state');
-  if (code) {
-    window.history.replaceState({}, '', window.location.pathname);
-    handleRobloxCallback(code, state);
-  } else {
+  async function reset() {
+    clearTimers(); userData = null;
+    $('redirectFill').classList.remove('go');
+    try { await signOut(auth); } catch {}
+    ['robloxError', 'googleError', 'emailError'].forEach(i => show(i, false));
+    $('googleBtn').disabled = false; $('robloxBtn').disabled = false;
     ui('stateConnect');
   }
-}
 
-// ── ROBLOX FLOW ──
-function doConnectRoblox() {
-  const state = crypto.randomUUID();
-  sessionStorage.setItem(SS_STATE, state);
-  const p = new URLSearchParams({ client_id: ROBLOX_CLIENT_ID, redirect_uri: REDIRECT_URI, response_type: 'Code', scope: 'openid profile', state });
-  window.location.href = 'https://authorize.roblox.com/?' + p.toString();
-}
+  /* tabs */
+  const TABS = ['roblox', 'google', 'email'];
+  function switchTab(t, focus) {
+    TABS.forEach(k => {
+      const b = $('tab' + k[0].toUpperCase() + k.slice(1)), on = k === t;
+      b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1;
+      show('panel' + k[0].toUpperCase() + k.slice(1), on);
+      if (on && focus) b.focus();
+    });
+  }
+  document.querySelectorAll('.method-tab').forEach(b => {
+    b.addEventListener('click', () => switchTab(b.dataset.tab));
+    b.addEventListener('keydown', e => {
+      const i = TABS.indexOf(b.dataset.tab);
+      if (e.key === 'ArrowRight') { e.preventDefault(); switchTab(TABS[(i + 1) % 3], true); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); switchTab(TABS[(i + 2) % 3], true); }
+    });
+  });
 
-async function handleRobloxCallback(code, stateParam) {
-  const saved = sessionStorage.getItem(SS_STATE);
-  sessionStorage.removeItem(SS_STATE);
-  ui('stateLoading');
-  document.getElementById('loadingMsg').textContent = 'Verifying your identity…';
-  if (stateParam !== saved) { showError('Security validation failed. Please try again.'); return; }
-  try {
-    const res  = await fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ code }) });
-    const data = await res.json();
-    if (!data.userId || !data.username) throw new Error(data.error || 'Could not retrieve account details.');
-    document.getElementById('loadingMsg').textContent = 'Looking up your MiGOVT account…';
-    await waitFor('_migovtReady', 'migovtReady');
-    const { collection, getDocs, query, where } = window._migovtQ;
-    const snap = await getDocs(query(collection(window._migovtDb, 'mipass'), where('pin', '==', String(data.userId))));
-    if (snap.empty) { ui('stateNoAccount'); return; }
-    const doc = snap.docs[0].data();
-    userData = { pin: String(data.userId), name: doc.name, dateOfBirth: doc.dateOfBirth, robloxUsername: data.username };
-    // Build verified card with avatar
-    document.getElementById('vUsername').textContent = data.username;
-    document.getElementById('vPin').textContent      = 'PIN: ' + data.userId;
-    document.getElementById('verifiedAvatarWrap').innerHTML = '<div class="rblx-avatar"><div class="rblx-avatar-fallback"></div></div>';
-    loadRobloxAvatar(data.userId);
-    showVerified();
-  } catch(err) { showError('Sign in failed: ' + err.message); }
-}
+  function toSignup() {
+    let u = '/signup/';
+    if (redirectTarget) u += '#redirect_uri=' + encodeURIComponent(redirectTarget) + '&site_name=' + encodeURIComponent(rName);
+    return u;
+  }
 
-async function loadRobloxAvatar(userId) {
-  try {
-    const res = await fetch('https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=' + userId + '&size=48x48&format=Png');
-    const data = await res.json();
-    const url = data?.data?.[0]?.imageUrl;
-    if (url) {
-      document.getElementById('verifiedAvatarWrap').innerHTML =
-        '<div class="rblx-avatar"><img src="' + url + '" alt="Avatar" onerror="this.parentElement.innerHTML=\'<div class=\\\'rblx-avatar-fallback\\\'></div>\'"></div>';
-    }
-  } catch(e) {}
-}
+  /* account shape handed back to callers */
+  const pack = (d, fallbackEmail, robloxName) => ({
+    pin: String(d.pin || ''), name: d.name || '', dob: d.dateOfBirth || '', email: d.email || fallbackEmail || '',
+    roblox: d.robloxUsername || robloxName || ''
+  });
 
-// ── GOOGLE FLOW ──
-async function doSignInGoogle() {
-  const btn = document.getElementById('googleSignInBtn');
-  btn.disabled = true;
-  document.getElementById('googleError').style.display = 'none';
-  await waitFor('_migovtReady', 'migovtReady');
-  try {
-    const result = await window._signInWithPopup(window._migovtAuth, new window._GoogleAuthProvider());
-    const user   = result.user;
-    ui('stateLoading');
-    document.getElementById('loadingMsg').textContent = 'Looking up your MiGOVT account…';
-    // Look up by Firebase UID (document ID) or email
-    const { collection, getDocs, query, where } = window._migovtQ;
-    // Try by uid first
-    const { getDoc, doc } = await (async () => {
-      const mod = await import('https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js');
-      return mod;
-    })();
-    const docSnap = await getDoc(doc(window._migovtDb, 'mipass', user.uid));
-    if (!docSnap.exists()) {
-      // fallback: query by email
-      const snap = await getDocs(query(collection(window._migovtDb, 'mipass'), where('email', '==', user.email)));
-      if (snap.empty) { ui('stateNoAccount'); return; }
-      const d = snap.docs[0].data();
-      userData = { pin: d.pin, name: d.name, dateOfBirth: d.dateOfBirth, robloxUsername: d.robloxUsername || '' };
+  function showVerified(kind, label, avatarUrl) {
+    const a = $('vAvatar');
+    a.innerHTML = '';
+    const box = document.createElement('div'); box.className = 'verified-avatar' + (kind === 'roblox' ? ' dark' : '');
+    if (avatarUrl) { const im = new Image(); im.alt = ''; im.src = avatarUrl; im.onerror = () => { box.textContent = initials(userData.name || label); }; box.appendChild(im); }
+    else if (kind === 'roblox') box.innerHTML = window.__GL.replace('class="gl"', 'class="gl" style="width:22px;height:22px;color:#fff"');
+    else box.textContent = initials(userData.name || label);
+    a.appendChild(box);
+    $('vName').textContent = label || userData.name;
+    $('vPin').textContent = 'PIN: ' + userData.pin;
+    ui('stateVerified');
+    if (redirectTarget) {
+      show('redirectWrap', true); show('homeBtn', false);
+      $('redirectSiteName').textContent = rName;
+      timers.push(setTimeout(() => $('redirectFill').classList.add('go'), 50));
+      timers.push(setTimeout(doRedirect, 2600));
     } else {
-      const d = docSnap.data();
-      userData = { pin: d.pin, name: d.name, dateOfBirth: d.dateOfBirth, robloxUsername: d.robloxUsername || '' };
+      show('redirectWrap', false); show('homeBtn', true);
     }
-    document.getElementById('vUsername').textContent = userData.name;
-    document.getElementById('vPin').textContent      = 'PIN: ' + userData.pin;
-    document.getElementById('verifiedAvatarWrap').innerHTML = '<div class="google-avatar"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div>';
-    showVerified();
-  } catch(err) {
-    ui('stateConnect');
-    const e = document.getElementById('googleError');
-    e.textContent = (err.message || 'Google sign-in failed.');
-    e.style.display = 'block';
-    btn.disabled = false;
   }
-}
 
-// ── EMAIL FLOW ──
-async function doSignInEmail() {
-  const emailEl = document.getElementById('emailInput'), passEl = document.getElementById('passwordInput');
-  let valid = true;
-  emailEl.classList.remove('error'); passEl.classList.remove('error');
-  document.getElementById('emailError').style.display = 'none';
-  if (!emailEl.value.trim() || !/\S+@\S+\.\S+/.test(emailEl.value)) { emailEl.classList.add('error'); valid = false; }
-  if (!passEl.value) { passEl.classList.add('error'); valid = false; }
-  if (!valid) return;
-  const btn = document.getElementById('emailSignInBtn');
-  btn.disabled = true;
-  document.getElementById('emailSignInText').textContent = 'Signing in…';
-  document.getElementById('emailSignInSpin').style.display = 'inline-block';
-  await waitFor('_migovtReady', 'migovtReady');
-  try {
-    const cred = await window._signInWithEmailAndPassword(window._migovtAuth, emailEl.value.trim(), passEl.value);
-    const user = cred.user;
-    ui('stateLoading');
-    document.getElementById('loadingMsg').textContent = 'Looking up your MiGOVT account…';
-    const { getDoc, doc } = await (async () => {
-      const mod = await import('https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js');
-      return mod;
-    })();
-    const docSnap = await getDoc(doc(window._migovtDb, 'mipass', user.uid));
-    if (!docSnap.exists()) { ui('stateNoAccount'); return; }
-    const d = docSnap.data();
-    userData = { pin: d.pin, name: d.name, dateOfBirth: d.dateOfBirth, robloxUsername: d.robloxUsername || '' };
-    document.getElementById('vUsername').textContent = userData.name;
-    document.getElementById('vPin').textContent      = 'PIN: ' + userData.pin;
-    document.getElementById('verifiedAvatarWrap').innerHTML = '<div class="google-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>';
-    showVerified();
-  } catch(err) {
-    ui('stateConnect');
-    const e = document.getElementById('emailError');
-    let msg = err.message || 'Sign-in failed.';
-    if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') msg = 'Incorrect email or password.';
-    e.textContent = msg; e.style.display = 'block';
-    btn.disabled = false;
-    document.getElementById('emailSignInText').textContent = 'Sign In';
-    document.getElementById('emailSignInSpin').style.display = 'none';
+  function doRedirect() {
+    if (!redirectTarget || !userData) return;
+    clearTimers();
+    const url = new URL(redirectTarget);
+    const set = (k, v) => { if (v) url.searchParams.set(k, v); };
+    set('mipass_pin', userData.pin); set('mipass_name', userData.name); set('mipass_dob', userData.dob);
+    set('mipass_user', userData.roblox); set('mipass_email', userData.email);
+    location.href = url.toString();
   }
-}
 
-async function doForgotPassword() {
-  const emailEl = document.getElementById('emailInput');
-  const email   = emailEl.value.trim();
-  const errEl   = document.getElementById('emailError');
-  if (!email || !/\S+@\S+\.\S+/.test(email)) {
-    emailEl.classList.add('error');
-    errEl.textContent = 'Enter your email address above first.';
-    errEl.style.display = 'block';
-    return;
+  async function fromUid(user) {
+    let s = await getDoc(doc(db, 'mipass', user.uid));
+    if (s.exists()) return s.data();
+    if (user.email) {
+      const q = await getDocs(query(collection(db, 'mipass'), where('email', '==', user.email), limit(1)));
+      if (!q.empty) return q.docs[0].data();
+    }
+    return null;
   }
-  await waitFor('_migovtReady', 'migovtReady');
-  try {
-    await window._sendPasswordResetEmail(window._migovtAuth, email);
-    errEl.style.background = '#dcfce7'; errEl.style.borderColor = '#86efac'; errEl.style.color = '#15803d';
-    errEl.textContent = 'Password reset email sent. Check your inbox.';
-    errEl.style.display = 'block';
-  } catch(err) {
-    errEl.style.background = ''; errEl.style.borderColor = ''; errEl.style.color = '';
-    errEl.textContent = (err.message || 'Could not send reset email.');
-    errEl.style.display = 'block';
+
+  /* Roblox */
+  $('robloxBtn').addEventListener('click', () => {
+    const state = crypto.randomUUID();
+    ss.set(SS_STATE, state);
+    const p = new URLSearchParams({ client_id: ROBLOX_CLIENT_ID, redirect_uri: REDIRECT_URI, response_type: 'Code', scope: 'openid profile', state });
+    location.href = 'https://authorize.roblox.com/?' + p;
+  });
+  async function robloxCallback(code, stateParam) {
+    const saved = ss.get(SS_STATE); ss.del(SS_STATE);
+    ui('stateLoading'); $('loadingMsg').textContent = 'Verifying your identity...';
+    if (!saved || stateParam !== saved) return showError('Security validation failed. Please try again.');
+    try {
+      const res = await fetch(WORKER_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) });
+      const data = await res.json();
+      if (!data.userId || !data.username) throw new Error(data.error || 'Could not retrieve account details.');
+      $('loadingMsg').textContent = 'Looking up your MiGOVT account...';
+      const snap = await getDocs(query(collection(db, 'mipass'), where('pin', '==', String(data.userId)), limit(1)));
+      if (snap.empty) return ui('stateNoAccount');
+      userData = pack(snap.docs[0].data(), '', data.username); userData.pin = String(data.userId);
+      let av = null;
+      try { const r = await fetch('https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=' + data.userId + '&size=48x48&format=Png'); av = (await r.json())?.data?.[0]?.imageUrl || null; } catch {}
+      showVerified('roblox', data.username, av);
+    } catch (e) { console.error(e); showError('Sign-in failed: ' + (e.message || 'please try again.')); }
   }
-}
 
-// ── VERIFIED COMMON ──
-function showVerified() {
-  ui('stateVerified');
-  if (redirectTarget) {
-    document.getElementById('redirectWrap').style.display = 'flex';
-    document.getElementById('confirmBtn').style.display   = 'none';
-    setTimeout(() => { document.getElementById('redirectFill').style.width = '100%'; }, 50);
-    setTimeout(() => doRedirect(), 2600);
-  } else {
-    document.getElementById('redirectWrap').style.display = 'none';
-    document.getElementById('confirmBtn').style.display   = '';
-  }
-}
+  /* Google */
+  $('googleBtn').addEventListener('click', async () => {
+    const btn = $('googleBtn'); btn.disabled = true; show('googleError', false);
+    try {
+      const { user } = await signInWithPopup(auth, new GoogleAuthProvider());
+      ui('stateLoading'); $('loadingMsg').textContent = 'Looking up your MiGOVT account...';
+      const d = await fromUid(user);
+      if (!d) { try { await signOut(auth); } catch {} return ui('stateNoAccount'); }
+      userData = pack(d, user.email);
+      showVerified('google', userData.name, user.photoURL);
+    } catch (e) {
+      ui('stateConnect'); btn.disabled = false;
+      if (e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') return;
+      $('googleError').textContent = e?.code === 'auth/popup-blocked' ? 'Your browser blocked the Google window. Allow pop-ups for this site and try again.' : (e.message || 'Google sign-in failed.');
+      show('googleError', true);
+    }
+  });
 
-function doRedirect() {
-  if (!redirectTarget || !userData) return;
-  const url = new URL(redirectTarget);
-  url.searchParams.set('mipass_pin',  userData.pin);
-  url.searchParams.set('mipass_name', userData.name);
-  url.searchParams.set('mipass_dob',  userData.dateOfBirth);
-  url.searchParams.set('mipass_user', userData.robloxUsername);
-  window.location.href = url.toString();
-}
+  /* Email */
+  const EMAIL_RE = /\S+@\S+\.\S+/;
+  const busy = on => { $('emailBtn').disabled = on; $('emailBtnText').textContent = on ? 'Signing in...' : 'Sign in'; $('emailSpin').style.display = on ? 'inline-block' : 'none'; };
+  $('emailForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const em = $('emailInput'), pw = $('passwordInput'); show('emailError', false);
+    em.classList.toggle('error', !EMAIL_RE.test(em.value.trim())); pw.classList.toggle('error', !pw.value);
+    if (em.classList.contains('error') || pw.classList.contains('error')) return;
+    busy(true);
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, em.value.trim(), pw.value);
+      ui('stateLoading'); $('loadingMsg').textContent = 'Looking up your MiGOVT account...';
+      const d = await fromUid(user);
+      if (!d) { try { await signOut(auth); } catch {} busy(false); return ui('stateNoAccount'); }
+      userData = pack(d, user.email);
+      busy(false); showVerified('email', userData.name);
+    } catch (er) {
+      ui('stateConnect'); busy(false);
+      const bad = ['auth/wrong-password', 'auth/user-not-found', 'auth/invalid-credential', 'auth/invalid-login-credentials'].includes(er?.code);
+      $('emailError').classList.remove('ok');
+      $('emailError').textContent = bad ? 'Incorrect email or password.' : er?.code === 'auth/too-many-requests' ? 'Too many attempts. Wait a few minutes and try again.' : (er.message || 'Sign-in failed.');
+      show('emailError', true);
+    }
+  });
+  $('forgotBtn').addEventListener('click', async () => {
+    const em = $('emailInput'), box = $('emailError'), v = em.value.trim();
+    if (!EMAIL_RE.test(v)) { em.classList.add('error'); box.classList.remove('ok'); box.textContent = 'Enter your email address above first.'; return show('emailError', true); }
+    em.classList.remove('error');
+    try { await sendPasswordResetEmail(auth, v); } catch (er) { if (er?.code !== 'auth/user-not-found') { box.classList.remove('ok'); box.textContent = er.message || 'Could not send the reset email.'; return show('emailError', true); } }
+    box.classList.add('ok'); box.textContent = 'If an account exists for that email, a reset link is on its way.'; show('emailError', true);
+  });
 
-function goCreate() {
-  const redirect = sessionStorage.getItem(SS_REDIRECT) || '';
-  const rName    = sessionStorage.getItem(SS_RNAME) || '';
-  let url = '/signup/';
-  if (redirect) url += '?redirect_uri=' + encodeURIComponent(redirect) + '&site_name=' + encodeURIComponent(rName);
-  window.location.href = url;
-}
+  /* misc buttons */
+  $('notYou').addEventListener('click', reset);
+  $('retryBtn').addEventListener('click', reset);
+  $('noAcctBack').addEventListener('click', reset);
+  $('goNow').addEventListener('click', doRedirect);
+  $('goCreateBtn').addEventListener('click', () => { location.href = toSignup(); });
 
-window.doConnectRoblox  = doConnectRoblox;
-window.doSignInGoogle   = doSignInGoogle;
-window.doSignInEmail    = doSignInEmail;
-window.doForgotPassword = doForgotPassword;
-window.switchTab        = switchTab;
-window.doReset          = doReset;
-window.doRedirect       = doRedirect;
-window.goCreate         = goCreate;
-
-window.addEventListener('DOMContentLoaded', init);
+  /* init */
+  (function init() {
+    const p = new URLSearchParams(location.search);
+    const given = p.get('redirect_uri');
+    if (given) {
+      const ok = safeRedirect(given);
+      if (ok) { ss.set(SS_REDIRECT, ok); ss.set(SS_RNAME, (p.get('site_name') || '').slice(0, 80)); }
+      else { ss.del(SS_REDIRECT); ss.del(SS_RNAME); }
+    }
+    redirectTarget = safeRedirect(ss.get(SS_REDIRECT));
+    rName = ss.get(SS_RNAME) || 'The requesting service';
+    if (redirectTarget) {
+      show('requesterBadge', true); $('requesterName').textContent = rName + ' ';
+      $('createLink').href = toSignup();
+    }
+    const code = p.get('code'), state = p.get('state'), err = p.get('error');
+    if (code || err) history.replaceState({}, '', location.pathname);
+    if (code) robloxCallback(code, state);
+    else if (err) { ui('stateConnect'); $('robloxError').textContent = 'Roblox sign-in was cancelled or failed. Try again.'; show('robloxError', true); }
+    else ui('stateConnect');
+  })();
 </script>
 <script src="/partials.js"></script>
 </body>

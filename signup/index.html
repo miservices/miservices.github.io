@@ -114,7 +114,6 @@ button.roblox-btn {
   transition: background 0.15s, transform 0.1s; width: auto;
 }
 button.roblox-btn:hover { background: #1f2937; transform: translateY(-1px); }
-.rblx-diamond { width: 17px; height: 17px; background: white; transform: rotate(45deg); border-radius: 2px; flex-shrink: 0; }
 .state-loading { display: none; flex-direction: column; align-items: center; gap: 14px; padding: 40px 0; text-align: center; }
 .spinner { width: 34px; height: 34px; border: 3px solid #e5e7eb; border-top-color: var(--lake-deep); border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -137,7 +136,6 @@ button.roblox-btn:hover { background: #1f2937; transform: translateY(-1px); }
 .rblx-linked-left { display: flex; align-items: center; gap: 14px; }
 .rblx-avatar { width: 44px; height: 44px; border-radius: 9px; overflow: hidden; flex-shrink: 0; background: #111827; display: flex; align-items: center; justify-content: center; }
 .rblx-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.rblx-avatar-fallback { width: 17px; height: 17px; background: white; transform: rotate(45deg); border-radius: 2px; }
 .rblx-linked-info { display: flex; flex-direction: column; gap: 2px; }
 .rblx-linked-name { font-size: 15px; font-weight: 800; color: var(--dark); }
 .rblx-linked-pin  { font-size: 11.5px; color: var(--gray); font-family: monospace; }
@@ -247,702 +245,420 @@ footer {
 footer strong { color: var(--ink); }
 
 @media (max-width: 520px) { .card { padding: 30px 22px; } .form-row { grid-template-columns: 1fr; } }
+
+.gl{width:17px;height:17px;flex-shrink:0;display:block}
+.mark{display:inline-flex;width:17px;height:17px;align-items:center;justify-content:center}
+.mark img{width:100%;height:100%;object-fit:contain;display:block}
+.rblx-avatar .gl{width:22px;height:22px;color:#fff}
+button:focus-visible,a:focus-visible,.linkbtn:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(14,58,83,.45);outline-offset:2px}
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--gray);text-decoration:underline;cursor:pointer;font-size:12px}
+.email-toggle-link{background:none;border:0;width:100%;font-family:inherit}
+.hidden{display:none!important}
+.alert.show{display:block}
+.btn-link{display:inline-block;background:var(--lake-deep);color:#fff;font-size:14px;font-weight:700;padding:12px 26px;border-radius:6px;text-decoration:none;border:0;cursor:pointer;font-family:inherit}
+.btn-link:hover{background:var(--lake-night)}
+.field input[type=date]{min-width:0}
+.step-header h2:focus{outline:none}
+
 </style>
 </head>
 <body>
-
+<script>window.__GL = '<svg class="gl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h4M8 9v4"/><circle cx="15.5" cy="10.5" r="0.6" fill="currentColor"/><circle cx="17.5" cy="12.5" r="0.6" fill="currentColor"/><path d="M6.5 6h11a4.5 4.5 0 0 1 4.4 3.6l.9 4.6a2.8 2.8 0 0 1-4.9 2.3L16 14H8l-1.9 2.5a2.8 2.8 0 0 1-4.9-2.3l.9-4.6A4.5 4.5 0 0 1 6.5 6z"/></svg>';</script>
 <div id="site-chrome"></div>
-
 <main class="auth-wrap">
 <div class="card">
-
-  <div class="card-title">Create MiGOVT Account</div>
+  <h1 class="card-title">Create MiGOVT Account</h1>
   <p class="card-subtitle">Register for a state identity account linked to your Roblox verification and personal information.</p>
 
-  <!-- PROGRESS (4 steps) -->
-  <div class="progress-wrap" id="progressWrap">
+  <div class="progress-wrap" id="progressWrap" aria-label="Progress">
     <div class="progress-steps">
-      <div class="ps">
-        <div class="ps-circle active" id="pc1">1</div>
-        <div class="ps-label active" id="pl1">Verify</div>
-      </div>
-      <div class="ps-line" id="pline1"></div>
-      <div class="ps">
-        <div class="ps-circle" id="pc2">2</div>
-        <div class="ps-label" id="pl2">Account</div>
-      </div>
-      <div class="ps-line" id="pline2"></div>
-      <div class="ps">
-        <div class="ps-circle" id="pc3">3</div>
-        <div class="ps-label" id="pl3">Identity</div>
-      </div>
-      <div class="ps-line" id="pline3"></div>
-      <div class="ps">
-        <div class="ps-circle" id="pc4">4</div>
-        <div class="ps-label" id="pl4">Review</div>
-      </div>
+      <div class="ps"><div class="ps-circle active" id="pc1">1</div><div class="ps-label active" id="pl1">Verify</div></div><div class="ps-line" id="pline1"></div>
+      <div class="ps"><div class="ps-circle" id="pc2">2</div><div class="ps-label" id="pl2">Account</div></div><div class="ps-line" id="pline2"></div>
+      <div class="ps"><div class="ps-circle" id="pc3">3</div><div class="ps-label" id="pl3">Identity</div></div><div class="ps-line" id="pline3"></div>
+      <div class="ps"><div class="ps-circle" id="pc4">4</div><div class="ps-label" id="pl4">Review</div></div>
     </div>
   </div>
 
-  <!-- ═══ STEP 1 — ROBLOX VERIFY ═══ -->
+  <!-- STEP 1 -->
   <div class="step active" id="step1">
-    <div class="step-header">
-      <h2>Step 1 — Verify Your Identity</h2>
-      <p>Connect your Roblox account to get started. Your Roblox User ID is your Personal Identification Number (PIN) and will be linked to your MiGOVT account.</p>
-    </div>
+    <div class="step-header"><h2 tabindex="-1">Step 1: Verify your identity</h2>
+      <p>Connect your Roblox account to get started. Your Roblox User ID is your Personal Identification Number (PIN) and is linked to your MiGOVT account.</p></div>
 
     <div id="stateConnect" class="roblox-connect-wrap">
-      <div class="rblx-pill-header">
-        <div class="rblx-pill-dot"></div>
-        <span>Roblox Identity Verification</span>
-      </div>
-      <p style="font-size:13px;color:var(--gray);line-height:1.6;text-align:center;max-width:400px;">MiGOVT uses your Roblox account to verify your identity and retrieve your Personal Identification Number (PIN). No game data is ever accessed.</p>
-      <button class="roblox-btn" onclick="connectRoblox()">
-        <div class="rblx-diamond"></div>
-        Link Roblox Account
-      </button>
+      <div class="rblx-pill-header"><div class="rblx-pill-dot"></div><span>Roblox identity verification</span></div>
+      <p style="font-size:13px;color:var(--gray);line-height:1.6;text-align:center;max-width:400px;">MiGOVT uses your Roblox account to verify your identity and retrieve your PIN. No game data is ever accessed.</p>
+      <button class="roblox-btn" id="connectBtn" type="button"><span class="mark"><img src="/images/roblox-logo.svg" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{innerHTML:window.__GL}).firstChild)"></span>Link Roblox account</button>
       <div class="rblx-scope-row">
-        <div class="rblx-scope-item"><span class="rblx-scope-yes">✓</span> Username &amp; User ID</div>
-        <div class="rblx-scope-sep">·</div>
-        <div class="rblx-scope-item"><span class="rblx-scope-no">✗</span> Robux or inventory</div>
-        <div class="rblx-scope-sep">·</div>
-        <div class="rblx-scope-item"><span class="rblx-scope-no">✗</span> Friends or activity</div>
+        <div class="rblx-scope-item"><span class="rblx-scope-yes" aria-hidden="true">&#10003;</span> Username &amp; User ID</div><div class="rblx-scope-sep">&middot;</div>
+        <div class="rblx-scope-item"><span class="rblx-scope-no" aria-hidden="true">&#10007;</span> Robux or inventory</div><div class="rblx-scope-sep">&middot;</div>
+        <div class="rblx-scope-item"><span class="rblx-scope-no" aria-hidden="true">&#10007;</span> Friends or activity</div>
       </div>
     </div>
 
-    <div id="stateLoading" class="state-loading">
-      <div class="spinner"></div>
-      <p id="loadingMsg">Verifying your Roblox account…</p>
-    </div>
+    <div id="stateLoading" class="state-loading" role="status" aria-live="polite"><div class="spinner"></div><p id="loadingMsg">Verifying your Roblox account...</p></div>
 
     <div id="stateConnected" class="state-connected">
       <div class="rblx-linked-card">
         <div class="rblx-linked-left">
-          <div class="rblx-avatar" id="rblxAvatarWrap">
-            <div class="rblx-avatar-fallback"></div>
-          </div>
-          <div class="rblx-linked-info">
-            <div class="rblx-linked-name" id="connUsername"></div>
-            <div class="rblx-linked-pin" id="connPin"></div>
-          </div>
+          <div class="rblx-avatar" id="rblxAvatarWrap"><svg class="gl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h4M8 9v4"/><circle cx="15.5" cy="10.5" r="0.6" fill="currentColor"/><circle cx="17.5" cy="12.5" r="0.6" fill="currentColor"/><path d="M6.5 6h11a4.5 4.5 0 0 1 4.4 3.6l.9 4.6a2.8 2.8 0 0 1-4.9 2.3L16 14H8l-1.9 2.5a2.8 2.8 0 0 1-4.9-2.3l.9-4.6A4.5 4.5 0 0 1 6.5 6z"/></svg></div>
+          <div class="rblx-linked-info"><div class="rblx-linked-name" id="connUsername"></div><div class="rblx-linked-pin" id="connPin"></div></div>
         </div>
-        <div class="rblx-linked-right">
-          <div class="rblx-linked-badge">Linked</div>
-          <span class="disconnect-link" onclick="doDisconnect()">Remove</span>
-        </div>
+        <div class="rblx-linked-right"><div class="rblx-linked-badge">Linked</div><button type="button" class="linkbtn" id="removeRblx">Remove</button></div>
       </div>
     </div>
 
-    <div id="stateError" class="state-error">
-      <p id="errorMsg">Something went wrong.</p>
-      <button class="btn-retry" onclick="doRetry()">Try Again</button>
+    <div id="stateError" class="state-error" role="alert"><p id="errorMsg">Something went wrong.</p><button class="btn-retry" id="retryBtn" type="button">Try again</button></div>
+
+    <div class="alert warning" id="alertDuplicate" role="alert">
+      <div class="alert-title">A MiGOVT account already exists</div>
+      A MiGOVT account is already linked to this Roblox account. You can't create a duplicate. <a class="signin-inst" href="/login/" style="color:inherit;font-weight:700;text-decoration:underline">Sign in instead</a>.
     </div>
 
-    <div class="alert warning" id="alertDuplicate">
-      <div class="alert-title">MiGOVT Account Already Exists</div>
-      A MiGOVT account is already linked to this Roblox account (PIN). You cannot create a duplicate account. If you need help, please contact support.
-    </div>
-
-    <div class="form-actions">
-      <span></span>
-      <button class="btn-next" id="nextBtn1" onclick="goStep(2)" disabled>Continue <span>›</span></button>
-    </div>
+    <div class="form-actions"><span></span><button class="btn-next" id="nextBtn1" data-go="2" type="button" disabled>Continue <span aria-hidden="true">&rsaquo;</span></button></div>
   </div>
 
-  <!-- ═══ STEP 2 — ACCOUNT (Google / Email) ═══ -->
+  <!-- STEP 2 -->
   <div class="step" id="step2">
-    <div class="step-header">
-      <h2>Step 2 — Create Your Account</h2>
-      <p>Link a Google account or create an email and password to sign in to MiGOVT.</p>
-    </div>
+    <div class="step-header"><h2 tabindex="-1">Step 2: Create your sign-in</h2>
+      <p>Link a Google account, or choose an email and password, to sign in to MiGOVT.</p></div>
 
     <div id="authSetupWrap">
-      <!-- Google (recommended) -->
-      <div class="google-btn-wrap">
-        <span class="google-recommended">Recommended</span>
-        <button class="google-btn" id="googleBtn" onclick="signInWithGoogle()">
-          <svg class="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-          </svg>
-          Continue with Google
-        </button>
-      </div>
-
-      <div class="auth-divider" id="authDivider">or</div>
-
-      <!-- Email / password -->
-      <div class="email-form" id="emailForm" style="display:none;">
-        <div class="field">
-          <label for="authEmail">Email Address <span class="req">*</span></label>
-          <input type="email" id="authEmail" placeholder="you@example.com">
-          <span class="err-msg">A valid email is required.</span>
-        </div>
-        <div class="field">
-          <label for="authPassword">Password <span class="req">*</span></label>
-          <input type="password" id="authPassword" placeholder="At least 8 characters">
-          <div class="hint">Minimum 8 characters.</div>
-          <span class="err-msg">Password must be at least 8 characters.</span>
-        </div>
-        <div class="field">
-          <label for="authPasswordConfirm">Confirm Password <span class="req">*</span></label>
-          <input type="password" id="authPasswordConfirm" placeholder="Repeat password">
-          <span class="err-msg">Passwords do not match.</span>
-        </div>
-        <button class="btn-next" style="width:100%;justify-content:center;" id="emailContinueBtn" onclick="handleEmailAuth()">
-          <span id="emailContinueText">Continue with Email</span>
-          <div class="mini-spin" id="emailContinueSpin"></div>
-        </button>
-      </div>
-      <span class="email-toggle-link" id="emailToggle" onclick="toggleEmailForm()">Use email &amp; password instead</span>
+      <div class="google-btn-wrap"><span class="google-recommended">Recommended</span>
+        <button class="google-btn" id="googleBtn" type="button"><svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Continue with Google</button></div>
+      <div class="auth-divider">or</div>
+      <form class="email-form hidden" id="emailForm" novalidate>
+        <div class="field"><label for="authEmail">Email address <span class="req">*</span></label>
+          <input type="email" id="authEmail" placeholder="you@example.com" autocomplete="username email" inputmode="email"><span class="err-msg">A valid email is required.</span></div>
+        <div class="field"><label for="authPassword">Password <span class="req">*</span></label>
+          <input type="password" id="authPassword" placeholder="At least 8 characters" autocomplete="new-password"><div class="hint">Minimum 8 characters.</div><span class="err-msg">Password must be at least 8 characters.</span></div>
+        <div class="field"><label for="authPasswordConfirm">Confirm password <span class="req">*</span></label>
+          <input type="password" id="authPasswordConfirm" placeholder="Repeat password" autocomplete="new-password"><span class="err-msg">Passwords do not match.</span></div>
+        <button class="btn-next" style="width:100%;justify-content:center;" id="emailContinueBtn" type="submit">Use this email and password</button>
+      </form>
+      <button type="button" class="email-toggle-link" id="emailToggle" aria-expanded="false">Use email &amp; password instead</button>
     </div>
 
-    <!-- Shown after auth linked -->
-    <div id="authConnectedWrap" style="display:none;">
+    <div id="authConnectedWrap" class="hidden">
       <div class="auth-linked-card">
         <div class="rblx-linked-left" style="gap:10px;">
-          <div style="width:38px;height:38px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;" id="authIconEl"></div>
-          <div class="rblx-linked-info">
-            <div class="rblx-linked-name" id="authNameEl" style="font-size:13px;"></div>
-            <div class="rblx-linked-pin" id="authMethodEl" style="color:#2563eb;"></div>
-          </div>
+          <div style="width:38px;height:38px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden" id="authIconEl"></div>
+          <div class="rblx-linked-info"><div class="rblx-linked-name" id="authNameEl" style="font-size:13px;"></div><div class="rblx-linked-pin" id="authMethodEl" style="color:#2563eb;"></div></div>
         </div>
-        <div class="rblx-linked-right">
-          <div class="rblx-linked-badge" style="background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8;">Linked</div>
-          <span class="disconnect-link" onclick="disconnectAuth()">Change</span>
-        </div>
+        <div class="rblx-linked-right"><div class="rblx-linked-badge" style="background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8;">Ready</div><button type="button" class="linkbtn" id="changeAuth">Change</button></div>
       </div>
     </div>
 
-    <div class="alert error" id="step2AuthError" style="margin-top:16px;"></div>
-
-    <div class="form-actions">
-      <button class="btn-back" onclick="goStep(1)">‹ Back</button>
-      <button class="btn-next" id="nextBtn2" onclick="goStep(3)" disabled>Continue <span>›</span></button>
-    </div>
+    <div class="alert error" id="step2AuthError" role="alert"></div>
+    <div class="form-actions"><button class="btn-back" data-go="1" type="button">&lsaquo; Back</button><button class="btn-next" id="nextBtn2" data-go="3" type="button" disabled>Continue <span aria-hidden="true">&rsaquo;</span></button></div>
   </div>
 
-  <!-- ═══ STEP 3 — IDENTITY INFO ═══ -->
+  <!-- STEP 3 -->
   <div class="step" id="step3">
-    <div class="step-header">
-      <h2>Step 3 — Identity Information</h2>
-      <p>Provide your personal information to complete your MiGOVT account.</p>
-    </div>
-
-    <div class="alert success" id="alertRegistered">
-      <div class="alert-title">Found in State Registry</div>
-      Your identity was found in the State Registry and has been pre-filled below. Fields are locked — if any information is incorrect, update it via the <a href="https://miservices.github.io/sos/incorrect-details/" target="_blank" style="color:inherit;font-weight:700;text-decoration:underline;">Secretary of State website</a>.
-    </div>
-    <div class="alert info" id="alertNotRegistered">
-      <div class="alert-title">Not Found in State Registry</div>
-      Your PIN was not found in the State Registry. Please fill in your information below to register with the state.
-    </div>
-
+    <div class="step-header"><h2 tabindex="-1">Step 3: Identity information</h2><p>Provide your personal information to complete your MiGOVT account.</p></div>
+    <div class="alert success" id="alertRegistered"><div class="alert-title">Found in State Registry</div>Your identity was found in the State Registry and has been filled in below. If anything is incorrect, update it through the <a href="https://miservices.github.io/sos/incorrect-details/" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline">Secretary of State website</a>.</div>
+    <div class="alert info" id="alertNotRegistered"><div class="alert-title">Not found in State Registry</div>Your PIN was not found in the State Registry. Fill in your information below to register with the state.</div>
     <div class="section-divider"></div>
-
-    <div class="form-row single">
-      <div class="field">
-        <label>Personal Identification Number (PIN)</label>
-        <div class="pin-display" id="pinDisplay">—</div>
-      </div>
-    </div>
-
+    <div class="form-row single"><div class="field"><label>Personal Identification Number (PIN)</label><div class="pin-display" id="pinDisplay">-</div></div></div>
     <div class="form-row">
-      <div class="field">
-        <label for="firstName">First Name <span class="req">*</span></label>
-        <input type="text" id="firstName" placeholder="e.g. James">
-        <span class="err-msg">First name is required.</span>
-      </div>
-      <div class="field">
-        <label for="lastName">Last Name <span class="req">*</span></label>
-        <input type="text" id="lastName" placeholder="e.g. Sullivan">
-        <span class="err-msg">Last name is required.</span>
-      </div>
+      <div class="field"><label for="firstName">First name <span class="req">*</span></label><input type="text" id="firstName" placeholder="e.g. James" autocomplete="given-name"><span class="err-msg">First name is required.</span></div>
+      <div class="field"><label for="lastName">Last name <span class="req">*</span></label><input type="text" id="lastName" placeholder="e.g. Sullivan" autocomplete="family-name"><span class="err-msg">Last name is required.</span></div>
     </div>
     <div class="form-row">
-      <div class="field">
-        <label for="middleName">Middle Name <span class="opt">(optional)</span></label>
-        <input type="text" id="middleName" placeholder="e.g. Robert">
-      </div>
-      <div class="field">
-        <label for="dob">Date of Birth <span class="req">*</span></label>
-        <input type="date" id="dob">
-        <span class="err-msg">Date of birth is required.</span>
-      </div>
+      <div class="field"><label for="middleName">Middle name <span class="opt">(optional)</span></label><input type="text" id="middleName" placeholder="e.g. Robert" autocomplete="additional-name"></div>
+      <div class="field"><label for="dob">Date of birth <span class="req">*</span></label><input type="date" id="dob" min="1900-01-01" autocomplete="bday"><span class="err-msg" id="dobErr">Enter a valid date of birth.</span></div>
     </div>
-
-    <div class="locked-notice" id="lockedNotice">
-      Your information is locked because it was found in the State Registry. If anything is incorrect, update it via the <a href="https://miservices.github.io/sos/incorrect-details/" target="_blank">Secretary of State website</a>.
-    </div>
-
-    <div class="alert error" id="step3Error"></div>
-
-    <div class="form-actions">
-      <button class="btn-back" onclick="goStep(2)">‹ Back</button>
-      <button class="btn-next" id="nextBtn3" onclick="handleStep3Next()">
-        <span id="nextBtn3Text">Continue</span>
-        <div class="mini-spin" id="nextBtn3Spin"></div>
-        <span>›</span>
-      </button>
-    </div>
+    <div class="alert error" id="step3Error" role="alert"></div>
+    <div class="form-actions"><button class="btn-back" data-go="2" type="button">&lsaquo; Back</button><button class="btn-next" id="nextBtn3" type="button"><span id="nextBtn3Text">Continue</span><div class="mini-spin" id="nextBtn3Spin"></div><span aria-hidden="true">&rsaquo;</span></button></div>
   </div>
 
-  <!-- ═══ STEP 4 — REVIEW ═══ -->
+  <!-- STEP 4 -->
   <div class="step" id="step4">
-    <div class="step-header">
-      <h2>Step 4 — Review &amp; Confirm</h2>
-      <p>Review the information below before creating your MiGOVT account.</p>
-    </div>
-
-    <div class="review-group">
-      <div class="review-group-title">Roblox Identity</div>
-      <div class="review-row"><span class="review-label">Roblox Username</span><span class="review-value" id="rv-username">—</span></div>
-      <div class="review-row"><span class="review-label">Personal Identification Number (PIN)</span><span class="review-value" id="rv-pin">—</span></div>
-    </div>
-    <div class="review-group">
-      <div class="review-group-title">Account</div>
-      <div class="review-row"><span class="review-label">Sign-in Method</span><span class="review-value" id="rv-authmethod">—</span></div>
-      <div class="review-row"><span class="review-label">Email Address</span><span class="review-value" id="rv-authemail">—</span></div>
-    </div>
-    <p style="font-size:12px;color:var(--gray);line-height:1.55;margin-top:-8px;margin-bottom:22px;">Your email address will be shared with authorized state services to confirm and manage your MiGOVT account.</p>
-    <div class="review-group">
-      <div class="review-group-title">Personal Information</div>
-      <div class="review-row"><span class="review-label">Full Name</span><span class="review-value" id="rv-name">—</span></div>
-      <div class="review-row"><span class="review-label">Date of Birth</span><span class="review-value" id="rv-dob">—</span></div>
-    </div>
-
-    <div class="declaration-box">
-      <p>By creating this MiGOVT account, I confirm that the information provided is accurate and that I am the rightful owner of the Roblox account linked above. I understand that this account is subject to state identity policies, and that my email address will be shared with authorized state services to confirm and manage my account.</p>
-      <div class="checkbox-row">
-        <input type="checkbox" id="declareCheck" onchange="toggleCreate()">
-        <label for="declareCheck">I confirm the above information is accurate and I agree to the terms.</label>
-      </div>
-    </div>
-
-    <div class="alert error" id="step4Error"></div>
-
-    <div class="form-actions">
-      <button class="btn-back" onclick="goStep(3)">‹ Back</button>
-      <button class="btn-submit" id="createBtn" onclick="createAccount()" disabled>
-        <span id="createBtnText">Create MiGOVT Account</span>
-        <div class="mini-spin" id="createBtnSpin"></div>
-      </button>
-    </div>
+    <div class="step-header"><h2 tabindex="-1">Step 4: Review &amp; confirm</h2><p>Review the information below before creating your MiGOVT account.</p></div>
+    <div class="review-group"><div class="review-group-title">Roblox identity</div>
+      <div class="review-row"><span class="review-label">Roblox username</span><span class="review-value" id="rv-username">-</span></div>
+      <div class="review-row"><span class="review-label">PIN</span><span class="review-value" id="rv-pin">-</span></div></div>
+    <div class="review-group"><div class="review-group-title">Account</div>
+      <div class="review-row"><span class="review-label">Sign-in method</span><span class="review-value" id="rv-authmethod">-</span></div>
+      <div class="review-row"><span class="review-label">Email address</span><span class="review-value" id="rv-authemail">-</span></div></div>
+    <p style="font-size:12px;color:var(--gray);line-height:1.55;margin-top:-8px;margin-bottom:22px;">Your email address is shared with services you sign in to through MiGOVT so they can confirm and manage your account.</p>
+    <div class="review-group"><div class="review-group-title">Personal information</div>
+      <div class="review-row"><span class="review-label">Full name</span><span class="review-value" id="rv-name">-</span></div>
+      <div class="review-row"><span class="review-label">Date of birth</span><span class="review-value" id="rv-dob">-</span></div></div>
+    <div class="declaration-box"><p>By creating this MiGOVT account, I confirm that the information provided is accurate and that I am the rightful owner of the Roblox account linked above. I understand that this account is subject to state identity policies, and that my email address will be shared with authorized state services to confirm and manage my account.</p>
+      <div class="checkbox-row"><input type="checkbox" id="declareCheck"><label for="declareCheck">I confirm the above information is accurate and I agree to the terms.</label></div></div>
+    <div class="alert error" id="step4Error" role="alert"></div>
+    <div class="form-actions"><button class="btn-back" data-go="3" type="button">&lsaquo; Back</button><button class="btn-submit" id="createBtn" type="button" disabled><span id="createBtnText">Create MiGOVT account</span><div class="mini-spin" id="createBtnSpin"></div></button></div>
   </div>
 
-  <!-- ═══ SUCCESS ═══ -->
+  <!-- SUCCESS -->
   <div class="step" id="stepSuccess">
-    <div class="success-wrap">
-      <div class="success-icon-big" aria-hidden="true">
-        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="26" cy="26" r="25" stroke="#2d7a4a" stroke-width="2" fill="#e8f3ec"/>
-          <path d="M16 27L22.5 33.5L36 19" stroke="#2d7a4a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <h2>Account Created</h2>
-      <p>Your MiGOVT account has been successfully created and linked to your State Identity Record.</p>
-      <div class="account-info-box">
-        <div class="ai-label">Your PIN</div>
-        <div class="ai-value" id="successPin">—</div>
-      </div>
-      <div class="next-steps">
-        <h3>What's Next</h3>
-        <ul>
-          <li>You can now log into MiGOVT with your linked account.</li>
-          <li>Your identity is linked to the State Registry and accessible to authorized state services.</li>
-          <li>Keep your account information up to date through your MiGOVT profile.</li>
-        </ul>
-      </div>
+    <div class="success-wrap" role="status">
+      <div class="success-icon-big" aria-hidden="true"><svg width="52" height="52" viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="25" stroke="#2d7a4a" stroke-width="2" fill="#e8f3ec"/><path d="M16 27L22.5 33.5L36 19" stroke="#2d7a4a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h2 tabindex="-1">Account created</h2>
+      <p>Your MiGOVT account has been created and linked to your State Identity Record.</p>
+      <div class="account-info-box"><div class="ai-label">Your PIN</div><div class="ai-value" id="successPin">-</div></div>
+      <div class="next-steps"><h3>What's next</h3><ul>
+        <li>You can now sign in to MiGOVT with the account you linked.</li>
+        <li>Your identity is linked to the State Registry and available to authorized state services.</li>
+        <li>Keep your information up to date through the Secretary of State.</li></ul></div>
       <div style="margin-top:22px;">
-        <a href="/login/" style="display:inline-block;background:var(--lake-deep);color:white;font-size:14px;font-weight:700;padding:12px 26px;border-radius:6px;text-decoration:none;">Sign In to MiGOVT →</a>
+        <a class="btn-link" id="successLink" href="/login/">Sign in to MiGOVT &rarr;</a>
+        <p id="successNote" class="hidden" style="margin-top:12px;font-size:12.5px;color:var(--gray)">Taking you back to <span id="successSite"></span>... <button type="button" class="linkbtn" id="stayBtn">Stay here</button></p>
       </div>
     </div>
   </div>
 
-  <div class="footer-note" id="footerNote">
-    Identity verification is required during account creation. All accounts are subject to state identity registration and audit logging. Your email address will be shared with authorized state services to confirm and manage your account.
-  </div>
-
-  <p class="already-have">Already have a MiGOVT account? <a href="/login/">Sign in</a></p>
+  <div class="footer-note" id="footerNote">Identity verification is required during account creation. All accounts are subject to state identity registration and audit logging.</div>
+  <p class="already-have" id="haveAcct">Already have a MiGOVT account? <a id="signinLink" href="/login/">Sign in</a></p>
 </div>
 </main>
+<footer><strong>Department of Technology</strong> &middot; MiGOVT.org &middot; Create Account</footer>
 
-<footer>
-  <strong>Department of Technology</strong> · MiGOVT.org · MiGOVT Create Account
-</footer>
-
-<!-- FIREBASE — SOS -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-  const sosApp = initializeApp({
-    apiKey: "AIzaSyCzMDtySiPOXM5J15ePmjyUZRn_Zcyz2w0",
-    authDomain: "misos-f7956.firebaseapp.com",
-    projectId: "misos-f7956",
-    storageBucket: "misos-f7956.firebasestorage.app",
-    messagingSenderId: "696781263120",
-    appId: "1:696781263120:web:0a2b3c56d8ad9ede0f5595"
-  }, "sos");
-  window._sosDb = getFirestore(sosApp);
-  window._sosHelpers = { doc, getDoc, setDoc };
-  window._sosReady = true;
-  document.dispatchEvent(new Event('sosReady'));
-</script>
+  import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where, limit } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+  import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
-<!-- FIREBASE — MiGOVT + Auth -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-  import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where }
-    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-  import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup }
-    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-
-  const migovtApp = initializeApp({
-    apiKey: "AIzaSyCWJBf_xxGj8JWbfwzzEHmtdzMmiLTGTas",
-    authDomain: "mipass-77b56.firebaseapp.com",
-    projectId: "mipass-77b56",
-    storageBucket: "mipass-77b56.firebasestorage.app",
-    messagingSenderId: "326401354685",
-    appId: "1:326401354685:web:dee9e48de3975a72d600d4"
+  const mapp = initializeApp({
+    apiKey: "AIzaSyCWJBf_xxGj8JWbfwzzEHmtdzMmiLTGTas", authDomain: "mipass-77b56.firebaseapp.com", projectId: "mipass-77b56",
+    storageBucket: "mipass-77b56.firebasestorage.app", messagingSenderId: "326401354685", appId: "1:326401354685:web:dee9e48de3975a72d600d4"
   }, "migovt");
+  const sapp = initializeApp({
+    apiKey: "AIzaSyCzMDtySiPOXM5J15ePmjyUZRn_Zcyz2w0", authDomain: "misos-f7956.firebaseapp.com", projectId: "misos-f7956",
+    storageBucket: "misos-f7956.firebasestorage.app", messagingSenderId: "696781263120", appId: "1:696781263120:web:0a2b3c56d8ad9ede0f5595"
+  }, "sos");
+  const db = getFirestore(mapp), auth = getAuth(mapp), sosDb = getFirestore(sapp);
 
-  window._migovtDb   = getFirestore(migovtApp);
-  window._migovtAuth = getAuth(migovtApp);
-  window._migovtHelpers = { collection, doc, getDoc, getDocs, setDoc, query, where };
-  window._GoogleAuthProvider = GoogleAuthProvider;
-  window._signInWithPopup    = signInWithPopup;
-  window._createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-  window._migovtReady = true;
-  document.dispatchEvent(new Event('migovtReady'));
-</script>
+  const ROBLOX_CLIENT_ID = '3400793010980287379', REDIRECT_URI = location.origin + '/signup/';
+  const WORKER_URL = 'https://roblox-oauth.takosull0.workers.dev/';
+  const SS_STATE = 'migovt_oauth_state', SS_REDIRECT = 'migovt_login_redirect', SS_RNAME = 'migovt_login_rname';
+  const $ = id => document.getElementById(id);
+  const show = (id, on = true) => $(id).classList.toggle('hidden', !on);
+  const alertShow = (id, on, msg) => { const e = $(id); if (msg != null) e.textContent = msg; e.style.display = on ? 'block' : 'none'; };
+  const ss = { get: k => { try { return sessionStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch {} }, del: k => { try { sessionStorage.removeItem(k); } catch {} } };
+  const fullName = (f, m, l) => [f, m, l].filter(Boolean).join(' ');
+  const todayStr = new Date().toISOString().slice(0, 10);
+  $('dob').max = todayStr;
 
-<!-- MAIN LOGIC -->
-<script>
-const ROBLOX_CLIENT_ID = '3400793010980287379';
-const REDIRECT_URI     = window.location.origin + '/signup/';
-const WORKER_URL       = 'https://roblox-oauth.takosull0.workers.dev/';
-
-let currentStep = 1;
-let robloxData  = { id: '', username: '' };
-let connected   = false;
-let registeredInRegistry = false;
-let authUser    = null;
-let authMethodLabel = '';
-
-function waitFor(flag, evt) {
-  if (window[flag]) return Promise.resolve();
-  return new Promise(r => document.addEventListener(evt, r, { once: true }));
-}
-function buildFullName(f, m, l) { return [f, m, l].filter(Boolean).join(' '); }
-function showAlert(id, show) { document.getElementById(id).style.display = show ? 'block' : 'none'; }
-
-// ── PROGRESS ──
-function updateProgress(step) {
-  for (let i = 1; i <= 4; i++) {
-    const c = document.getElementById('pc' + i);
-    const l = document.getElementById('pl' + i);
-    c.className = 'ps-circle'; l.className = 'ps-label';
-    if (i < step)        { c.classList.add('done');   c.innerHTML = '✓'; l.classList.add('done'); }
-    else if (i === step) { c.classList.add('active'); c.innerHTML = i;   l.classList.add('active'); }
-    else                 { c.innerHTML = i; }
-    if (i < 4) document.getElementById('pline' + i).classList.toggle('done', i < step);
+  function safeRedirect(u) {
+    if (!u) return null;
+    try { const x = new URL(u), h = x.hostname.toLowerCase();
+      return x.protocol === 'https:' && (h === 'migovt.org' || h.endsWith('.migovt.org')) ? x.toString() : null; } catch { return null; }
   }
-}
 
-// ── STEP NAV ──
-function goStep(n) {
-  const cur = document.getElementById('step' + currentStep);
-  if (cur) cur.classList.remove('active');
-  if (n === 'success') {
-    document.getElementById('stepSuccess').classList.add('active');
-    document.getElementById('progressWrap').style.display = 'none';
-    document.getElementById('footerNote').style.display = 'none';
-    return;
-  }
-  currentStep = n;
-  document.getElementById('step' + n).classList.add('active');
-  updateProgress(n);
-  if (n === 4) populateReview();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+  let step = 1, rb = { id: '', username: '' }, inRegistry = false;
+  let auth_ = null;      // { kind:'google', user } or { kind:'email', email, password }
+  let timers = [], redirectTarget = null, rName = '';
 
-// ── STEP 1: ROBLOX UI STATES ──
-function uiState(s) {
-  document.getElementById('stateConnect').style.display   = s === 'connect'   ? 'flex' : 'none';
-  document.getElementById('stateLoading').style.display   = s === 'loading'   ? 'flex' : 'none';
-  document.getElementById('stateConnected').style.display = s === 'connected' ? 'flex' : 'none';
-  document.getElementById('stateError').style.display     = s === 'error'     ? 'flex' : 'none';
-}
-function showError(msg) { document.getElementById('errorMsg').textContent = msg; uiState('error'); document.getElementById('nextBtn1').disabled = true; }
-function doRetry() { showAlert('alertDuplicate', false); uiState('connect'); }
-function doDisconnect() { connected = false; robloxData = { id:'', username:'' }; showAlert('alertDuplicate', false); uiState('connect'); document.getElementById('nextBtn1').disabled = true; }
-
-// ── AVATAR HEADSHOT ──
-async function loadAvatar(userId) {
-  try {
-    const res  = await fetch('https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=' + userId + '&size=48x48&format=Png');
-    const data = await res.json();
-    const url  = data?.data?.[0]?.imageUrl;
-    if (url) {
-      document.getElementById('rblxAvatarWrap').innerHTML =
-        '<img src="' + url + '" alt="Avatar" onerror="this.parentElement.innerHTML=\'<div class=\\\'rblx-avatar-fallback\\\'></div>\'">';
+  /* ---- navigation ---- */
+  function paint(n) {
+    for (let i = 1; i <= 4; i++) {
+      const c = $('pc' + i), l = $('pl' + i);
+      c.className = 'ps-circle'; l.className = 'ps-label';
+      if (i < n) { c.classList.add('done'); c.textContent = '✓'; l.classList.add('done'); }
+      else if (i === n) { c.classList.add('active'); c.textContent = i; l.classList.add('active'); }
+      else c.textContent = i;
+      if (i < 4) $('pline' + i).classList.toggle('done', i < n);
     }
-  } catch(e) {}
-}
-
-// ── STEP 1: OAUTH ──
-function connectRoblox() {
-  const state = crypto.randomUUID();
-  sessionStorage.setItem('migovt_oauth_state', state);
-  const p = new URLSearchParams({ client_id: ROBLOX_CLIENT_ID, redirect_uri: REDIRECT_URI, response_type: 'Code', scope: 'openid profile', state });
-  window.location.href = 'https://authorize.roblox.com/?' + p.toString();
-}
-
-async function handleOAuthCallback() {
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get('code'), stateParam = params.get('state'), saved = sessionStorage.getItem('migovt_oauth_state');
-  if (!code) return;
-  window.history.replaceState({}, '', window.location.pathname);
-  sessionStorage.removeItem('migovt_oauth_state');
-  uiState('loading');
-  document.getElementById('loadingMsg').textContent = 'Verifying your Roblox account…';
-  if (stateParam !== saved) { showError('Security validation failed. Please try connecting again.'); return; }
-  try {
-    const res  = await fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ code }) });
-    const data = await res.json();
-    if (!data.userId || !data.username) throw new Error(data.error || 'Could not retrieve account details.');
-    await afterRobloxAuth(data.userId, data.username);
-  } catch(err) { showError('Connection failed: ' + err.message); }
-}
-
-async function afterRobloxAuth(userId, username) {
-  document.getElementById('loadingMsg').textContent = 'Checking for existing MiGOVT account…';
-  await waitFor('_migovtReady', 'migovtReady');
-  const { collection, getDocs, query, where } = window._migovtHelpers;
-  try {
-    const snap = await getDocs(query(collection(window._migovtDb, 'mipass'), where('pin', '==', String(userId))));
-    robloxData = { id: userId, username };
-    document.getElementById('connUsername').textContent = username;
-    document.getElementById('connPin').textContent = 'PIN: ' + userId;
-    uiState('connected');
-    loadAvatar(userId);
-    if (!snap.empty) { showAlert('alertDuplicate', true); document.getElementById('nextBtn1').disabled = true; return; }
-    connected = true;
-    showAlert('alertDuplicate', false);
-    document.getElementById('nextBtn1').disabled = false;
-  } catch(err) { showError('Could not verify account status: ' + err.message); }
-}
-
-// ── STEP 2: GOOGLE ──
-async function signInWithGoogle() {
-  const btn = document.getElementById('googleBtn');
-  btn.disabled = true;
-  showAlert('step2AuthError', false);
-  await waitFor('_migovtReady', 'migovtReady');
-  try {
-    const result = await window._signInWithPopup(window._migovtAuth, new window._GoogleAuthProvider());
-    authUser = result.user;
-    authMethodLabel = 'Google';
-    showAuthConnected('<svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>', authUser.displayName || authUser.email, 'Google Account');
-    document.getElementById('nextBtn2').disabled = false;
-  } catch(err) {
-    const e = document.getElementById('step2AuthError');
-    e.textContent = (err.message || 'Google sign-in failed.'); e.style.display = 'block';
-    btn.disabled = false;
   }
-}
-
-// ── STEP 2: EMAIL ──
-function toggleEmailForm() {
-  const f = document.getElementById('emailForm'), showing = f.style.display !== 'none';
-  f.style.display = showing ? 'none' : 'flex';
-  document.getElementById('emailToggle').textContent = showing ? 'Use email & password instead' : 'Hide email form';
-}
-
-async function handleEmailAuth() {
-  const eEl = document.getElementById('authEmail'), pEl = document.getElementById('authPassword'), cEl = document.getElementById('authPasswordConfirm');
-  let valid = true;
-  [eEl, pEl, cEl].forEach(el => el.classList.remove('error'));
-  showAlert('step2AuthError', false);
-  if (!eEl.value.trim() || !/\S+@\S+\.\S+/.test(eEl.value)) { eEl.classList.add('error'); valid = false; }
-  if (pEl.value.length < 8) { pEl.classList.add('error'); valid = false; }
-  if (pEl.value !== cEl.value) { cEl.classList.add('error'); valid = false; }
-  if (!valid) return;
-  const btn = document.getElementById('emailContinueBtn');
-  btn.disabled = true;
-  document.getElementById('emailContinueText').textContent = 'Creating…';
-  document.getElementById('emailContinueSpin').style.display = 'inline-block';
-  await waitFor('_migovtReady', 'migovtReady');
-  try {
-    const cred = await window._createUserWithEmailAndPassword(window._migovtAuth, eEl.value.trim(), pEl.value);
-    authUser = cred.user;
-    authMethodLabel = 'Email & Password';
-    showAuthConnected('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>', authUser.email, 'Email & Password');
-    document.getElementById('nextBtn2').disabled = false;
-  } catch(err) {
-    const e = document.getElementById('step2AuthError');
-    e.textContent = (err.message || 'Could not create account.'); e.style.display = 'block';
-    btn.disabled = false;
-    document.getElementById('emailContinueText').textContent = 'Continue with Email';
-    document.getElementById('emailContinueSpin').style.display = 'none';
-  }
-}
-
-function showAuthConnected(icon, name, method) {
-  document.getElementById('authIconEl').innerHTML  = icon;
-  document.getElementById('authNameEl').textContent  = name;
-  document.getElementById('authMethodEl').textContent = method;
-  document.getElementById('authConnectedWrap').style.display = 'block';
-  document.getElementById('authSetupWrap').style.display = 'none';
-}
-
-function disconnectAuth() {
-  authUser = null; authMethodLabel = '';
-  document.getElementById('authConnectedWrap').style.display = 'none';
-  document.getElementById('authSetupWrap').style.display = '';
-  document.getElementById('emailForm').style.display = 'none';
-  document.getElementById('emailToggle').textContent = 'Use email & password instead';
-  document.getElementById('googleBtn').disabled = false;
-  document.getElementById('nextBtn2').disabled = true;
-  try { if (window._migovtAuth?.currentUser) window._migovtAuth.currentUser.delete().catch(()=>{}); } catch(e){}
-}
-
-// ── STEP 3: REGISTRY ──
-function lockFields()   { ['firstName','middleName','lastName','dob'].forEach(id => document.getElementById(id).setAttribute('readonly',true));  document.getElementById('lockedNotice').style.display='block'; }
-function unlockFields() { ['firstName','middleName','lastName','dob'].forEach(id => document.getElementById(id).removeAttribute('readonly'));     document.getElementById('lockedNotice').style.display='none'; }
-
-async function loadRegistryData(pin) {
-  await waitFor('_sosReady', 'sosReady');
-  const { doc, getDoc } = window._sosHelpers;
-  try {
-    const snap = await getDoc(doc(window._sosDb, 'registry', String(pin)));
-    if (snap.exists()) {
-      registeredInRegistry = true;
-      const d = snap.data();
-      if (d.firstName)  document.getElementById('firstName').value  = d.firstName;
-      if (d.middleName) document.getElementById('middleName').value = d.middleName;
-      if (d.lastName)   document.getElementById('lastName').value   = d.lastName;
-      if (d.dateOfBirth || d.dob) document.getElementById('dob').value = d.dateOfBirth || d.dob;
-      showAlert('alertRegistered', true); showAlert('alertNotRegistered', false); lockFields();
-    } else {
-      registeredInRegistry = false;
-      showAlert('alertRegistered', false); showAlert('alertNotRegistered', true); unlockFields();
+  async function goStep(n) {
+    document.getElementById('step' + step)?.classList.remove('active');
+    if (n === 'success') {
+      $('stepSuccess').classList.add('active');
+      ['progressWrap', 'footerNote', 'haveAcct'].forEach(i => show(i, false));
+      $('stepSuccess').querySelector('h2').focus();
+      return;
     }
-  } catch(err) { registeredInRegistry = false; showAlert('alertRegistered', false); showAlert('alertNotRegistered', true); unlockFields(); }
-}
-
-async function enterStep3() {
-  document.getElementById('pinDisplay').textContent = robloxData.id || '—';
-  showAlert('alertRegistered', false); showAlert('alertNotRegistered', false); showAlert('step3Error', false);
-  unlockFields();
-  if (robloxData.id) {
-    document.getElementById('nextBtn3').disabled = true;
-    document.getElementById('nextBtn3Text').textContent = 'Loading…';
-    document.getElementById('nextBtn3Spin').style.display = 'inline-block';
-    await loadRegistryData(robloxData.id);
-    document.getElementById('nextBtn3').disabled = false;
-    document.getElementById('nextBtn3Text').textContent = 'Continue';
-    document.getElementById('nextBtn3Spin').style.display = 'none';
+    step = n; $('step' + n).classList.add('active'); paint(n);
+    if (n === 4) populateReview();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    $('step' + n).querySelector('h2')?.focus({ preventScroll: true });
+    if (n === 3) await enterStep3();
   }
-}
+  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => goStep(+b.dataset.go)));
+  $('nextBtn3').onclick = nextFrom3;
 
-async function handleStep3Next() {
-  let valid = true;
-  ['firstName','lastName','dob'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) { el.classList.add('error'); valid = false; } else el.classList.remove('error');
+  /* ---- step 1 ---- */
+  const S1 = ['stateConnect', 'stateLoading', 'stateConnected', 'stateError'];
+  const uiState = s => S1.forEach(id => { const e = $(id); e.style.display = id === 'state' + s[0].toUpperCase() + s.slice(1) ? (id === 'stateConnected' ? 'block' : 'flex') : 'none'; });
+  const showError = m => { $('errorMsg').textContent = m; uiState('error'); $('nextBtn1').disabled = true; };
+  $('retryBtn').onclick = () => { alertShow('alertDuplicate', false); uiState('connect'); };
+  $('removeRblx').onclick = () => { rb = { id: '', username: '' }; alertShow('alertDuplicate', false); uiState('connect'); $('nextBtn1').disabled = true; };
+  $('connectBtn').onclick = () => {
+    const state = crypto.randomUUID(); ss.set(SS_STATE, state);
+    location.href = 'https://authorize.roblox.com/?' + new URLSearchParams({ client_id: ROBLOX_CLIENT_ID, redirect_uri: REDIRECT_URI, response_type: 'Code', scope: 'openid profile', state });
+  };
+  async function loadAvatar(id) {
+    try { const r = await fetch('https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=' + id + '&size=48x48&format=Png');
+      const url = (await r.json())?.data?.[0]?.imageUrl; if (!url) return;
+      const im = new Image(); im.alt = ''; im.src = url; im.onload = () => { $('rblxAvatarWrap').replaceChildren(im); }; } catch {}
+  }
+  async function oauthCallback() {
+    const p = new URLSearchParams(location.search), code = p.get('code'), st = p.get('state'), err = p.get('error');
+    if (!code && !err) return;
+    history.replaceState({}, '', location.pathname);
+    const saved = ss.get(SS_STATE); ss.del(SS_STATE);
+    if (err) return showError('Roblox sign-in was cancelled or failed. Please try again.');
+    uiState('loading'); $('loadingMsg').textContent = 'Verifying your Roblox account...';
+    if (!saved || st !== saved) return showError('Security validation failed. Please try connecting again.');
+    try {
+      const res = await fetch(WORKER_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) });
+      const d = await res.json();
+      if (!d.userId || !d.username) throw new Error(d.error || 'Could not retrieve account details.');
+      $('loadingMsg').textContent = 'Checking for an existing MiGOVT account...';
+      const snap = await getDocs(query(collection(db, 'mipass'), where('pin', '==', String(d.userId)), limit(1)));
+      rb = { id: String(d.userId), username: d.username };
+      $('connUsername').textContent = d.username; $('connPin').textContent = 'PIN: ' + d.userId;
+      uiState('connected'); loadAvatar(d.userId);
+      const dup = !snap.empty; alertShow('alertDuplicate', dup); $('nextBtn1').disabled = dup;
+    } catch (e) { console.error(e); showError('Connection failed: ' + (e.message || 'please try again.')); }
+  }
+
+  /* ---- step 2 ---- */
+  function authLinked(icon, name, method) {
+    $('authIconEl').replaceChildren(); if (typeof icon === 'string') $('authIconEl').innerHTML = icon; else $('authIconEl').appendChild(icon);
+    $('authNameEl').textContent = name; $('authMethodEl').textContent = method;
+    show('authConnectedWrap', true); show('authSetupWrap', false); $('nextBtn2').disabled = false;
+  }
+  async function dropAuth() { auth_ = null; try { await signOut(auth); } catch {} }   // never deletes anything: Google sign-in may belong to an existing person
+  $('changeAuth').onclick = async () => {
+    await dropAuth();
+    show('authConnectedWrap', false); show('authSetupWrap', true); show('emailForm', false);
+    $('emailToggle').textContent = 'Use email & password instead'; $('emailToggle').setAttribute('aria-expanded', 'false');
+    $('googleBtn').disabled = false; $('nextBtn2').disabled = true; alertShow('step2AuthError', false);
+  };
+  $('googleBtn').onclick = async () => {
+    const b = $('googleBtn'); b.disabled = true; alertShow('step2AuthError', false);
+    try {
+      const { user } = await signInWithPopup(auth, new GoogleAuthProvider());
+      const taken = await getDoc(doc(db, 'mipass', user.uid)).catch(() => null);
+      let dupe = taken?.exists();
+      if (!dupe && user.email) { const q = await getDocs(query(collection(db, 'mipass'), where('email', '==', user.email), limit(1))).catch(() => null); dupe = q && !q.empty; }
+      if (dupe) { await dropAuth(); b.disabled = false; return alertShow('step2AuthError', true, 'That Google account is already linked to a MiGOVT account. Sign in instead, or use a different Google account.'); }
+      auth_ = { kind: 'google', user };
+      authLinked($('googleBtn').querySelector('svg').cloneNode(true), user.displayName || user.email, 'Google account');
+    } catch (e) {
+      b.disabled = false;
+      if (e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') return;
+      alertShow('step2AuthError', true, e?.code === 'auth/popup-blocked' ? 'Your browser blocked the Google window. Allow pop-ups for this site and try again.' : (e.message || 'Google sign-in failed.'));
+    }
+  };
+  $('emailToggle').onclick = () => {
+    const showing = !$('emailForm').classList.contains('hidden');
+    show('emailForm', !showing); $('emailToggle').setAttribute('aria-expanded', String(!showing));
+    $('emailToggle').textContent = showing ? 'Use email & password instead' : 'Hide email form';
+    if (!showing) $('authEmail').focus();
+  };
+  $('emailForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const em = $('authEmail'), pw = $('authPassword'), cf = $('authPasswordConfirm'); alertShow('step2AuthError', false);
+    em.classList.toggle('error', !/\S+@\S+\.\S+/.test(em.value.trim()));
+    pw.classList.toggle('error', pw.value.length < 8);
+    cf.classList.toggle('error', pw.value !== cf.value);
+    if ([em, pw, cf].some(x => x.classList.contains('error'))) return;
+    // The account is created at the very end, so backing out leaves nothing behind.
+    auth_ = { kind: 'email', email: em.value.trim(), password: pw.value };
+    authLinked(`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`, auth_.email, 'Email & password');
   });
-  if (!valid) return;
-  showAlert('step3Error', false);
-  const btn = document.getElementById('nextBtn3');
-  btn.disabled = true; document.getElementById('nextBtn3Text').textContent = 'Saving…'; document.getElementById('nextBtn3Spin').style.display = 'inline-block';
-  const fn = document.getElementById('firstName').value.trim(), mn = document.getElementById('middleName').value.trim(), ln = document.getElementById('lastName').value.trim(), dob = document.getElementById('dob').value;
-  try {
-    if (!registeredInRegistry) {
-      await waitFor('_sosReady', 'sosReady');
-      const { doc, setDoc } = window._sosHelpers;
-      await setDoc(doc(window._sosDb, 'registry', String(robloxData.id)), {
-        pin: String(robloxData.id), robloxId: String(robloxData.id), robloxUsername: robloxData.username,
-        firstName: fn, middleName: mn || null, lastName: ln, fullName: buildFullName(fn,mn,ln),
-        dateOfBirth: dob, status:'registered', citizenshipStatus:null, applicationNumber:null,
-        priorLegalNames:[], registeredAt: new Date().toISOString(), source:'migovt'
-      });
-      registeredInRegistry = true;
-    }
-    btn.disabled = false; document.getElementById('nextBtn3Text').textContent = 'Continue'; document.getElementById('nextBtn3Spin').style.display = 'none';
+
+  /* ---- step 3 ---- */
+  const FIELDS = ['firstName', 'middleName', 'lastName', 'dob'];
+  const lock = on => FIELDS.forEach(id => $(id).readOnly = on);
+  async function enterStep3() {
+    $('pinDisplay').textContent = rb.id || '-';
+    alertShow('alertRegistered', false); alertShow('alertNotRegistered', false); alertShow('step3Error', false); lock(false);
+    if (!rb.id) return;
+    const btn = $('nextBtn3'); btn.disabled = true; $('nextBtn3Text').textContent = 'Loading...'; $('nextBtn3Spin').style.display = 'inline-block';
+    try {
+      const s = await getDoc(doc(sosDb, 'registry', rb.id));
+      if (s.exists()) {
+        inRegistry = true; const d = s.data();
+        if (d.firstName) $('firstName').value = d.firstName; if (d.middleName) $('middleName').value = d.middleName; if (d.lastName) $('lastName').value = d.lastName;
+        const dob = d.dateOfBirth || d.dob; if (dob) $('dob').value = String(dob).slice(0, 10);
+        alertShow('alertRegistered', true); lock(true);
+      } else { inRegistry = false; alertShow('alertNotRegistered', true); }
+    } catch (e) { console.warn('Registry lookup failed', e); inRegistry = false; alertShow('alertNotRegistered', true); }
+    btn.disabled = false; $('nextBtn3Text').textContent = 'Continue'; $('nextBtn3Spin').style.display = 'none';
+  }
+  function nextFrom3() {
+    let ok = true;
+    ['firstName', 'lastName'].forEach(id => { const bad = !$(id).value.trim(); $(id).classList.toggle('error', bad); if (bad) ok = false; });
+    const d = $('dob').value, bad = !d || d > todayStr || d < '1900-01-01';
+    $('dob').classList.toggle('error', bad); if (bad) ok = false;
+    if (!ok) return;
     goStep(4);
-  } catch(err) {
-    btn.disabled = false; document.getElementById('nextBtn3Text').textContent = 'Continue'; document.getElementById('nextBtn3Spin').style.display = 'none';
-    const e = document.getElementById('step3Error'); e.textContent = (err.message||'An error occurred.'); e.style.display = 'block';
   }
-}
 
-// ── STEP 4: REVIEW ──
-function populateReview() {
-  const fn = document.getElementById('firstName').value.trim(), mn = document.getElementById('middleName').value.trim(), ln = document.getElementById('lastName').value.trim(), dob = document.getElementById('dob').value;
-  document.getElementById('rv-username').textContent  = robloxData.username || '—';
-  document.getElementById('rv-pin').textContent       = robloxData.id       || '—';
-  document.getElementById('rv-name').textContent      = buildFullName(fn,mn,ln) || '—';
-  document.getElementById('rv-authmethod').textContent = authMethodLabel || '—';
-  document.getElementById('rv-authemail').textContent  = authUser?.email || authUser?.displayName || '—';
-  document.getElementById('rv-dob').textContent = dob ? new Date(dob+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '—';
-}
-
-function toggleCreate() { document.getElementById('createBtn').disabled = !document.getElementById('declareCheck').checked; }
-
-// ── CREATE ACCOUNT ──
-async function createAccount() {
-  const btn = document.getElementById('createBtn'), errBox = document.getElementById('step4Error');
-  btn.disabled = true; document.getElementById('createBtnText').textContent = 'Creating…'; document.getElementById('createBtnSpin').style.display = 'inline-block'; errBox.style.display = 'none';
-  const fn = document.getElementById('firstName').value.trim(), mn = document.getElementById('middleName').value.trim(), ln = document.getElementById('lastName').value.trim(), dob = document.getElementById('dob').value;
-  try {
-    await waitFor('_migovtReady', 'migovtReady');
-    const { collection, doc, getDocs, setDoc, query, where } = window._migovtHelpers;
-    const snap = await getDocs(query(collection(window._migovtDb,'mipass'), where('pin','==',String(robloxData.id))));
-    if (!snap.empty) throw new Error('A MiGOVT account already exists for this PIN. Please sign in instead.');
-    if (!authUser) throw new Error('No authentication method linked. Please go back and link an account.');
-    // Use Firebase Auth UID as the document ID — real, persistent, unique
-    await setDoc(doc(window._migovtDb, 'mipass', authUser.uid), {
-      uid:            authUser.uid,
-      name:           buildFullName(fn,mn,ln),
-      dateOfBirth:    dob,
-      pin:            String(robloxData.id),
-      robloxUsername: robloxData.username,
-      authMethod:     authMethodLabel,
-      email:          authUser.email || null,
-      createdAt:      new Date().toISOString()
-    });
-    document.getElementById('successPin').textContent = robloxData.id;
-    goStep('success');
-  } catch(err) {
-    btn.disabled = false; document.getElementById('createBtnText').textContent = 'Create MiGOVT Account'; document.getElementById('createBtnSpin').style.display = 'none';
-    btn.disabled = !document.getElementById('declareCheck').checked;
-    errBox.textContent = (err.message||'Account creation failed.'); errBox.style.display = 'block';
+  /* ---- step 4 ---- */
+  const vals = () => ({ fn: $('firstName').value.trim(), mn: $('middleName').value.trim(), ln: $('lastName').value.trim(), dob: $('dob').value });
+  function populateReview() {
+    const v = vals();
+    $('rv-username').textContent = rb.username || '-'; $('rv-pin').textContent = rb.id || '-';
+    $('rv-name').textContent = fullName(v.fn, v.mn, v.ln) || '-';
+    $('rv-authmethod').textContent = auth_ ? (auth_.kind === 'google' ? 'Google account' : 'Email & password') : '-';
+    $('rv-authemail').textContent = auth_ ? (auth_.kind === 'google' ? auth_.user.email : auth_.email) || '-' : '-';
+    $('rv-dob').textContent = v.dob ? new Date(v.dob + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '-';
   }
-}
+  $('declareCheck').onchange = () => { $('createBtn').disabled = !$('declareCheck').checked; };
+  $('createBtn').onclick = async () => {
+    const btn = $('createBtn'); btn.disabled = true; $('createBtnText').textContent = 'Creating...'; $('createBtnSpin').style.display = 'inline-block'; alertShow('step4Error', false);
+    const v = vals();
+    try {
+      if (!auth_) throw new Error('No sign-in method linked. Go back and link one.');
+      const dup = await getDocs(query(collection(db, 'mipass'), where('pin', '==', rb.id), limit(1)));
+      if (!dup.empty) throw new Error('A MiGOVT account already exists for this PIN. Please sign in instead.');
+      let user, email;
+      if (auth_.kind === 'google') { user = auth_.user; email = user.email || null; if (!auth.currentUser) throw new Error('Your Google session expired. Go back and link it again.'); }
+      else {
+        try { user = (await createUserWithEmailAndPassword(auth, auth_.email, auth_.password)).user; email = auth_.email; }
+        catch (e) { throw new Error(e?.code === 'auth/email-already-in-use' ? 'That email already has a MiGOVT sign-in. Go back and use a different email, or sign in instead.' : e?.code === 'auth/weak-password' ? 'That password is too weak. Go back and choose a stronger one.' : e.message); }
+      }
+      if ((await getDoc(doc(db, 'mipass', user.uid))).exists()) throw new Error('This sign-in is already linked to a MiGOVT account. Please sign in instead.');
+      await setDoc(doc(db, 'mipass', user.uid), {
+        uid: user.uid, name: fullName(v.fn, v.mn, v.ln), dateOfBirth: v.dob, pin: rb.id, robloxUsername: rb.username,
+        authMethod: auth_.kind === 'google' ? 'Google' : 'Email & Password', email, createdAt: new Date().toISOString()
+      });
+      if (!inRegistry) {
+        try { await setDoc(doc(sosDb, 'registry', rb.id), {
+          pin: rb.id, robloxId: rb.id, robloxUsername: rb.username, firstName: v.fn, middleName: v.mn || null, lastName: v.ln, fullName: fullName(v.fn, v.mn, v.ln),
+          dateOfBirth: v.dob, status: 'registered', citizenshipStatus: null, applicationNumber: null, priorLegalNames: [], registeredAt: new Date().toISOString(), source: 'migovt' }); }
+        catch (e) { console.warn('Registry entry not saved', e); }
+      }
+      finish({ pin: rb.id, name: fullName(v.fn, v.mn, v.ln), dob: v.dob, roblox: rb.username, email: email || '' });
+    } catch (e) {
+      console.error(e);
+      btn.disabled = !$('declareCheck').checked; $('createBtnText').textContent = 'Create MiGOVT account'; $('createBtnSpin').style.display = 'none';
+      alertShow('step4Error', true, e.message || 'Account creation failed.');
+    }
+  };
 
-// ── OVERRIDE goStep to hook step3 init ──
-const _orig = goStep;
-window.goStep = async function(n) {
-  if (n === 3) { _orig(3); await enterStep3(); return; }
-  _orig(n);
-};
+  /* ---- done ---- */
+  function finish(u) {
+    $('successPin').textContent = u.pin; goStep('success');
+    if (redirectTarget) {
+      const url = new URL(redirectTarget), set = (k, x) => { if (x) url.searchParams.set(k, x); };
+      set('mipass_pin', u.pin); set('mipass_name', u.name); set('mipass_dob', u.dob); set('mipass_user', u.roblox); set('mipass_email', u.email);
+      $('successLink').textContent = 'Continue to ' + rName + ' →'; $('successLink').href = url.toString();
+      $('successSite').textContent = rName; show('successNote', true);
+      timers.push(setTimeout(() => { location.href = url.toString(); }, 3000));
+    }
+  }
+  $('stayBtn').onclick = () => { timers.forEach(clearTimeout); timers = []; show('successNote', false); };
 
-// ── EXPOSE GLOBALS ──
-window.connectRoblox    = connectRoblox;
-window.doDisconnect     = doDisconnect;
-window.doRetry          = doRetry;
-window.signInWithGoogle = signInWithGoogle;
-window.toggleEmailForm  = toggleEmailForm;
-window.handleEmailAuth  = handleEmailAuth;
-window.disconnectAuth   = disconnectAuth;
-window.handleStep3Next  = handleStep3Next;
-window.toggleCreate     = toggleCreate;
-window.createAccount    = createAccount;
-
-window.addEventListener('DOMContentLoaded', () => { uiState('connect'); handleOAuthCallback(); });
+  /* ---- init ---- */
+  (function init() {
+    const q = new URLSearchParams(location.search), h = new URLSearchParams(location.hash.replace(/^#/, ''));
+    const given = q.get('redirect_uri') || h.get('redirect_uri');
+    if (given) {
+      const ok = safeRedirect(given);
+      if (ok) { ss.set(SS_REDIRECT, ok); ss.set(SS_RNAME, (q.get('site_name') || h.get('site_name') || '').slice(0, 80)); }
+      else { ss.del(SS_REDIRECT); ss.del(SS_RNAME); }
+      if (location.hash) history.replaceState({}, '', location.pathname + location.search);
+    }
+    redirectTarget = safeRedirect(ss.get(SS_REDIRECT)); rName = ss.get(SS_RNAME) || 'the requesting service';
+    if (redirectTarget) { const l = '/login/?redirect_uri=' + encodeURIComponent(redirectTarget) + '&site_name=' + encodeURIComponent(rName); $('signinLink').href = l; document.querySelectorAll('.signin-inst').forEach(a => a.href = l); }
+    uiState('connect'); oauthCallback();
+  })();
 </script>
 <script src="/partials.js"></script>
 </body>
