@@ -18,19 +18,7 @@
   --sun: #f2b632;
   --head: 'Newsreader', Georgia, serif;
   --ui: 'Public Sans', system-ui, -apple-system, sans-serif;
-
-  /* Legacy names kept so older page styles keep working */
-  --lake-deep: #173f7a;
-  --lake-mist: #3d66a3;
-  --lake-night: #0f2c58;
-  --paper: #faf8f3;
-  --paper-warm: #f0ece1;
-  --sign-brown-dark: #453423;
-  --trail-amber: #f2b632;
-  --trail-amber-text: #8a6208;
-  --ink-soft: #5d6470;
-  --nav-bg: #ffffff;
-  --nav-border: #e2ded3;
+  --bg-warm: #f0ece1;
 }
 
 * { box-sizing: border-box; }
@@ -139,7 +127,7 @@ label:focus-visible {
 }
 
 .confirm-modal-cancel { background: #fff; color: var(--ink); }
-.confirm-modal-cancel:hover { background: var(--paper-warm); }
+.confirm-modal-cancel:hover { background: var(--bg-warm); }
 
 .confirm-modal-continue { background: var(--ink); color: #fff; }
 .confirm-modal-continue:hover { background: var(--blue); border-color: var(--blue); }
