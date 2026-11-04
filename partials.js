@@ -4,7 +4,7 @@
 
    Usage: add <div id="site-chrome"></div> as the very first
    thing inside <body>, then include this script:
-     <script src="/partials.js"></script>
+     <script src="https://migovt.org/partials.js"></script>
    The footer is NOT included here — each page keeps its own.
    ============================================================ */
 
@@ -12,116 +12,118 @@
   var CHROME_HTML = `
   <div class="site-chrome-sticky">
   <div class="disclaimer-banner">
-    This is not an official government website. This site is a simulated government interface and does not represent any real government body or authority.
-    <a href="https://migovt.org/disclaimer">Read the full disclaimer</a>
+    <div class="inner">
+      <span class="bang" aria-hidden="true">!</span>
+      <span><strong>This is not an official government website.</strong> This site is a simulated government interface and does not represent any real government body or authority. <a href="https://migovt.org/disclaimer">Read the full disclaimer</a></span>
+    </div>
   </div>
 
   <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
 
   <header class="site-header">
     <div class="inner">
-      <a class="logo-link" href="/">MiGOVT<span>.org</span></a>
+      <a class="logo-link" href="https://migovt.org/" aria-label="MiGOVT, State of Michigan"><img src="https://migovt.org/banner.svg" alt="MiGOVT, State of Michigan"></a>
 
       <div class="nav-actions-wrap">
       <nav class="main-nav" aria-label="Primary">
         <ul>
           <li>
-            <a href="/visit/">Visitors <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
+            <a href="https://migovt.org/visit/">Visitors <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
             <div class="dropdown dropdown-simple">
               <ul>
-                <li><a href="/citizenship/">Get citizenship</a></li>
-                <li><a href="/tourism/">Tourism</a></li>
-                <li><a href="/dnr/hunting-fishing/">Hunting &amp; Fishing</a></li>
-                <li><a href="/dnr/state-parks/">State Parks</a></li>
-                <li><a href="/events">Events</a></li>
-                <li><a href="/mdot/travel-info/">Travel information</a></li>
+                <li><a href="https://migovt.org/citizenship/">Get citizenship</a></li>
+                <li><a href="https://migovt.org/tourism/">Tourism</a></li>
+                <li><a href="https://migovt.org/dnr/hunting-fishing/">Hunting &amp; Fishing</a></li>
+                <li><a href="https://migovt.org/dnr/state-parks/">State Parks</a></li>
+                <li><a href="https://migovt.org/events">Events</a></li>
+                <li><a href="https://migovt.org/mdot/travel-info/">Travel information</a></li>
               </ul>
             </div>
           </li>
 
           <li>
-            <a href="/residents/">Michiganders <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
+            <a href="https://migovt.org/residents/">Michiganders <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
             <div class="dropdown dropdown-simple">
               <ul>
-                <li><a href="/housing/">Housing</a></li>
-                <li><a href="/vote/">Voting</a></li>
-                <li><a href="/treasury/taxes/">Taxes</a></li>
-                <li><a href="/jobs/">Employment</a></li>
+                <li><a href="https://migovt.org/housing/">Housing</a></li>
+                <li><a href="https://migovt.org/vote/">Voting</a></li>
+                <li><a href="https://migovt.org/treasury/taxes/">Taxes</a></li>
+                <li><a href="https://migovt.org/jobs/">Employment</a></li>
               </ul>
             </div>
           </li>
 
           <li>
-            <a href="/services/">Services</a>
+            <a href="https://migovt.org/services/">Services</a>
           </li>
 
           <li>
-            <a href="/directory/">State Government <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
+            <a href="https://migovt.org/directory/">State Government <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
             <div class="dropdown dropdown-mega">
               <div class="col">
                 <div class="dropdown-col-title">Executive</div>
                 <ul>
-                  <li><a href="/governor/">Governor &amp; Lt. Governor</a></li>
-                  <li><a href="/governor/cabinet/">Cabinet</a></li>
-                  <li><a href="/ag/">Attorney General</a></li>
-                  <li><a href="/sos/">Secretary of State</a></li>
-                  <li><a href="/departments/">Departments</a></li>
+                  <li><a href="https://migovt.org/governor/">Governor &amp; Lt. Governor</a></li>
+                  <li><a href="https://migovt.org/governor/cabinet/">Cabinet</a></li>
+                  <li><a href="https://migovt.org/ag/">Attorney General</a></li>
+                  <li><a href="https://migovt.org/sos/">Secretary of State</a></li>
+                  <li><a href="https://migovt.org/departments/">Departments</a></li>
                 </ul>
               </div>
               <div class="col">
                 <div class="dropdown-col-title">Legislature</div>
                 <ul>
-                  <li><a href="/legislature/">Website</a></li>
-                  <li><a href="/capitol/">State Capitol</a></li>
-                  <li><a href="/legislature/legislators/">Legislators</a></li>
+                  <li><a href="https://migovt.org/legislature/">Website</a></li>
+                  <li><a href="https://migovt.org/capitol/">State Capitol</a></li>
+                  <li><a href="https://migovt.org/legislature/legislators/">Legislators</a></li>
                 </ul>
               </div>
               <div class="col">
                 <div class="dropdown-col-title">Judiciary</div>
                 <ul>
-                  <li><a href="/courts/">Website</a></li>
-                  <li><a href="/courts/supreme-court/">Supreme Court</a></li>
-                  <li><a href="/courts/district-courts/">District Courts</a></li>
+                  <li><a href="https://migovt.org/courts/">Website</a></li>
+                  <li><a href="https://migovt.org/courts/supreme-court/">Supreme Court</a></li>
+                  <li><a href="https://migovt.org/courts/district-courts/">District Courts</a></li>
                 </ul>
               </div>
             </div>
           </li>
 
           <li>
-            <a href="/local/">Local Government <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
+            <a href="https://migovt.org/local/">Local Government <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
             <div class="dropdown dropdown-mega cols-2">
               <div class="col">
                 <div class="dropdown-col-title">Genesee County</div>
                 <ul>
-                  <li><a href="/genesee-county/">Website</a></li>
-                  <li><a href="/genesee-county/elections/">Elections</a></li>
-                  <li><a href="/genesee-county/board-of-commissioners/">Board of Commissioners</a></li>
-                  <li><a href="/genesee-county/clerk">County Clerk</a></li>
-                  <li><a href="/genesee-county/sheriffs-office">Sheriff's Office</a></li>
-                  <li><a href="/genesee-county/district-court/">District Court</a></li>
+                  <li><a href="https://migovt.org/genesee-county/">Website</a></li>
+                  <li><a href="https://migovt.org/genesee-county/elections/">Elections</a></li>
+                  <li><a href="https://migovt.org/genesee-county/board-of-commissioners/">Board of Commissioners</a></li>
+                  <li><a href="https://migovt.org/genesee-county/clerk">County Clerk</a></li>
+                  <li><a href="https://migovt.org/genesee-county/sheriffs-office">Sheriff's Office</a></li>
+                  <li><a href="https://migovt.org/genesee-county/district-court/">District Court</a></li>
                 </ul>
               </div>
               <div class="col">
                 <div class="dropdown-col-title">City of Flint</div>
                 <ul>
-                  <li><a href="/flint/">Website</a></li>
-                  <li><a href="/flint/elections/">Elections</a></li>
-                  <li><a href="/flint/mayor/">Mayor</a></li>
-                  <li><a href="/flint/city-council/">City Council</a></li>
-                  <li><a href="/flint/departments/">Departments</a></li>
+                  <li><a href="https://migovt.org/flint/">Website</a></li>
+                  <li><a href="https://migovt.org/flint/elections/">Elections</a></li>
+                  <li><a href="https://migovt.org/flint/mayor/">Mayor</a></li>
+                  <li><a href="https://migovt.org/flint/city-council/">City Council</a></li>
+                  <li><a href="https://migovt.org/flint/departments/">Departments</a></li>
                 </ul>
               </div>
             </div>
           </li>
 
           <li>
-            <a href="/about">About</a>
+            <a href="https://migovt.org/about">About</a>
           </li>
         </ul>
       </nav>
 
       <div class="header-actions">
-        <a class="login-link" href="/login/">
+        <a class="login-link" href="https://migovt.org/login/">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           Log in
         </a>
@@ -135,74 +137,74 @@
   </header>
 
   <nav class="mobile-nav" aria-label="Primary mobile">
-    <a class="login-link-mobile" href="/login/">
+    <a class="login-link-mobile" href="https://migovt.org/login/">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       Log in
     </a>
     <details>
       <summary>Visitors</summary>
       <div class="sub-list">
-        <a href="/visit/">Visitors overview</a>
-        <a href="/citizenship/">Get citizenship</a>
-        <a href="/tourism/">Tourism</a>
-        <a href="/dnr/hunting-fishing/">Hunting &amp; Fishing</a>
-        <a href="/dnr/state-parks/">State Parks</a>
-        <a href="/events">Events</a>
-        <a href="/mdot/travel-info/">Travel information</a>
+        <a href="https://migovt.org/visit/">Visitors overview</a>
+        <a href="https://migovt.org/citizenship/">Get citizenship</a>
+        <a href="https://migovt.org/tourism/">Tourism</a>
+        <a href="https://migovt.org/dnr/hunting-fishing/">Hunting &amp; Fishing</a>
+        <a href="https://migovt.org/dnr/state-parks/">State Parks</a>
+        <a href="https://migovt.org/events">Events</a>
+        <a href="https://migovt.org/mdot/travel-info/">Travel information</a>
       </div>
     </details>
     <details>
       <summary>Michiganders</summary>
       <div class="sub-list">
-        <a href="/residents/">Michiganders overview</a>
-        <a href="/housing/">Housing</a>
-        <a href="/vote/">Voting</a>
-        <a href="/treasury/taxes/">Taxes</a>
-        <a href="/jobs/">Employment</a>
+        <a href="https://migovt.org/residents/">Michiganders overview</a>
+        <a href="https://migovt.org/housing/">Housing</a>
+        <a href="https://migovt.org/vote/">Voting</a>
+        <a href="https://migovt.org/treasury/taxes/">Taxes</a>
+        <a href="https://migovt.org/jobs/">Employment</a>
       </div>
     </details>
-    <a href="/services/">Services</a>
+    <a href="https://migovt.org/services/">Services</a>
     <details>
       <summary>State Government</summary>
       <div class="sub-list">
-        <a href="/directory/">State Government overview</a>
+        <a href="https://migovt.org/directory/">State Government overview</a>
         <div class="group-label">Executive</div>
-        <a href="/governor/">Governor &amp; Lt. Governor</a>
-        <a href="/governor/cabinet/">Cabinet</a>
-        <a href="/ag/">Attorney General</a>
-        <a href="/sos/">Secretary of State</a>
-        <a href="/directory/">Departments</a>
+        <a href="https://migovt.org/governor/">Governor &amp; Lt. Governor</a>
+        <a href="https://migovt.org/governor/cabinet/">Cabinet</a>
+        <a href="https://migovt.org/ag/">Attorney General</a>
+        <a href="https://migovt.org/sos/">Secretary of State</a>
+        <a href="https://migovt.org/departments/">Departments</a>
         <div class="group-label">Legislature</div>
-        <a href="/legislature/">Website</a>
-        <a href="/capitol/">State Capitol</a>
-        <a href="/legislature/legislators/">Legislators</a>
+        <a href="https://migovt.org/legislature/">Website</a>
+        <a href="https://migovt.org/capitol/">State Capitol</a>
+        <a href="https://migovt.org/legislature/legislators/">Legislators</a>
         <div class="group-label">Judiciary</div>
-        <a href="/courts/">Website</a>
-        <a href="/courts/supreme-court/">Supreme Court</a>
-        <a href="/courts/sbm/">State Bar of Michigan</a>
-        <a href="/courts/district-courts/">District Courts</a>
+        <a href="https://migovt.org/courts/">Website</a>
+        <a href="https://migovt.org/courts/supreme-court/">Supreme Court</a>
+        <a href="https://migovt.org/courts/sbm/">State Bar of Michigan</a>
+        <a href="https://migovt.org/courts/district-courts/">District Courts</a>
       </div>
     </details>
     <details>
       <summary>Local Government</summary>
       <div class="sub-list">
-        <a href="/local/">Local Government overview</a>
+        <a href="https://migovt.org/local/">Local Government overview</a>
         <div class="group-label">Genesee County</div>
-        <a href="/genesee-county/">Website</a>
-        <a href="/genesee-county/elections/">Elections</a>
-        <a href="/genesee-county/board-of/commissioners/">Board of Commissioners</a>
-        <a href="/genesee-county/clerk">County Clerk</a>
-        <a href="/genesee-county/sheriffs-office">Sheriff's Office</a>
-        <a href="/genesee-county/district-court/">District Court</a>
+        <a href="https://migovt.org/genesee-county/">Website</a>
+        <a href="https://migovt.org/genesee-county/elections/">Elections</a>
+        <a href="https://migovt.org/genesee-county/board-of-commissioners/">Board of Commissioners</a>
+        <a href="https://migovt.org/genesee-county/clerk">County Clerk</a>
+        <a href="https://migovt.org/genesee-county/sheriffs-office">Sheriff's Office</a>
+        <a href="https://migovt.org/genesee-county/district-court/">District Court</a>
         <div class="group-label">City of Flint</div>
-        <a href="/flint/">Website</a>
-        <a href="/flint/elections/">Elections</a>
-        <a href="/flint/mayor/">Mayor</a>
-        <a href="/flint/city-council/">City Council</a>
-        <a href="/flint/departments/">Departments</a>
+        <a href="https://migovt.org/flint/">Website</a>
+        <a href="https://migovt.org/flint/elections/">Elections</a>
+        <a href="https://migovt.org/flint/mayor/">Mayor</a>
+        <a href="https://migovt.org/flint/city-council/">City Council</a>
+        <a href="https://migovt.org/flint/departments/">Departments</a>
       </div>
     </details>
-    <a href="/about">About</a>
+    <a href="https://migovt.org/about">About</a>
   </nav>
   </div>
   `;
