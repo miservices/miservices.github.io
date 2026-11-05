@@ -182,7 +182,7 @@ a.btn{text-decoration:none}.av{color:var(--pri);font-weight:700}.dav{background:
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, setDoc, updateDoc, query, where, limit } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, deleteUser, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
 /* ---------- configuration ---------- */
 const ROBLOX_CLIENT_ID = '3400793010980287379';
@@ -199,6 +199,7 @@ const records = initializeApp({
   storageBucket: "mi-vital-records.firebasestorage.app", messagingSenderId: "775067715147", appId: "1:775067715147:web:7c2ff2e56a9f98929d2fce"
 }, "records");
 const db = getFirestore(accounts), auth = getAuth(accounts), recDb = getFirestore(records);
+await setPersistence(auth, browserLocalPersistence).catch(() => {});   /* keep email and Google sign-ins across visits */
 
 /* ---------- helpers ---------- */
 const $ = id => document.getElementById(id);
@@ -209,6 +210,13 @@ const EMAIL_RE = /^\S+@\S+\.\S+$/;
 const initials = s => { const w = String(s || '?').trim().split(/\s+/).filter(Boolean); return ((w[0] || '?')[0] + (w.length > 1 ? w[w.length - 1][0] : '')).toUpperCase(); };
 const discordReady = () => !!(DISCORD_CLIENT_ID && DISCORD_WORKER_URL);
 const GOOGLE_NAMES = ['auth/popup-closed-by-user', 'auth/cancelled-popup-request'];
+
+/* ----- remember people so they do not sign in again and again ----- */
+const REM = 'migovt_remember', REM_DAYS = 30;
+const ls = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} }, del: k => { try { localStorage.removeItem(k); } catch {} } };
+const remember = (kind, pin) => { if (pin) ls.set(REM, JSON.stringify({ kind, pin: String(pin), exp: Date.now() + REM_DAYS * 864e5 })); };
+function remembered() { try { const o = JSON.parse(ls.get(REM) || 'null'); if (o && o.pin && o.exp > Date.now()) return o; } catch {} ls.del(REM); return null; }
+const forget = () => { ls.del(REM); ss.del('migovt_ident'); };
 
 /* ----- hand-offs between login and signup ----- */
 const SS_XFER = 'migovt_xfer', SS_WIZ = 'migovt_signup', SS_NOTICE = 'migovt_notice';
@@ -323,7 +331,7 @@ function toSignup() {
 }
 
 async function reset() {
-  clearTimers(); userData = null;
+  clearTimers(); userData = null; forget();
   try { await signOut(auth); } catch {}
   ['l-err','p-err'].forEach(i => setMsg(i, ''));
   ['b-signin','b-roblox','b-discord','b-google'].forEach(i => $(i).disabled = false);
@@ -336,7 +344,7 @@ function avatarNode(label) { const box = $('d-av'); box.className = 'av lg'; set
 const KIND = { roblox: 'Roblox', discord: 'Discord', google: 'Google', email: 'email and password' };
 function done(kind, label, _unused, note) {
   $('d-eyebrow').textContent = 'Signed in with ' + KIND[kind];
-  if (userData.pin) ss.set('migovt_ident', userData.pin);
+  remember(kind, userData.pin);
   avatarNode(userData.name || label);
   $('d-name').textContent = userData.name || label || 'MiGOVT account';
   $('d-pin').textContent = 'PIN ' + userData.pin;
@@ -468,7 +476,26 @@ wirePasswordToggles();
   if (!code && !err) {
     const note = noticeGet(), x = xferGet();
     if (note) setMsg('l-note', note, 'warn');
-    if (!x) return;
+    if (!x) {
+      /* Already signed in, or remembered from a previous visit: go straight through. */
+      try {
+        await auth.authStateReady();
+        if (auth.currentUser) {
+          loading('Signing you in...');
+          const h = await fromUid(auth.currentUser);
+          if (h) { userData = pack(h.d, auth.currentUser.email); const g = auth.currentUser.providerData.some(p => p.providerId === 'google.com'); return done(g ? 'google' : 'email', userData.name); }
+        }
+        const r = remembered();
+        if (r) {
+          loading('Signing you in...');
+          const h = await byField('pin', r.pin);
+          if (h) { userData = pack(h.d, ''); userData.pin = r.pin; return done(KIND[r.kind] ? r.kind : 'roblox', userData.name); }
+          forget();
+        }
+        view('login');
+      } catch (e) { console.error(e); view('login'); }
+      return;
+    }
     /* Someone started creating an account but already has one: finish signing them in with what they already proved. */
     try {
       if (x.kind === 'email') { $('l-email').value = x.email || ''; $('l-pw').focus(); return; }

@@ -149,7 +149,7 @@ dialog{border:0;border-radius:14px;padding:28px;max-width:440px;width:calc(100% 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getFirestore, collection, doc, getDoc, getDocs, setDoc, updateDoc, query, where, limit } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, deleteUser, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
 /* ---------- configuration ---------- */
 const ROBLOX_CLIENT_ID = '3400793010980287379';
@@ -166,6 +166,7 @@ const records = initializeApp({
   storageBucket: "mi-vital-records.firebasestorage.app", messagingSenderId: "775067715147", appId: "1:775067715147:web:7c2ff2e56a9f98929d2fce"
 }, "records");
 const db = getFirestore(accounts), auth = getAuth(accounts), recDb = getFirestore(records);
+await setPersistence(auth, browserLocalPersistence).catch(() => {});   /* keep email and Google sign-ins across visits */
 
 /* ---------- helpers ---------- */
 const $ = id => document.getElementById(id);
@@ -176,6 +177,13 @@ const EMAIL_RE = /^\S+@\S+\.\S+$/;
 const initials = s => { const w = String(s || '?').trim().split(/\s+/).filter(Boolean); return ((w[0] || '?')[0] + (w.length > 1 ? w[w.length - 1][0] : '')).toUpperCase(); };
 const discordReady = () => !!(DISCORD_CLIENT_ID && DISCORD_WORKER_URL);
 const GOOGLE_NAMES = ['auth/popup-closed-by-user', 'auth/cancelled-popup-request'];
+
+/* ----- remember people so they do not sign in again and again ----- */
+const REM = 'migovt_remember', REM_DAYS = 30;
+const ls = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} }, del: k => { try { localStorage.removeItem(k); } catch {} } };
+const remember = (kind, pin) => { if (pin) ls.set(REM, JSON.stringify({ kind, pin: String(pin), exp: Date.now() + REM_DAYS * 864e5 })); };
+function remembered() { try { const o = JSON.parse(ls.get(REM) || 'null'); if (o && o.pin && o.exp > Date.now()) return o; } catch {} ls.del(REM); return null; }
+const forget = () => { ls.del(REM); ss.del('migovt_ident'); };
 
 /* ----- hand-offs between login and signup ----- */
 const SS_XFER = 'migovt_xfer', SS_WIZ = 'migovt_signup', SS_NOTICE = 'migovt_notice';
@@ -390,7 +398,7 @@ function renderServices() {
   const fmt = iso => { const d = new Date(iso); return isNaN(d) ? '' : MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); };
   list.forEach(v => s.appendChild(row(ICON.s, v.name || v.url, 'Last used ' + fmt(v.lastUsed) + ' \u00b7 ' + (v.count || 1) + (v.count === 1 ? ' sign-in' : ' sign-ins'), [])));
 }
-$('b-out').addEventListener('click', async () => { ss.del('migovt_ident'); try { await signOut(auth); } catch {} location.href = 'https://migovt.org/login/'; });
+$('b-out').addEventListener('click', async () => { forget(); try { await signOut(auth); } catch {} location.href = 'https://migovt.org/login/'; });
 wirePasswordToggles();
 
 /* ----- init ----- */
@@ -401,7 +409,7 @@ wirePasswordToggles();
   if (!user) {
     const p = new URLSearchParams(location.search); let pin = (p.get('mipass_pin') || '').trim();
     if (p.has('mipass_pin')) history.replaceState({}, '', location.pathname);
-    if (pin && /^\d{4,20}$/.test(pin)) ss.set('migovt_ident', pin); else pin = ss.get('migovt_ident') || '';
+    if (!(pin && /^\d{4,20}$/.test(pin))) pin = remembered()?.pin || '';
     if (!pin) return view('signin');
     try {
       const q = await getDocs(query(collection(db, 'mipass'), where('pin', '==', pin), limit(1)));
