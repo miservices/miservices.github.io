@@ -251,7 +251,9 @@ function readRedirectParams() {
   }
   redirectTarget = safeRedirect(ss.get(SS_REDIRECT));
   rName = ss.get(SS_RNAME) || 'The requesting service';
-  if (redirectTarget && $('svcnote')) { $('svcnote').hidden = false; $('svcname').textContent = rName; }
+  /* Only show "X is asking you to sign in" when another service sent you here, not for MiGOVT's own account page. */
+  const own = redirectTarget && new URL(redirectTarget).pathname.startsWith('/account');
+  if (redirectTarget && !own && $('svcnote')) { $('svcnote').hidden = false; $('svcname').textContent = rName; }
 }
 /* account shape handed back to callers */
 const pack = (d, fallbackEmail, robloxName) => ({
