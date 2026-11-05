@@ -123,7 +123,7 @@ dialog{border:0;border-radius:14px;padding:28px;max-width:440px;width:calc(100% 
    <div class="av xl" id="p-av"></div>
    <h1 id="h-prof" tabindex="-1"></h1>
    <span class="badge">Verified</span>
-   <dl class="kv"><dt>PIN</dt><dd id="p-pin"></dd><dt>Date of birth</dt><dd id="p-dob"></dd><dt>Roblox</dt><dd id="p-rb"></dd><dt>Email</dt><dd id="p-em"></dd></dl>
+   <dl class="kv"><dt>First name</dt><dd id="p-first"></dd><dt>Middle name</dt><dd id="p-mid"></dd><dt>Last name</dt><dd id="p-last"></dd><dt>PIN</dt><dd id="p-pin"></dd><dt>Date of birth</dt><dd id="p-dob"></dd><dt>Roblox</dt><dd id="p-rb"></dd><dt>Email</dt><dd id="p-em"></dd></dl>
    <p class="mut">Your name and date of birth come from your state record and can only be changed by the Department of State.</p>
    <button class="btn alt" type="button" id="b-out">Sign out</button>
   </section>
@@ -172,9 +172,17 @@ const $ = id => document.getElementById(id);
 const ss = { get: k => { try { return sessionStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch {} }, del: k => { try { sessionStorage.removeItem(k); } catch {} } };
 const SS_STATE = 'migovt_oauth_state', SS_REDIRECT = 'migovt_login_redirect', SS_RNAME = 'migovt_login_rname';
 const EMAIL_RE = /^\S+@\S+\.\S+$/;
-const initials = s => String(s || '?').trim().split(/\s+/).slice(0, 2).map(w => (w[0] || '').toUpperCase()).join('') || '?';
+/* First initial + last initial (never the middle name): "Lewis Cline Sullivan" -> LS */
+const initials = s => { const w = String(s || '?').trim().split(/\s+/).filter(Boolean); return ((w[0] || '?')[0] + (w.length > 1 ? w[w.length - 1][0] : '')).toUpperCase(); };
 const discordReady = () => !!(DISCORD_CLIENT_ID && DISCORD_WORKER_URL);
 const GOOGLE_NAMES = ['auth/popup-closed-by-user', 'auth/cancelled-popup-request'];
+
+/* ----- hand-offs between login and signup ----- */
+const SS_XFER = 'migovt_xfer', SS_WIZ = 'migovt_signup', SS_NOTICE = 'migovt_notice';
+const xferSet = o => ss.set(SS_XFER, JSON.stringify({ ...o, t: Date.now() }));
+function xferGet() { try { const o = JSON.parse(ss.get(SS_XFER) || 'null'); ss.del(SS_XFER); return o && Date.now() - o.t < 600000 ? o : null; } catch { return null; } }
+const noticeGet = () => { const n = ss.get(SS_NOTICE); ss.del(SS_NOTICE); return n; };
+function retQuery() { return redirectTarget ? '?redirect_uri=' + encodeURIComponent(redirectTarget) + '&site_name=' + encodeURIComponent(rName) : ''; }
 
 function setMsg(id, text, kind) { const e = $(id); if (!e) return; e.textContent = text || ''; e.className = 'alert' + (kind ? ' ' + kind : ''); e.hidden = !text; }
 
@@ -195,16 +203,20 @@ function readRedirectParams() {
   }
   redirectTarget = safeRedirect(ss.get(SS_REDIRECT));
   rName = ss.get(SS_RNAME) || 'The requesting service';
-  if (redirectTarget && $('svcnote')) { $('svcnote').hidden = false; $('svcname').textContent = rName; }
+  /* Only show "X is asking you to sign in" when another service sent you here, not for MiGOVT's own account page. */
+  const own = redirectTarget && new URL(redirectTarget).pathname.startsWith('/account');
+  if (redirectTarget && !own && $('svcnote')) { $('svcnote').hidden = false; $('svcname').textContent = rName; }
 }
 /* account shape handed back to callers */
+const splitName = n => { const w = String(n || '').trim().split(/\s+/).filter(Boolean); return { first: w[0] || '', middle: w.length > 2 ? w.slice(1, -1).join(' ') : '', last: w.length > 1 ? w[w.length - 1] : '' }; };
 const pack = (d, fallbackEmail, robloxName) => ({
+  first: d.firstName ?? splitName(d.name).first, middle: d.middleName ?? splitName(d.name).middle, last: d.lastName ?? splitName(d.name).last,
   pin: String(d.pin || ''), name: d.name || '', dob: d.dateOfBirth || '', email: d.email || fallbackEmail || '',
   roblox: d.robloxUsername || robloxName || '', discordId: d.discordId || '', discordName: d.discordUsername || ''
 });
 function buildReturnUrl(u) {
   const url = new URL(redirectTarget), set = (k, v) => { if (v) url.searchParams.set(k, v); };
-  set('mipass_pin', u.pin); set('mipass_name', u.name); set('mipass_dob', u.dob);
+  set('mipass_pin', u.pin); set('mipass_name', u.name); set('mipass_first', u.first); set('mipass_middle', u.middle); set('mipass_last', u.last); set('mipass_dob', u.dob);
   set('mipass_user', u.roblox); set('mipass_email', u.email); set('mipass_discord', u.discordName);
   return url.toString();
 }
@@ -339,6 +351,7 @@ function row(icon, title, detail, buttons) {
 function render() {
   $('h-prof').textContent = acct.name || 'MiGOVT account';
   setAvatar($('p-av'), acct.pin, acct.name);
+  { const n = splitName(acct.name); $('p-first').textContent = acct.firstName ?? n.first; $('p-mid').textContent = (acct.middleName ?? n.middle) || 'None'; $('p-last').textContent = acct.lastName ?? n.last; }
   $('p-pin').textContent = acct.pin; $('p-dob').textContent = longDate(acct.dateOfBirth); $('p-rb').textContent = acct.robloxUsername || 'Not on file'; $('p-em').textContent = acct.email || user.email || 'Not on file';
   const m = $('meths'); m.replaceChildren();
   $('lim').hidden = !limited;
