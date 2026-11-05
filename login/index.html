@@ -160,6 +160,7 @@ a.btn{text-decoration:none}.av{color:var(--pri);font-weight:700}.dav{background:
  </div>
  <div id="d-home" hidden>
   <a class="btn pri" href="https://migovt.org/">Go to migovt.org</a>
+  <a class="btn alt" href="https://migovt.org/account/">Manage my account</a>
   <button class="btn alt" type="button" id="b-link" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 6.5c3-1.1 6-1.1 9 0l2.2 9.6c-1.9 1.5-3.8 2.2-6.7 2.2s-4.800-.7-6.700-2.200z"/><circle cx="9.5" cy="12" r="1.2"/><circle cx="14.5" cy="12" r="1.2"/><path d="M9 16c1.900.9 4.100.9 6 0"/></svg><span>Link your Discord account</span></button>
  </div>
  <p class="sw"><button class="link" type="button" id="b-notyou">Not you? Use a different account</button></p>
@@ -309,6 +310,7 @@ function avatarNode(label) { const box = $('d-av'); box.className = 'av lg'; set
 const KIND = { roblox: 'Roblox', discord: 'Discord', google: 'Google', email: 'email and password' };
 function done(kind, label, _unused, note) {
   $('d-eyebrow').textContent = 'Signed in with ' + KIND[kind];
+  if (userData.pin) ss.set('migovt_ident', userData.pin);
   avatarNode(userData.name || label);
   $('d-name').textContent = userData.name || label || 'MiGOVT account';
   $('d-pin').textContent = 'PIN ' + userData.pin;
