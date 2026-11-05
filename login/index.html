@@ -154,11 +154,6 @@ a.btn{text-decoration:none}.av{color:var(--pri);font-weight:700}.dav{background:
  <div class="eyebrow" id="d-eyebrow">Signed in</div>
  <div class="who"><div class="av" id="d-av"></div><div class="fi"><b id="d-name"></b><span id="d-pin"></span></div><span class="badge" id="d-badge">Verified</span></div>
  <div class="alert ok" id="d-note" hidden></div>
- <div id="d-redir" hidden>
-  <p class="mut" style="margin-top:18px">Returning you to <b id="d-site"></b>...</p>
-  <div class="bar" id="d-bar"><i></i></div>
-  <button class="btn pri" type="button" id="b-go">Continue now</button>
- </div>
  <div id="d-home" hidden>
   <a class="btn pri" href="https://migovt.org/">Go to migovt.org</a>
   <a class="btn alt" href="https://migovt.org/account/">Manage my account</a>
@@ -346,16 +341,10 @@ function done(kind, label, _unused, note) {
   $('d-name').textContent = userData.name || label || 'MiGOVT account';
   $('d-pin').textContent = 'PIN ' + userData.pin;
   const n = $('d-note'); n.textContent = note || ''; n.hidden = !note;
-  if (redirectTarget) {
-    $('d-redir').hidden = false; $('d-home').hidden = true; $('d-site').textContent = rName;
-    view('done', true);
-    timers.push(setTimeout(() => $('d-bar').classList.add('go'), 50));
-    timers.push(setTimeout(go, 2800));
-  } else {
-    $('d-redir').hidden = true; $('d-home').hidden = false;
-    $('b-link').hidden = !(discordReady() && auth.currentUser && !userData.discordId);
-    view('done', true);
-  }
+  if (redirectTarget) { loading('Returning you to ' + rName + '...'); go(); return; }
+  $('d-home').hidden = false;
+  $('b-link').hidden = !(discordReady() && auth.currentUser && !userData.discordId);
+  view('done', true);
 }
 let leaving = false;
 async function go() {
@@ -363,7 +352,6 @@ async function go() {
   await Promise.race([logService(userData.pin), new Promise(r => setTimeout(r, 1500))]);
   location.href = buildReturnUrl(userData);
 }
-$('b-go').addEventListener('click', go);
 
 async function fromUid(user) {
   const s = await getDoc(doc(db, 'mipass', user.uid));
