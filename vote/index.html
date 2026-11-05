@@ -3,1098 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Voting | MiGOVT.org</title>
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Shared site-wide styles (banner, header, nav, confirm modal) -->
-<link rel="stylesheet" href="/shared.css">
-
+<title>Voting in Michigan | MiGOVT</title>
+<link rel="icon" type="image/svg+xml" href="https://migovt.org/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://migovt.org/shared.css">
 <style>
-  /* ---------- Page-specific styles ---------- */
-
-  .page-hero {
-    background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
-    border-bottom: 1px solid var(--nav-border);
-    padding: 52px 24px 40px;
-    text-align: center;
-  }
-
-  .page-hero-inner { max-width: 660px; margin: 0 auto; }
-
-  .eyebrow {
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.16em;
-    color: var(--trail-amber-text);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: clamp(30px, 5vw, 42px);
-    line-height: 1.15;
-    margin: 0 0 14px;
-    color: var(--lake-deep);
-  }
-
-  .page-hero p.lede {
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 0 auto;
-    max-width: 560px;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  .section-block { scroll-margin-top: 62px; }
-  #election-status { scroll-margin-top: 0; }
-
-  /* ---------- Sticky "jump to" bar ---------- */
-
-  .toc-bar {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    background: var(--nav-bg);
-    border-bottom: 1px solid var(--nav-border);
-    box-shadow: 0 2px 10px rgba(14,58,83,0.06);
-  }
-
-  .toc-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .toc-inner::-webkit-scrollbar { display: none; }
-
-  .toc-label {
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 700;
-    font-size: 11.5px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--trail-amber-text);
-    padding: 14px 12px 14px 0;
-    flex-shrink: 0;
-  }
-
-  .toc-inner a {
-    flex-shrink: 0;
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--ink-soft);
-    text-decoration: none;
-    padding: 14px 12px;
-    border-bottom: 2px solid transparent;
-    white-space: nowrap;
-    transition: color 0.12s ease, border-color 0.12s ease;
-  }
-
-  .toc-inner a:hover { color: var(--lake-deep); }
-
-  .toc-inner a.active {
-    color: var(--lake-deep);
-    border-bottom-color: var(--trail-amber);
-  }
-
-  /* ---------- Election status banner ---------- */
-
-  .status-section {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 24px 8px;
-  }
-
-  .status-card {
-    background: var(--nav-bg);
-    border: 1px solid var(--nav-border);
-    border-radius: 10px;
-    padding: 26px 26px 22px;
-  }
-
-  .status-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 6px;
-  }
-
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 700;
-    font-size: 12.5px;
-    letter-spacing: 0.02em;
-    padding: 6px 13px;
-    border-radius: 100px;
-  }
-
-  .status-badge .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-  .status-badge.s-gray { background: #e7e3d8; color: #5c5646; }
-  .status-badge.s-gray .dot { background: #8a8371; }
-
-  .status-badge.s-blue { background: #e1ecf3; color: #1d5a80; }
-  .status-badge.s-blue .dot { background: #3f8fb8; }
-
-  .status-badge.s-green { background: #e2f0e4; color: #2b6b3a; }
-  .status-badge.s-green .dot { background: #4c9a5c; }
-
-  .status-badge.s-amber { background: #f8ecd4; color: var(--trail-amber-text); }
-  .status-badge.s-amber .dot { background: var(--trail-amber); }
-
-  .status-badge.s-deep { background: var(--lake-deep); color: var(--paper); }
-  .status-badge.s-deep .dot { background: var(--trail-amber); }
-
-  .status-desc {
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 8px 0 4px;
-  }
-
-  .status-notice {
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: var(--ink);
-    background: var(--paper-warm);
-    border-left: 4px solid var(--lake-mist);
-    border-radius: 5px;
-    padding: 11px 15px;
-    margin: 14px 0 0;
-  }
-
-  .status-notice.notice-today {
-    border-left-color: var(--trail-amber);
-    font-weight: 600;
-  }
-
-  .runoff-flag {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 13.5px;
-    line-height: 1.55;
-    color: var(--ink);
-    background: #f8ecd4;
-    border: 1px solid #eeda9f;
-    border-radius: 6px;
-    padding: 12px 15px;
-    margin: 14px 0 0;
-  }
-
-  .runoff-flag svg { width: 17px; height: 17px; stroke: var(--trail-amber-text); flex-shrink: 0; margin-top: 1px; }
-  .runoff-flag strong { color: var(--trail-amber-text); }
-
-  .status-actions {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 20px;
-  }
-
-  .status-actions.count-1 { grid-template-columns: minmax(220px, 320px); }
-  .status-actions.count-2 { grid-template-columns: repeat(2, 1fr); }
-
-  @media (max-width: 640px) { .status-actions { grid-template-columns: 1fr !important; } }
-
-  .status-action {
-    display: block;
-    background: var(--paper);
-    border: 1px solid var(--nav-border);
-    border-radius: 7px;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: border-color 0.12s ease, transform 0.12s ease;
-  }
-
-  .status-action:hover { border-color: var(--trail-amber); transform: translateY(-1px); }
-
-  .status-action .label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 700;
-    font-size: 13.5px;
-    color: var(--lake-deep);
-  }
-
-  .status-action .label svg { width: 16px; height: 16px; stroke: currentColor; flex-shrink: 0; }
-
-  .status-action .sub {
-    font-size: 12px;
-    color: var(--ink-soft);
-    margin-top: 4px;
-  }
-
-  .status-action.primary {
-    background: var(--lake-deep);
-    border-color: var(--lake-deep);
-  }
-
-  .status-action.primary .label { color: var(--paper); }
-  .status-action.primary .sub { color: rgba(243,239,230,0.78); }
-
-  /* ---------- Status glossary ---------- */
-
-  .status-glossary {
-    margin-top: 18px;
-  }
-
-  .status-glossary summary {
-    list-style: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    color: var(--lake-deep);
-    padding: 4px 0;
-  }
-
-  .status-glossary summary::-webkit-details-marker { display: none; }
-
-  .status-glossary summary::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-    border-right: 2px solid var(--lake-deep);
-    border-bottom: 2px solid var(--lake-deep);
-    transform: rotate(-45deg);
-    transition: transform 0.15s ease;
-    flex-shrink: 0;
-  }
-
-  .status-glossary[open] summary::before { transform: rotate(45deg); }
-
-  .glossary-list {
-    margin-top: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .glossary-item {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .glossary-item .g-badge {
-    flex-shrink: 0;
-    width: 168px;
-  }
-
-  @media (max-width: 640px) {
-    .glossary-item { flex-direction: column; gap: 6px; }
-    .glossary-item .g-badge { width: auto; }
-  }
-
-  .glossary-item p {
-    font-size: 13px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    margin: 0;
-  }
-
-  .page-wrap {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  .section-block {
-    padding: 48px 0;
-    border-bottom: 1px solid var(--nav-border);
-  }
-
-  .section-block:last-child { border-bottom: none; }
-
-  .section-head { max-width: 640px; margin: 0 0 22px; }
-
-  .section-head .eyebrow { margin-bottom: 8px; }
-
-  .section-head h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 25px;
-    color: var(--lake-deep);
-    margin: 0 0 10px;
-  }
-
-  .section-head p {
-    font-size: 14.5px;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 0;
-  }
-
-  /* ---------- Quick-fact stat cards ---------- */
-
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  @media (max-width: 700px) { .stat-grid { grid-template-columns: 1fr; } }
-
-  .stat-card {
-    background: var(--nav-bg);
-    border: 1px solid var(--nav-border);
-    border-top: 3px solid var(--trail-amber);
-    border-radius: 6px;
-    padding: 18px 20px;
-  }
-
-  .stat-card .stat-label {
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--trail-amber-text);
-    margin-bottom: 8px;
-  }
-
-  .stat-card .stat-value {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--lake-deep);
-    margin-bottom: 6px;
-    line-height: 1.3;
-  }
-
-  .stat-card .stat-note {
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
-
-  /* ---------- Explainer boxes ---------- */
-
-  .explainer-box {
-    background: var(--nav-bg);
-    border: 1px solid var(--nav-border);
-    border-left: 4px solid var(--lake-mist);
-    border-radius: 6px;
-    padding: 20px 22px;
-    margin-bottom: 16px;
-  }
-
-  .explainer-box h4 {
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 700;
-    font-size: 14.5px;
-    color: var(--ink);
-    margin: 0 0 8px;
-  }
-
-  .explainer-box p {
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 0 0 10px;
-  }
-
-  .explainer-box p:last-child { margin-bottom: 0; }
-
-  .explainer-box.amber { border-left-color: var(--trail-amber); }
-
-  /* ---------- Points table ---------- */
-
-  .points-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 18px 0 4px;
-    font-family: 'Public Sans', sans-serif;
-    font-size: 13px;
-  }
-
-  .points-table th, .points-table td {
-    text-align: left;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--nav-border);
-  }
-
-  .points-table th {
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--trail-amber-text);
-    background: var(--paper-warm);
-  }
-
-  .points-table td { color: var(--ink-soft); }
-  .points-table td.race-name { color: var(--ink); font-weight: 700; }
-
-  @media (max-width: 620px) {
-    .points-table { display: block; overflow-x: auto; white-space: nowrap; }
-  }
-
-  /* ---------- Ballot items ---------- */
-
-  .ballot-list { display: flex; flex-direction: column; gap: 14px; }
-
-  .ballot-item {
-    display: flex;
-    gap: 16px;
-    background: var(--nav-bg);
-    border: 1px solid var(--nav-border);
-    border-radius: 8px;
-    padding: 18px 20px;
-  }
-
-  .ballot-item .icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-    background: var(--paper-warm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .ballot-item .icon svg { width: 19px; height: 19px; stroke: var(--lake-deep); }
-
-  .ballot-item h4 {
-    font-family: 'Public Sans', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--ink);
-    margin: 0 0 6px;
-  }
-
-  .ballot-item p {
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 0 0 8px;
-  }
-
-  .ballot-item p:last-child { margin-bottom: 0; }
-
-  .ballot-item .rule-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--lake-deep);
-    background: var(--paper-warm);
-    border-radius: 100px;
-    padding: 4px 10px;
-    margin-top: 4px;
-  }
-
-  footer {
-    text-align: center;
-    padding: 22px 20px 26px;
-    font-size: 12px;
-    color: var(--ink-soft);
-    border-top: 1px solid rgba(90,70,50,0.15);
-  }
-
-  footer strong { color: var(--ink); }
+.pg{background:linear-gradient(180deg,#0d2a54,#123566);color:#fff;padding:34px 0 40px}
+.crumb{display:flex;gap:8px;align-items:center;font-size:14px;color:#c9d4e6}.crumb a{color:#c9d4e6}.crumb a:hover{color:#fff}
+.pg h1{font:600 clamp(36px,5vw,54px)/1.05 var(--head);margin:16px 0 10px}
+.pg p.lead{font:400 20px/1.45 var(--head);color:#e3ebf8;max-width:680px}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.jump a{font:600 14px var(--ui);color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:7px 16px}.jump a:hover{background:#fff;color:var(--navy)}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.ctas a{text-decoration:none;font:700 15px var(--ui);padding:13px 22px;border-radius:6px;display:flex;align-items:center;gap:10px}.ctas svg{width:20px;height:20px}
+.ctas .pri{background:var(--gold);color:#14171c}.ctas .sec{border:1px solid rgba(255,255,255,.4);color:#fff}.ctas .sec:hover{background:#fff;color:var(--navy)}
+section.blk{padding:46px 0 6px;scroll-margin-top:12px}
+.eyebrow{font:800 12px var(--ui);letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.sh{display:flex;align-items:center;gap:16px;margin-bottom:8px}.sh:before{content:"";width:46px;height:4px;background:var(--blue)}.sh h2{font:600 32px var(--head);color:var(--navy)}
+.intro{font:400 19px/1.5 var(--head);color:#33415c;max-width:720px;margin:0 0 22px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.st{background:#fff;border-radius:9px;box-shadow:0 3px 10px rgba(13,42,84,.1);padding:24px;border-top:4px solid var(--gold)}
+.st small{display:block;font:800 12px var(--ui);letter-spacing:.14em;text-transform:uppercase;color:#5d6470}
+.st b{display:block;font:600 27px/1.15 var(--head);color:var(--navy);margin:8px 0 10px}.st p{font-size:15px;color:#33415c}
+.tl{background:#fff;border-radius:9px;box-shadow:0 3px 10px rgba(13,42,84,.1);padding:26px 26px 20px;margin-top:18px}
+.tl h3{font:600 20px var(--head);color:var(--navy);margin-bottom:4px}.tl p.n{font-size:14px;color:#5d6470;margin-bottom:46px}
+.bar{position:relative;height:14px;background:#e6ebf4;border-radius:7px;margin:0 6px}
+.win{position:absolute;top:0;height:14px;background:var(--blue);border-radius:7px;left:3.2%;width:64.5%}
+.mk{position:absolute;top:-8px;width:2px;height:30px;background:var(--navy)}.mk span{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);white-space:nowrap;font:700 12.5px var(--ui);color:var(--navy);background:#fff;padding:0 4px}
+.mk.el{left:32.3%;background:var(--gold);width:4px}.mk.el span{bottom:34px}.mk.tb{left:100%}.mk.tb span{transform:translateX(-85%)}
+.mk.ws{left:3.2%}.mk.we{left:67.7%}
+.ax{display:flex;justify-content:space-between;font-size:12.5px;color:#5d6470;margin:26px 6px 0}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13.5px;color:#33415c;margin-top:12px}.legend i{display:inline-block;width:14px;height:8px;border-radius:4px;margin-right:6px;vertical-align:middle}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{background:#fff;border-radius:9px;box-shadow:0 3px 10px rgba(13,42,84,.1);padding:26px}
+.card h3{font:600 22px var(--head);color:var(--navy);margin-bottom:10px}.card p{font-size:16px;line-height:1.55;color:#33415c}.card p+p{margin-top:10px}
+.call{background:#fff8e5;border-left:5px solid var(--gold);border-radius:0 9px 9px 0;padding:18px 22px;margin-top:18px;font-size:16px;color:#33415c}.call b{color:var(--navy)}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:9px;overflow:hidden;box-shadow:0 3px 10px rgba(13,42,84,.1)}
+th{background:var(--navy);color:#fff;text-align:left;font:700 13px var(--ui);letter-spacing:.06em;text-transform:uppercase;padding:14px 18px}
+td{padding:15px 18px;border-top:1px solid #e3e7ee;font-size:16px;color:#14171c}tr:nth-child(even) td{background:#f6f8fc}td:first-child{font:600 18px var(--head);color:var(--navy)}td .pts{font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto;border-radius:9px;margin-top:6px}
+.tie{display:inline-flex;align-items:center;gap:8px;background:#eef3fb;color:var(--blue);font:700 13.5px var(--ui);border-radius:999px;padding:6px 14px;margin-top:12px}.tie svg{width:16px;height:16px}
+.dates{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.dt{background:#f6f8fc;border-radius:8px;padding:14px 16px}.dt small{display:block;font:800 11.5px var(--ui);letter-spacing:.12em;text-transform:uppercase;color:#5d6470}.dt b{display:block;font:600 22px var(--head);color:var(--navy);margin-top:4px}
+.tabs{display:flex;gap:6px;border-bottom:3px solid var(--navy);margin-bottom:22px;flex-wrap:wrap}
+.tabs button{font:700 16px var(--ui);background:#e3e9f4;color:var(--navy);border:0;padding:13px 24px;border-radius:8px 8px 0 0;cursor:pointer}.tabs button[aria-selected=true]{background:var(--navy);color:#fff}.tabs button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.panel[hidden]{display:none}
+.items{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.it{background:#fff;border-radius:9px;box-shadow:0 3px 10px rgba(13,42,84,.1);padding:24px;border-top:4px solid var(--blue)}.it.wide{grid-column:1/-1}
+.it .cnt{display:inline-block;font:800 12px var(--ui);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--blue);border-radius:4px;padding:3px 9px;margin-bottom:10px}
+.it h3{font:600 23px var(--head);color:var(--navy);margin-bottom:8px}.it p{font-size:16px;line-height:1.55;color:#33415c}
+.help{margin:50px 0 60px;background:var(--navy);color:#fff;border-radius:10px;padding:30px 34px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}.help h2{font:600 26px var(--head)}.help p{color:#c9d4e6;margin-top:4px}
+.help a{text-decoration:none;font:700 15px var(--ui);padding:12px 22px;border-radius:6px;border:1px solid rgba(255,255,255,.4);color:#fff}.help a.pri{background:var(--gold);border-color:var(--gold);color:#14171c}.help a:hover{background:#fff;color:var(--navy)}
+.help .bt{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:900px){.stats,.two,.items{grid-template-columns:1fr}.dates{grid-template-columns:1fr}}
+@media(max-width:640px){.tl{padding:20px 16px}.mk span{font-size:11px}.mk.tb span{transform:translateX(-90%)}.sh h2{font-size:26px}.help{padding:24px}td,th{padding:12px 12px;font-size:14px}td:first-child{font-size:16px}}
 </style>
 </head>
 <body>
-
-  <!-- Shared banner + header + mobile nav get injected here by partials.js -->
-  <div id="site-chrome"></div>
-
-  <section class="page-hero">
-    <div class="page-hero-inner">
-      <div class="eyebrow">Voting</div>
-      <h1>Voting in Michigan</h1>
-      <p class="lede">
-        How the state, county, and city general elections work — who's on
-        the ballot, how ranked preference voting decides multi-seat races,
-        and what happens when there's a tie or a vacancy.
-      </p>
-    </div>
-  </section>
-
-  <section class="status-section" id="election-status">
-    <div class="status-card" id="status-card">
-      <!-- Populated by JS below -->
-    </div>
-  </section>
-
-  <nav class="toc-bar" id="toc-bar" aria-label="Jump to section">
-    <div class="toc-inner">
-      <span class="toc-label">Jump to</span>
-      <a href="#election-status">Election Status</a>
-      <a href="#election-calendar">Calendar</a>
-      <a href="#ranked-voting">Ranked Voting</a>
-      <a href="#ties-runoffs">Ties &amp; Runoffs</a>
-      <a href="#special-elections">Special Elections</a>
-      <a href="#state-election">State Election</a>
-      <a href="#county-election">County Election</a>
-      <a href="#city-election">City Election</a>
-    </div>
-  </nav>
-
-  <div class="page-wrap">
-
-    <!-- ============ ELECTION CALENDAR ============ -->
-    <section class="section-block" id="election-calendar">
-      <div class="section-head">
-        <div class="eyebrow">The Basics</div>
-        <h2>Michigan's Election Calendar</h2>
-        <p>Every general election in Michigan — state, county, and city — runs on the same calendar.</p>
-      </div>
-
-      <div class="stat-grid">
-        <div class="stat-card">
-          <div class="stat-label">Term Length</div>
-          <div class="stat-value">January 1 – December 31</div>
-          <div class="stat-note">Every office filled in a general election serves a one-year term.</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Election Day</div>
-          <div class="stat-value">21 days before the term begins</div>
-          <div class="stat-note">In practice, that places Election Day around December 11 of the prior year.</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Online Voting Window</div>
-          <div class="stat-value">30 to 10 days before the term begins</div>
-          <div class="stat-note">In practice, that's roughly December 2 through December 22. Available through the Secretary of State's online system for the state election, and a Secretary of State–approved system for county and city elections.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ RANKED PREFERENCE VOTING ============ -->
-    <section class="section-block" id="ranked-voting">
-      <div class="section-head">
-        <div class="eyebrow">How It Works</div>
-        <h2>Ranked Preference Voting</h2>
-        <p>Four races fill more than one seat at once. For those, instead of picking a single candidate, you rank as many as you'd like, up to the number of open seats.</p>
-      </div>
-
-      <div class="explainer-box">
-        <h4>How the scoring works</h4>
-        <p>Your top choice gets the highest number of points for that race, your second choice the next-highest, and so on. Points are awarded per ballot and added up across every voter — the winners are whoever earns the highest total preference score, not whoever gets the most first-choice votes.</p>
-        <p>You don't have to rank every open seat. But the point values themselves don't change based on how many candidates you rank — if you only rank your top choice, that candidate still receives the full top point value from your ballot.</p>
-      </div>
-
-      <table class="points-table">
-        <thead>
-          <tr>
-            <th>Race</th>
-            <th>Seats</th>
-            <th>You may rank up to</th>
-            <th>Points (1st → last)</th>
-            <th>Top scorer becomes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="race-name">Legislature</td>
-            <td>12</td>
-            <td>12 candidates</td>
-            <td>12, 11, 10 … 1</td>
-            <td>Speaker of the Legislature</td>
-          </tr>
-          <tr>
-            <td class="race-name">Judiciary</td>
-            <td>7</td>
-            <td>7 candidates</td>
-            <td>7, 6, 5 … 1</td>
-            <td>Chief Justice</td>
-          </tr>
-          <tr>
-            <td class="race-name">Board of Commissioners</td>
-            <td>5</td>
-            <td>5 candidates</td>
-            <td>5, 4, 3, 2, 1</td>
-            <td>Chairperson</td>
-          </tr>
-          <tr>
-            <td class="race-name">City Council</td>
-            <td>3</td>
-            <td>3 candidates</td>
-            <td>3, 2, 1</td>
-            <td>President of the Council</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- ============ TIES, RUNOFFS & HEAD POSITIONS ============ -->
-    <section class="section-block" id="ties-runoffs">
-      <div class="section-head">
-        <div class="eyebrow">The Basics</div>
-        <h2>Ties, Runoffs &amp; Head Positions</h2>
-        <p>Most ties are settled by voters in a runoff. A handful of specific ties are settled by the state's newly elected leadership instead.</p>
-      </div>
-
-      <div class="explainer-box">
-        <h4>Runoff elections</h4>
-        <p>If a race ends in a tie, a runoff election is held to settle it. Online voting for a runoff opens January 1 and closes January 10; in-person Election Day for the runoff is January 5.</p>
-      </div>
-
-      <div class="explainer-box amber">
-        <h4>The exception: head positions</h4>
-        <p>A tie for the top preference score in the Legislature, Judiciary, Board of Commissioners, or City Council race isn't sent to a runoff — because that tie determines who becomes Speaker of the Legislature, Chief Justice, Chairperson, or President of the Council. Those specific ties are broken by the newly elected Governor, except for a City Council President tie, which is broken by the newly elected Mayor.</p>
-      </div>
-    </section>
-
-    <!-- ============ SPECIAL ELECTIONS ============ -->
-    <section class="section-block" id="special-elections">
-      <div class="section-head">
-        <div class="eyebrow">The Basics</div>
-        <h2>Special Elections</h2>
-        <p>General elections happen on a fixed yearly cycle — but seats sometimes come open in between.</p>
-      </div>
-
-      <div class="explainer-box">
-        <h4>Filling a vacancy</h4>
-        <p>When a seat becomes vacant outside the regular election cycle, a special election is held to fill the remainder of the term. It follows the same basic structure as a general election — a period of online voting followed by an in-person Election Day — on a timeline set by the Secretary of State for state offices, or by the County Clerk for county and city offices.</p>
-        <p>The one exception is the Governor's office: if it becomes vacant, the Lieutenant Governor succeeds to the office directly, without a special election.</p>
-      </div>
-    </section>
-
-    <!-- ============ GENERAL STATE ELECTION ============ -->
-    <section class="section-block" id="state-election">
-      <div class="section-head">
-        <div class="eyebrow">General Election</div>
-        <h2>General State Election</h2>
-        <p>Held on the calendar above. Four things appear on the state ballot.</p>
-      </div>
-
-      <div class="ballot-list">
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div>
-            <h4>Governor &amp; Lieutenant Governor</h4>
-            <p>Elected jointly as a single ticket — one vote decides both offices together.</p>
-          </div>
-        </div>
-
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
-          </div>
-          <div>
-            <h4>12 Legislators</h4>
-            <p>Elected by ranked preference voting — rank up to 12 candidates, with each ballot's top choice worth 12 points down to 1. The candidate with the highest total preference score becomes Speaker of the Legislature; the other 11 winners serve as members.</p>
-            <span class="rule-tag">Tie for Speaker → broken by the newly elected Governor</span>
-          </div>
-        </div>
-
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 8v10a1 1 0 001 1h12a1 1 0 001-1V8"/></svg>
-          </div>
-          <div>
-            <h4>7 Justices</h4>
-            <p>1 Chief Justice and 6 Associate Justices, elected by ranked preference voting — rank up to 7 candidates, with each ballot's top choice worth 7 points down to 1. The candidate with the highest total preference score becomes Chief Justice; the other 6 winners serve as Associate Justices.</p>
-            <span class="rule-tag">Tie for Chief Justice → broken by the newly elected Governor</span>
-          </div>
-        </div>
-
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          </div>
-          <div>
-            <h4>Questions &amp; Issues</h4>
-            <p>Statewide ballot questions and issues are also put directly to voters. Unless a specific question says otherwise, it's decided by a simple majority — though some questions require a two-thirds supermajority to pass.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ GENERAL COUNTY ELECTION ============ -->
-    <section class="section-block" id="county-election">
-      <div class="section-head">
-        <div class="eyebrow">General Election</div>
-        <h2>General County Election</h2>
-        <p>Genesee County's ballot fills the Board of Commissioners and four countywide offices.</p>
-      </div>
-
-      <div class="ballot-list">
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          </div>
-          <div>
-            <h4>5 Commissioners</h4>
-            <p>Elected by ranked preference voting — rank up to 5 candidates, with each ballot's top choice worth 5 points down to 1. The candidate with the highest total preference score becomes Chairperson of the Board; the other 4 winners serve as members.</p>
-            <span class="rule-tag">Tie for Chairperson → broken by the newly elected Governor</span>
-          </div>
-        </div>
-
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></svg>
-          </div>
-          <div>
-            <h4>County Clerk</h4>
-            <p>Maintains the county's official records, including property records and District Court records, and administers elections at the county level and for every municipality within the county. The Clerk also serves as Clerk of the Court for the County District Court — Genesee County's only trial-level court.</p>
-          </div>
-        </div>
-
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-          </div>
-          <div>
-            <h4>County Treasurer</h4>
-            <p>The county's chief financial officer, responsible for collecting property taxes and managing county funds.</p>
-          </div>
-        </div>
-
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div>
-            <h4>Sheriff</h4>
-            <p>The county's elected chief law enforcement officer, overseeing the Sheriff's Office.</p>
-          </div>
-        </div>
-
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6l3 7-6 13-6-13z"/></svg>
-          </div>
-          <div>
-            <h4>County Prosecutor</h4>
-            <p>The county's chief criminal law enforcement attorney, responsible for charging and prosecuting criminal cases within the county.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="explainer-box" style="margin-top:18px;">
-        <h4>Ties, runoffs &amp; vacancies</h4>
-        <p>Same rules as the state election: a tie in any of these races goes to a runoff, except a tie for Chairperson of the Board of Commissioners, which the newly elected Governor breaks. A vacancy in any of these offices is filled by a special election on the same two-part structure described above.</p>
-      </div>
-    </section>
-
-    <!-- ============ CITY OF FLINT GENERAL ELECTION ============ -->
-    <section class="section-block" id="city-election">
-      <div class="section-head">
-        <div class="eyebrow">General Election</div>
-        <h2>City of Flint General Election</h2>
-        <p>Flint's ballot fills the Mayor's office and the City Council.</p>
-      </div>
-
-      <div class="ballot-list">
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div>
-            <h4>Mayor</h4>
-            <p>Flint's elected chief executive.</p>
-          </div>
-        </div>
-
-        <div class="ballot-item">
-          <div class="icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          </div>
-          <div>
-            <h4>3 Council Members</h4>
-            <p>Elected by ranked preference voting — rank up to 3 candidates, with each ballot's top choice worth 3 points, second 2, and third 1. The candidate with the highest total preference score becomes President of the Council; the other 2 winners serve as members.</p>
-            <span class="rule-tag">Tie for President → broken by the newly elected Mayor</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="explainer-box" style="margin-top:18px;">
-        <h4>Ties, runoffs &amp; vacancies</h4>
-        <p>Same rules as the state and county elections: a tie for Mayor or for a non-President Council seat goes to a runoff. A vacancy in either office is filled by a special election on the same two-part structure described above.</p>
-      </div>
-    </section>
-
-  </div>
-
-  <footer>
-    <strong>Department of Technology</strong> · migovt.org · Voting
-  </footer>
-
-  <!-- Injects banner + header + mobile nav into #site-chrome above -->
-  <script src="/partials.js"></script>
-
-  <!-- Confirms before navigating away on any link marked confirm-link -->
-  <script src="/confirm-nav.js"></script>
-
-  <script>
-  (function () {
-    /* ============================================================
-       ELECTION STATUS
-       ------------------------------------------------------------
-       CURRENT_STATUS is the single source of truth for the banner
-       below. Set it to one of the 8 values documented here — in
-       production this would be set by whatever process tracks the
-       real election calendar.
-
-       STATUS REFERENCE
-       -----------------
-       closed
-         Voting is not open. No general election or runoff is
-         currently underway.
-         Shows: Register to Vote, Find Your Polling Place.
-
-       open_pre
-         The general election's online voting window is open, and
-         Election Day has not yet happened.
-         Shows: Register to Vote, Vote Online, Find Your Polling
-         Place (as an alternative to voting online).
-
-       open_during
-         The general election's online voting window is open, and
-         today IS Election Day.
-         Shows: the same three actions as open_pre, plus a
-         highlighted "It's Election Day!" notice.
-
-       open_after
-         The general election's online voting window is still open,
-         but Election Day has already passed.
-         Shows: a "Election Day has passed" notice, then Register
-         to Vote and Vote Online only — no polling-place action,
-         since in-person voting was tied to Election Day.
-
-       open_runoff_pre
-         Same as open_pre, but for a runoff election (held when a
-         race in the general election ended in a tie). Also shows
-         the amber "There's a runoff election" callout.
-
-       open_runoff_during
-         Same as open_during, but for the runoff. Also shows the
-         runoff callout plus the "It's Election Day!" notice
-         (worded for the runoff).
-
-       open_runoff_after
-         Same as open_after, but for the runoff. Also shows the
-         runoff callout plus the "Election Day has passed" notice.
-
-       done
-         The election (general or runoff) ended recently and
-         results are available.
-         Shows: a single "View Results" action linking to
-         https://migovt.org/sos/vote/results/.
-       ============================================================ */
-    var CURRENT_STATUS = "closed";
-
-    var STATUS_META = {
-      closed: {
-        label: "Closed",
-        badge: "s-gray",
-        desc: "Voting is not currently open. The general election hasn't opened for online voting yet, and there's no runoff underway."
-      },
-      open_pre: {
-        label: "Open — Before Election Day",
-        badge: "s-blue",
-        desc: "Online voting for the general election is open. Election Day hasn't happened yet."
-      },
-      open_during: {
-        label: "Open — It's Election Day",
-        badge: "s-green",
-        desc: "Online voting for the general election is open, and today is Election Day."
-      },
-      open_after: {
-        label: "Open — After Election Day",
-        badge: "s-amber",
-        desc: "Election Day for the general election has passed, but online voting remains open until the window closes."
-      },
-      open_runoff_pre: {
-        label: "Runoff Open — Before Election Day",
-        badge: "s-blue",
-        desc: "A runoff election is underway. Online voting is open, and Election Day for the runoff hasn't happened yet."
-      },
-      open_runoff_during: {
-        label: "Runoff Open — It's Election Day",
-        badge: "s-green",
-        desc: "A runoff election is underway, and today is Election Day for the runoff."
-      },
-      open_runoff_after: {
-        label: "Runoff Open — After Election Day",
-        badge: "s-amber",
-        desc: "Election Day for the runoff has passed, but online voting remains open until the window closes."
-      },
-      done: {
-        label: "Results Are In",
-        badge: "s-deep",
-        desc: "The election ended not long ago. Whether that was the general election or a runoff depends on how this year's races played out — official results are posted either way."
-      }
-    };
-
-    // Order shown in the dropdown and the glossary below.
-    var STATUS_ORDER = ["closed", "open_pre", "open_after", "open_during",
-      "open_runoff_pre", "open_runoff_after", "open_runoff_during", "done"];
-
-    var ACTIONS = {
-      register: {
-        href: "/sos/vote/",
-        label: "Register to Vote",
-        sub: "Check or update your voter registration.",
-        icon: '<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>'
-      },
-      online: {
-        href: "/sos/absentee/",
-        label: "Vote Online",
-        sub: "Cast your ballot through the Secretary of State's system.",
-        icon: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/>'
-      },
-      polling: {
-        href: "/sos/polling/",
-        label: "Find Your Polling Place",
-        sub: "Prefer voting in person instead of online? Look up your location.",
-        icon: '<path d="M12 21s7-6.5 7-11a7 7 0 10-14 0c0 4.5 7 11 7 11z"/><circle cx="12" cy="10" r="3"/>'
-      },
-      results: {
-        href: "https://migovt.org/sos/vote/results/",
-        label: "View Results",
-        sub: "See the official outcome of the election.",
-        icon: '<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>'
-      }
-    };
-
-    function actionHtml(key, primary) {
-      var a = ACTIONS[key];
-      return '<a class="status-action confirm-link' + (primary ? ' primary' : '') + '" href="' + a.href + '">' +
-        '<span class="label"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + a.icon + '</svg>' + a.label + '</span>' +
-        '<span class="sub">' + a.sub + '</span>' +
-        '</a>';
-    }
-
-    function renderStatus(status) {
-      var meta = STATUS_META[status];
-      var isRunoff = status.indexOf("runoff") !== -1;
-      var isDuring = /during$/.test(status);
-      var isAfter = /after$/.test(status);
-      var isClosed = status === "closed";
-      var isDone = status === "done";
-
-      var html = '';
-
-      html += '<div class="status-card-top">' +
-        '<span class="status-badge ' + meta.badge + '"><span class="dot"></span>' + meta.label + '</span>' +
-        '</div>';
-      html += '<p class="status-desc">' + meta.desc + '</p>';
-
-      var actionKeys = [];
-
-      if (isRunoff && !isDone) {
-        html += '<div class="runoff-flag">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>' +
-          '<span><strong>There\'s a runoff election.</strong> At least one race in the general election ended in a tie, so voters are deciding it in a runoff.</span>' +
-          '</div>';
-      }
-
-      if (isClosed) {
-        actionKeys = ["register", "polling"];
-      } else if (isDone) {
-        actionKeys = ["results"];
-      } else if (isAfter) {
-        html += '<p class="status-notice">Election Day has ' + (isRunoff ? "passed for the runoff" : "passed") + ', but online voting is still open until the window closes.</p>';
-        actionKeys = ["register", "online"];
-      } else {
-        if (isDuring) {
-          html += '<p class="status-notice notice-today">' + (isRunoff ? "It's Election Day for the runoff!" : "It's Election Day!") + ' You can still vote online, or in person at your polling place.</p>';
-        }
-        actionKeys = ["register", "online", "polling"];
-      }
-
-      html += '<div class="status-actions count-' + actionKeys.length + '">' +
-        actionKeys.map(function (k, i) { return actionHtml(k, i === 0 && actionKeys.length > 1); }).join("") +
-        '</div>';
-
-      html += glossaryHtml();
-
-      document.getElementById("status-card").innerHTML = html;
-
-      if (window.confirmNav) window.confirmNav.attach();
-    }
-
-    function glossaryHtml() {
-      var items = STATUS_ORDER.map(function (key) {
-        var m = STATUS_META[key];
-        return '<div class="glossary-item">' +
-          '<span class="g-badge"><span class="status-badge ' + m.badge + '"><span class="dot"></span>' + m.label + '</span></span>' +
-          '<p>' + m.desc + '</p>' +
-          '</div>';
-      }).join("");
-
-      return '' +
-        '<details class="status-glossary">' +
-          '<summary>What do these statuses mean?</summary>' +
-          '<div class="glossary-list">' + items + '</div>' +
-        '</details>';
-    }
-
-    function init() {
-      renderStatus(CURRENT_STATUS);
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", init);
-    } else {
-      init();
-    }
-  })();
-  </script>
-
-  <script>
-  (function () {
-    /* ---------- TOC scrollspy: highlight the active jump-to link ---------- */
-    var links = Array.prototype.slice.call(document.querySelectorAll('.toc-inner a'));
-    if (!links.length || !window.IntersectionObserver) return;
-
-    var map = {};
-    links.forEach(function (link) {
-      var id = link.getAttribute('href').slice(1);
-      var section = document.getElementById(id);
-      if (section) map[id] = link;
-    });
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        var link = map[entry.target.id];
-        if (!link) return;
-        if (entry.isIntersecting) {
-          links.forEach(function (l) { l.classList.remove('active'); });
-          link.classList.add('active');
-        }
-      });
-    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
-
-    Object.keys(map).forEach(function (id) {
-      observer.observe(document.getElementById(id));
-    });
-  })();
-  </script>
-
+<script src="https://migovt.org/partials.js"></script>
+<main>
+<section class="pg"><div class="w">
+<nav class="crumb" aria-label="Breadcrumb"><a href="https://migovt.org/">Home</a><span>/</span><span>Voting</span></nav>
+<h1>Voting in Michigan</h1>
+<p class="lead">How elections work, when they happen, and what is on your ballot, from the state to your county and city.</p>
+<div class="ctas"><a class="pri" href="https://migovt.org/vote/register/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14h16v6H4zM7 14l1.5-5h7L17 14"/><path d="M10 11.5l1.6 1.6 3-3.2"/></svg>Register to vote</a><a class="sec" href="https://migovt.org/vote/check-registration/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20.5 20.5l-4.9-4.9"/></svg>Check my registration</a><a class="sec" href="https://migovt.org/vote/polling-place/"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Find my polling place</a></div>
+<div class="jump" aria-label="On this page"><a href="#calendar">Election calendar</a><a href="#ranked">Ranked preference voting</a><a href="#ties">Ties and runoffs</a><a href="#special">Special elections</a><a href="#ballot">What's on the ballot</a></div>
+</div></section>
+<div class="w">
+
+<section class="blk" id="calendar"><div class="eyebrow">The basics</div><div class="sh"><h2>Michigan's Election Calendar</h2></div>
+<p class="intro">Every general election in Michigan, state, county, and city, runs on the same calendar.</p>
+<div class="stats">
+<div class="st"><small>Term length</small><b>January 1 – December 31</b><p>Every office filled in a general election serves a one-year term.</p></div>
+<div class="st"><small>Election Day</small><b>21 days before the term begins</b><p>In practice, that places Election Day around December 11 of the prior year.</p></div>
+<div class="st"><small>Online voting window</small><b>30 to 10 days before the term begins</b><p>In practice, that's roughly December 2 through December 22. Available through the Secretary of State's online system for the state election, and a Secretary of State–approved system for county and city elections.</p></div>
+</div>
+<div class="tl" role="img" aria-label="Timeline: online voting opens about December 2, Election Day is around December 11, online voting closes about December 22, and the new term begins January 1."><h3>The cycle at a glance</h3><p class="n">Approximate dates, counted back from the January 1 start of the term.</p>
+<div class="bar"><div class="win"></div><div class="mk ws"><span>Dec 2</span></div><div class="mk el"><span>Election Day · Dec 11</span></div><div class="mk we"><span>Dec 22</span></div><div class="mk tb"><span>Term begins · Jan 1</span></div></div>
+<div class="ax"><span>Dec 1</span><span>Dec 16</span><span>Jan 1</span></div>
+<div class="legend"><span><i style="background:var(--blue)"></i>Online voting window</span><span><i style="background:var(--gold);width:5px;height:14px"></i>Election Day</span></div></div>
+</section>
+
+<section class="blk" id="ranked"><div class="eyebrow">How it works</div><div class="sh"><h2>Ranked Preference Voting</h2></div>
+<p class="intro">Four races fill more than one seat at once. For those, instead of picking a single candidate, you rank as many as you'd like, up to the number of open seats.</p>
+<div class="two"><div class="card"><h3>How the scoring works</h3><p>Your top choice gets the highest number of points for that race, your second choice the next-highest, and so on. Points are awarded per ballot and added up across every voter. The winners are whoever earns the highest total preference score, not whoever gets the most first-choice votes.</p></div>
+<div class="card"><h3>You don't have to rank every seat</h3><p>You don't have to rank every open seat. But the point values themselves don't change based on how many candidates you rank. If you only rank your top choice, that candidate still receives the full top point value from your ballot.</p></div></div>
+<div class="tw" style="margin-top:20px"><table><thead><tr><th>Race</th><th>Seats</th><th>You may rank up to</th><th>Points (1st → last)</th><th>Top scorer becomes</th></tr></thead><tbody><tr><td>Legislature</td><td>12</td><td>12 candidates</td><td class="pts">12, 11, 10 … 1</td><td>Speaker of the Legislature</td></tr><tr><td>Judiciary</td><td>7</td><td>7 candidates</td><td class="pts">7, 6, 5 … 1</td><td>Chief Justice</td></tr><tr><td>Board of Commissioners</td><td>5</td><td>5 candidates</td><td class="pts">5, 4, 3, 2, 1</td><td>Chairperson</td></tr><tr><td>City Council</td><td>3</td><td>3 candidates</td><td class="pts">3, 2, 1</td><td>President of the Council</td></tr></tbody></table></div>
+</section>
+
+<section class="blk" id="ties"><div class="eyebrow">The basics</div><div class="sh"><h2>Ties, Runoffs &amp; Head Positions</h2></div>
+<p class="intro">Most ties are settled by voters in a runoff. A handful of specific ties are settled by the state's newly elected leadership instead.</p>
+<div class="two"><div class="card"><h3>Runoff elections</h3><p>If a race ends in a tie, a runoff election is held to settle it.</p><div class="dates"><div class="dt"><small>Online voting</small><b>January 1 – January 10</b></div><div class="dt"><small>In-person Election Day</small><b>January 5</b></div></div></div>
+<div class="card"><h3>The exception: head positions</h3><p>A tie for the top preference score in the Legislature, Judiciary, Board of Commissioners, or City Council race isn't sent to a runoff, because that tie determines who becomes Speaker of the Legislature, Chief Justice, Chairperson, or President of the Council.</p><p>Those specific ties are broken by the newly elected Governor, except for a City Council President tie, which is broken by the newly elected Mayor.</p></div></div>
+</section>
+
+<section class="blk" id="special"><div class="eyebrow">The basics</div><div class="sh"><h2>Special Elections</h2></div>
+<p class="intro">General elections happen on a fixed yearly cycle, but seats sometimes come open in between.</p>
+<div class="two"><div class="card"><h3>Filling a vacancy</h3><p>When a seat becomes vacant outside the regular election cycle, a special election is held to fill the remainder of the term. It follows the same basic structure as a general election, a period of online voting followed by an in-person Election Day, on a timeline set by the Secretary of State for state offices, or by the County Clerk for county and city offices.</p></div>
+<div class="card"><h3>The Governor's office</h3><p>The one exception is the Governor's office: if it becomes vacant, the Lieutenant Governor succeeds to the office directly, without a special election.</p></div></div>
+</section>
+
+<section class="blk" id="ballot"><div class="eyebrow">General election</div><div class="sh"><h2>What's on the ballot</h2></div>
+<p class="intro">Choose a level of government to see what voters decide.</p>
+<div class="tabs" role="tablist" aria-label="Ballot level"><button role="tab" id="t1" aria-selected="true" aria-controls="p1">State</button><button role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1">Genesee County</button><button role="tab" id="t3" aria-selected="false" aria-controls="p3" tabindex="-1">City of Flint</button></div>
+
+<div class="panel" id="p1" role="tabpanel" aria-labelledby="t1"><h3 style="font:600 26px var(--head);color:var(--navy);margin-bottom:6px">General State Election</h3><p class="intro" style="margin-bottom:18px">Held on the calendar above. Four things appear on the state ballot.</p><div class="items">
+<div class="it"><h3>Governor &amp; Lieutenant Governor</h3><p>Elected jointly as a single ticket. One vote decides both offices together.</p></div>
+<div class="it"><span class="cnt">12 seats</span><h3>12 Legislators</h3><p>Elected by ranked preference voting. Rank up to 12 candidates, with each ballot's top choice worth 12 points down to 1. The candidate with the highest total preference score becomes Speaker of the Legislature; the other 11 winners serve as members.</p><div class="tie"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v16M7 20h10M4 7h16"/><path d="M4 7l-2.7 6.2a3 3 0 005.4 0zM20 7l-2.7 6.2a3 3 0 005.4 0z"/></svg>Tie for Speaker → broken by the newly elected Governor</div></div>
+<div class="it"><span class="cnt">7 seats</span><h3>7 Justices</h3><p>1 Chief Justice and 6 Associate Justices, elected by ranked preference voting. Rank up to 7 candidates, with each ballot's top choice worth 7 points down to 1. The candidate with the highest total preference score becomes Chief Justice; the other 6 winners serve as Associate Justices.</p><div class="tie"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v16M7 20h10M4 7h16"/><path d="M4 7l-2.7 6.2a3 3 0 005.4 0zM20 7l-2.7 6.2a3 3 0 005.4 0z"/></svg>Tie for Chief Justice → broken by the newly elected Governor</div></div>
+<div class="it"><h3>Questions &amp; Issues</h3><p>Statewide ballot questions and issues are also put directly to voters. Unless a specific question says otherwise, it's decided by a simple majority, though some questions require a two-thirds supermajority to pass.</p></div>
+</div></div>
+
+<div class="panel" id="p2" role="tabpanel" aria-labelledby="t2" hidden><h3 style="font:600 26px var(--head);color:var(--navy);margin-bottom:6px">General County Election</h3><p class="intro" style="margin-bottom:18px">Genesee County's ballot fills the Board of Commissioners and four countywide offices.</p><div class="items">
+<div class="it wide"><span class="cnt">5 seats</span><h3>5 Commissioners</h3><p>Elected by ranked preference voting. Rank up to 5 candidates, with each ballot's top choice worth 5 points down to 1. The candidate with the highest total preference score becomes Chairperson of the Board; the other 4 winners serve as members.</p><div class="tie"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v16M7 20h10M4 7h16"/><path d="M4 7l-2.7 6.2a3 3 0 005.4 0zM20 7l-2.7 6.2a3 3 0 005.4 0z"/></svg>Tie for Chairperson → broken by the newly elected Governor</div></div>
+<div class="it"><h3>County Clerk</h3><p>Maintains the county's official records, including property records and District Court records, and administers elections at the county level and for every municipality within the county. The Clerk also serves as Clerk of the Court for the County District Court, Genesee County's only trial-level court.</p></div>
+<div class="it"><h3>County Treasurer</h3><p>The county's chief financial officer, responsible for collecting property taxes and managing county funds.</p></div>
+<div class="it"><h3>Sheriff</h3><p>The county's elected chief law enforcement officer, overseeing the Sheriff's Office.</p></div>
+<div class="it"><h3>County Prosecutor</h3><p>The county's chief criminal law enforcement attorney, responsible for charging and prosecuting criminal cases within the county.</p></div>
+<div class="it wide" style="border-top-color:var(--gold)"><h3>Ties, runoffs &amp; vacancies</h3><p>Same rules as the state election: a tie in any of these races goes to a runoff, except a tie for Chairperson of the Board of Commissioners, which the newly elected Governor breaks. A vacancy in any of these offices is filled by a special election on the same two-part structure described above.</p></div>
+</div></div>
+
+<div class="panel" id="p3" role="tabpanel" aria-labelledby="t3" hidden><h3 style="font:600 26px var(--head);color:var(--navy);margin-bottom:6px">City of Flint General Election</h3><p class="intro" style="margin-bottom:18px">Flint's ballot fills the Mayor's office and the City Council.</p><div class="items">
+<div class="it"><h3>Mayor</h3><p>Flint's elected chief executive.</p></div>
+<div class="it"><span class="cnt">3 seats</span><h3>3 Council Members</h3><p>Elected by ranked preference voting. Rank up to 3 candidates, with each ballot's top choice worth 3 points, second 2, and third 1. The candidate with the highest total preference score becomes President of the Council; the other 2 winners serve as members.</p><div class="tie"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v16M7 20h10M4 7h16"/><path d="M4 7l-2.7 6.2a3 3 0 005.4 0zM20 7l-2.7 6.2a3 3 0 005.4 0z"/></svg>Tie for President → broken by the newly elected Mayor</div></div>
+<div class="it wide" style="border-top-color:var(--gold)"><h3>Ties, runoffs &amp; vacancies</h3><p>Same rules as the state and county elections: a tie for Mayor or for a non-President Council seat goes to a runoff. A vacancy in either office is filled by a special election on the same two-part structure described above.</p></div>
+</div></div>
+</section>
+
+<div class="help"><div><h2>Ready to vote?</h2><p>Register, check your status, or find where to vote.</p></div><div class="bt"><a class="pri" href="https://migovt.org/vote/register/">Register to vote</a><a href="https://migovt.org/vote/absentee/">Vote online</a><a href="https://migovt.org/local/clerks/">Contact my clerk</a></div></div>
+</div>
+</main>
+<script>
+(function(){var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+function sel(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;document.getElementById(x.getAttribute('aria-controls')).hidden=!on;});t.focus();}
+tabs.forEach(function(t,i){t.addEventListener('click',function(){sel(t);});t.addEventListener('keydown',function(e){var n=e.key==='ArrowRight'?i+1:e.key==='ArrowLeft'?i-1:null;if(n===null)return;e.preventDefault();sel(tabs[(n+tabs.length)%tabs.length]);});});
+if(location.hash==='#county')sel(tabs[1]);if(location.hash==='#city')sel(tabs[2]);})();
+</script>
 </body>
 </html>
