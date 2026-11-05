@@ -241,6 +241,19 @@ function xferGet() { try { const o = JSON.parse(ss.get(SS_XFER) || 'null'); ss.d
 const noticeGet = () => { const n = ss.get(SS_NOTICE); ss.del(SS_NOTICE); return n; };
 function retQuery() { return redirectTarget ? '?redirect_uri=' + encodeURIComponent(redirectTarget) + '&site_name=' + encodeURIComponent(rName) : ''; }
 
+/* Remember which services a person signed in to through MiGOVT (best effort; never blocks sign-in). */
+async function logService(pin) {
+  try {
+    if (!redirectTarget || !pin) return;
+    const u = new URL(redirectTarget); if (u.pathname.startsWith('/account')) return;
+    const key = (u.hostname + '/' + (u.pathname.split('/')[1] || '')).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+    const q = await getDocs(query(collection(db, 'mipass'), where('pin', '==', String(pin)), limit(1)));
+    if (q.empty) return;
+    const prev = (q.docs[0].data().services || {})[key], now = new Date().toISOString();
+    await updateDoc(q.docs[0].ref, { ['services.' + key]: { name: rName, url: u.origin + '/' + (u.pathname.split('/')[1] || ''), firstUsed: prev?.firstUsed || now, lastUsed: now, count: (prev?.count || 0) + 1 } });
+  } catch (e) { console.warn('Could not record service use', e); }
+}
+
 function setMsg(id, text, kind) { const e = $(id); if (!e) return; e.textContent = text || ''; e.className = 'alert' + (kind ? ' ' + kind : ''); e.hidden = !text; }
 
 /* Only send people back to MiGOVT itself or one of its subdomains, over https. */
@@ -471,6 +484,7 @@ function success() {
   showEl('wiz', false); showEl('success', true); $('ok-pin').textContent = rb.id;
   const h = $('success').querySelector('h1'); h.focus({ preventScroll: true }); window.scrollTo({ top: 0 });
   const u = { first: rec.first, middle: rec.middle, last: rec.last, pin: rb.id, name: rec.name, dob: rec.dob, email: chosen.email, roblox: rb.username, discordName: dc.username }; ss.del(SS_WIZ);
+  if (redirectTarget) logService(rb.id);
   if (redirectTarget) { const a = $('b-continue'); a.href = buildReturnUrl(u); a.textContent = 'Continue to ' + rName; }
 }
 

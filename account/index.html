@@ -134,7 +134,7 @@ dialog{border:0;border-radius:14px;padding:28px;max-width:440px;width:calc(100% 
     <ul class="meths" id="meths"></ul>
    </section>
    <section class="card" aria-labelledby="h-sec">
-    <h3 id="h-sec">Security</h3>
+    <h3 id="h-sec">Services you have used</h3>
     <ul class="meths" id="sec"></ul>
    </section>
    <div class="alert ok" id="note" role="status" hidden></div>
@@ -183,6 +183,19 @@ const xferSet = o => ss.set(SS_XFER, JSON.stringify({ ...o, t: Date.now() }));
 function xferGet() { try { const o = JSON.parse(ss.get(SS_XFER) || 'null'); ss.del(SS_XFER); return o && Date.now() - o.t < 600000 ? o : null; } catch { return null; } }
 const noticeGet = () => { const n = ss.get(SS_NOTICE); ss.del(SS_NOTICE); return n; };
 function retQuery() { return redirectTarget ? '?redirect_uri=' + encodeURIComponent(redirectTarget) + '&site_name=' + encodeURIComponent(rName) : ''; }
+
+/* Remember which services a person signed in to through MiGOVT (best effort; never blocks sign-in). */
+async function logService(pin) {
+  try {
+    if (!redirectTarget || !pin) return;
+    const u = new URL(redirectTarget); if (u.pathname.startsWith('/account')) return;
+    const key = (u.hostname + '/' + (u.pathname.split('/')[1] || '')).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+    const q = await getDocs(query(collection(db, 'mipass'), where('pin', '==', String(pin)), limit(1)));
+    if (q.empty) return;
+    const prev = (q.docs[0].data().services || {})[key], now = new Date().toISOString();
+    await updateDoc(q.docs[0].ref, { ['services.' + key]: { name: rName, url: u.origin + '/' + (u.pathname.split('/')[1] || ''), firstUsed: prev?.firstUsed || now, lastUsed: now, count: (prev?.count || 0) + 1 } });
+  } catch (e) { console.warn('Could not record service use', e); }
+}
 
 function setMsg(id, text, kind) { const e = $(id); if (!e) return; e.textContent = text || ''; e.className = 'alert' + (kind ? ' ' + kind : ''); e.hidden = !text; }
 
@@ -259,7 +272,7 @@ import { onAuthStateChanged, EmailAuthProvider, reauthenticateWithCredential, up
 
 const ICON = {
   mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.500"/><path d="M3.500 7l8.500 6 8.500-6"/></svg>',
-  g: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12.2h-8"/><path d="M19.300 7.500A8 8 0 1 0 20 12.200"/></svg>', d: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 6.5c3-1.1 6-1.1 9 0l2.2 9.6c-1.9 1.5-3.8 2.2-6.7 2.2s-4.800-.7-6.700-2.200z"/><circle cx="9.5" cy="12" r="1.2"/><circle cx="14.5" cy="12" r="1.2"/><path d="M9 16c1.900.9 4.100.9 6 0"/></svg>', r: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2" transform="rotate(14 12 12)"/><rect x="10.3" y="10.3" width="3.4" height="3.4" transform="rotate(14 12 12)"/></svg>', k: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.500" width="15" height="10" rx="2"/><path d="M8 10.500V7.500a4 4 0 0 1 8 0v3"/></svg>'
+  s: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l9-5 9 5M4 8h16M6 10.500v7M10 10.500v7M14 10.500v7M18 10.500v7M3 20h18"/></svg>', g: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12.2h-8"/><path d="M19.300 7.500A8 8 0 1 0 20 12.200"/></svg>', d: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 6.5c3-1.1 6-1.1 9 0l2.2 9.6c-1.9 1.5-3.8 2.2-6.7 2.2s-4.800-.7-6.700-2.200z"/><circle cx="9.5" cy="12" r="1.2"/><circle cx="14.5" cy="12" r="1.2"/><path d="M9 16c1.900.9 4.100.9 6 0"/></svg>', r: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2" transform="rotate(14 12 12)"/><rect x="10.3" y="10.3" width="3.4" height="3.4" transform="rotate(14 12 12)"/></svg>', k: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.500" width="15" height="10" rx="2"/><path d="M8 10.500V7.500a4 4 0 0 1 8 0v3"/></svg>'
 };
 const views = ['load','signin','main'];
 const view = n => views.forEach(v => $('v-' + v).classList.toggle('on', v === n));
@@ -359,18 +372,23 @@ function render() {
     m.append(row(ICON.r, 'Roblox', (acct.robloxUsername || 'Linked') + ' (PIN ' + acct.pin + ')', []),
       row(ICON.d, 'Discord', acct.discordUsername ? 'Linked as ' + acct.discordUsername : 'Not linked', []),
       row(ICON.mail, 'Email', acct.email || 'Not on file', []));
-    $('sec').replaceChildren(); $('h-sec').parentElement.hidden = true; return;
+    renderServices(); return;
   }
-  $('h-sec').parentElement.hidden = false;
   const pw = hasProv('password'), g = user.providerData.find(p => p.providerId === 'google.com');
   m.append(
-    row(ICON.mail, 'Email and password', pw ? (acct.email || user.email) : 'Not set up', pw ? [['Change email', changeEmail]] : [['Add a password', addPassword]]),
+    row(ICON.mail, 'Email and password', pw ? (acct.email || user.email) : 'Not set up', pw ? [['Change email', changeEmail], ['Change password', changePassword]] : [['Add a password', addPassword]]),
     row(ICON.g, 'Google', g ? 'Linked as ' + (g.email || user.email) : 'Not linked', g ? (user.providerData.length > 1 ? [['Unlink', unlinkGoogle]] : []) : [['Link Google', linkGoogle, 'pri']]),
     row(ICON.d, 'Discord', acct.discordUsername ? 'Linked as ' + acct.discordUsername : 'Not linked', [[acct.discordUsername ? 'Link a different account' : 'Link Discord', linkDiscord, acct.discordUsername ? 'alt' : 'pri']]),
     row(ICON.r, 'Roblox', (acct.robloxUsername || 'Linked') + ' (PIN ' + acct.pin + ')', [])
   );
+  renderServices();
+}
+function renderServices() {
   const s = $('sec'); s.replaceChildren();
-  s.append(row(ICON.k, 'Password', pw ? 'Used with your email to sign in' : 'You sign in with Google', pw ? [['Change password', changePassword]] : [['Add a password', addPassword]]));
+  const list = Object.values(acct.services || {}).sort((a, b) => String(b.lastUsed).localeCompare(String(a.lastUsed)));
+  if (!list.length) { const li = document.createElement('li'); li.textContent = 'None yet. Services you sign in to with MiGOVT will appear here.'; li.style.color = 'var(--mut)'; s.appendChild(li); return; }
+  const fmt = iso => { const d = new Date(iso); return isNaN(d) ? '' : MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); };
+  list.forEach(v => s.appendChild(row(ICON.s, v.name || v.url, 'Last used ' + fmt(v.lastUsed) + ' \u00b7 ' + (v.count || 1) + (v.count === 1 ? ' sign-in' : ' sign-ins'), [])));
 }
 $('b-out').addEventListener('click', async () => { ss.del('migovt_ident'); try { await signOut(auth); } catch {} location.href = 'https://migovt.org/login/'; });
 wirePasswordToggles();
